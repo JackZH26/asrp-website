@@ -5,24 +5,31 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ASRP — Agent Science Research Platform</title>
 <meta name="description" content="Open-source framework that turns AI agents into rigorous research collaborators. Experiment registration, cross-validation, audit trails.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2240%22 fill=%22%236c8cff%22/></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2240%22 fill=%22%234a8c6a%22/></svg>">
 <style>
 /* ========== VARIABLES ========== */
 :root {
-  --bg: #0a0a0f;
-  --surface: #111118;
-  --card: #16161f;
-  --border: rgba(108, 140, 255, 0.08);
-  --border-hover: rgba(108, 140, 255, 0.2);
-  --text: #e4e4e7;
-  --text-secondary: #a1a1aa;
-  --text-tertiary: #71717a;
-  --accent: #6c8cff;
-  --accent-muted: #4f6cc9;
-  --success: #34d399;
-  --warning: #fbbf24;
-  --error: #f87171;
-  --gradient: linear-gradient(135deg, #6c8cff 0%, #8b7fdb 100%);
+  --bg: #f0f5f0;
+  --surface: #e8f0e8;
+  --card: #ffffff;
+  --card-alt: #f8faf8;
+  --border: #d4e4d4;
+  --border-hover: #4a8c6a;
+  --text: #2d3b2d;
+  --text-secondary: #5a6b5a;
+  --text-tertiary: #6b7c6b;
+  --accent: #4a8c6a;
+  --accent-muted: #3d7559;
+  --accent-light: rgba(74, 140, 106, 0.08);
+  --success: #4a8c6a;
+  --warning: #b89a4a;
+  --error: #c45c5c;
+  --gradient: linear-gradient(135deg, #7bc4a0, #4a8c6a);
+  --gradient-text: linear-gradient(135deg, #4a8c6a, #2d6b4a);
+  --code-bg: #e8f0e8;
+  --code-text: #2d5a3d;
+  --shadow: 0 2px 8px rgba(74, 140, 106, 0.06);
+  --shadow-hover: 0 4px 16px rgba(74, 140, 106, 0.12);
 }
 
 /* ========== RESET ========== */
@@ -47,6 +54,7 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
   line-height: 1.2;
   letter-spacing: -0.02em;
+  color: var(--text);
 }
 
 h1 { font-size: clamp(2.5rem, 5vw, 3.5rem); }
@@ -68,7 +76,7 @@ a {
 }
 
 a:hover {
-  color: var(--text);
+  color: var(--accent-muted);
 }
 
 /* ========== LAYOUT ========== */
@@ -90,7 +98,7 @@ nav {
   top: 0;
   width: 100%;
   z-index: 100;
-  background: rgba(10, 10, 15, 0.8);
+  background: rgba(240, 245, 240, 0.9);
   backdrop-filter: blur(16px) saturate(180%);
   border-bottom: 1px solid var(--border);
 }
@@ -174,17 +182,18 @@ nav .links a:hover {
 
 .btn-primary:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(108, 140, 255, 0.3);
+  box-shadow: 0 4px 12px rgba(74, 140, 106, 0.3);
 }
 
 .btn-outline {
   border: 1px solid var(--border);
   color: var(--text);
+  background: white;
 }
 
 .btn-outline:hover {
-  border-color: var(--border-hover);
-  background: var(--surface);
+  border-color: var(--accent);
+  background: var(--card-alt);
 }
 
 .btn-sm {
@@ -206,7 +215,7 @@ nav .links a:hover {
   border-radius: 24px;
   font-size: 0.8125rem;
   font-weight: 500;
-  background: rgba(108, 140, 255, 0.1);
+  background: var(--accent-light);
   color: var(--accent);
   margin-bottom: 1.5rem;
   border: 1px solid var(--border);
@@ -223,7 +232,7 @@ nav .links a:hover {
 }
 
 .hero h1 .gradient-text {
-  background: var(--gradient);
+  background: var(--gradient-text);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -260,7 +269,7 @@ nav .links a:hover {
 .hero .stat .num {
   font-size: 2.5rem;
   font-weight: 700;
-  background: var(--gradient);
+  background: var(--gradient-text);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -311,11 +320,13 @@ section .section-subtitle {
   border-radius: 12px;
   padding: 2rem;
   transition: all 0.2s ease;
+  box-shadow: var(--shadow);
 }
 
 .feature:hover {
-  border-color: var(--border-hover);
+  border-color: var(--accent);
   transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
 }
 
 .feature .icon {
@@ -323,7 +334,7 @@ section .section-subtitle {
   height: 40px;
   margin-bottom: 1.25rem;
   border-radius: 8px;
-  background: linear-gradient(135deg, rgba(108, 140, 255, 0.15), rgba(139, 127, 219, 0.1));
+  background: var(--accent-light);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -372,11 +383,13 @@ section .section-subtitle {
   padding: 1.75rem 1.25rem;
   text-align: center;
   transition: all 0.2s ease;
+  box-shadow: var(--shadow);
 }
 
 .role:hover {
-  border-color: var(--border-hover);
+  border-color: var(--accent);
   transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
 }
 
 .role .role-icon {
@@ -384,7 +397,7 @@ section .section-subtitle {
   height: 48px;
   margin: 0 auto 1rem;
   border-radius: 50%;
-  background: linear-gradient(135deg, rgba(108, 140, 255, 0.15), rgba(139, 127, 219, 0.1));
+  background: var(--accent-light);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -419,6 +432,7 @@ section .section-subtitle {
   padding: 3rem;
   max-width: 800px;
   margin: 0 auto;
+  box-shadow: var(--shadow);
 }
 
 .case-study h3 {
@@ -428,7 +442,7 @@ section .section-subtitle {
 }
 
 .timeline {
-  border-left: 2px solid rgba(108, 140, 255, 0.2);
+  border-left: 2px solid var(--accent);
   padding-left: 1.5rem;
   margin: 1.5rem 0;
 }
@@ -480,7 +494,7 @@ section .section-subtitle {
 .case-study .note {
   margin-top: 2rem;
   padding: 1.25rem;
-  background: rgba(108, 140, 255, 0.05);
+  background: var(--accent-light);
   border-radius: 8px;
   border-left: 3px solid var(--accent);
   font-size: 0.9375rem;
@@ -536,8 +550,8 @@ section .section-subtitle {
 }
 
 .step code {
-  color: var(--accent);
-  background: rgba(108, 140, 255, 0.1);
+  color: var(--code-text);
+  background: var(--code-bg);
   padding: 0.125rem 0.375rem;
   border-radius: 4px;
   font-size: 0.875rem;
@@ -564,11 +578,13 @@ section .section-subtitle {
   border-radius: 12px;
   padding: 2rem;
   transition: all 0.2s ease;
+  box-shadow: var(--shadow);
 }
 
 .oss-card:hover {
-  border-color: var(--border-hover);
+  border-color: var(--accent);
   transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
 }
 
 .oss-card .oss-icon {
@@ -576,7 +592,7 @@ section .section-subtitle {
   height: 40px;
   margin-bottom: 1rem;
   border-radius: 8px;
-  background: linear-gradient(135deg, rgba(108, 140, 255, 0.15), rgba(139, 127, 219, 0.1));
+  background: var(--accent-light);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -608,6 +624,7 @@ footer {
   border-top: 1px solid var(--border);
   padding: 3rem 0;
   text-align: center;
+  background: var(--card-alt);
 }
 
 footer .links {
@@ -648,7 +665,7 @@ footer .lang-bar a:hover {
 
 /* ========== TERMINAL PROMPT ========== */
 .terminal {
-  background: var(--surface);
+  background: var(--code-bg);
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 1rem;
