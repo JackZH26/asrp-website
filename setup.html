@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ASRP Setup Wizard — Configure Your Research Platform</title>
+<script src="auth.js"></script>
 <meta name="description" content="One-stop configuration wizard for ASRP. Configure API keys, agents, and tools in minutes.">
 <link rel="icon" href="favicon.ico" type="image/x-icon">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -1330,10 +1331,13 @@ function generateConfig() {
     URL.revokeObjectURL(a.href);
   }
 
-  // Show success message
+  // Mark setup as complete
+  localStorage.setItem('asrp-setup-complete', 'true');
+
+  // Show success message with dashboard link
   const output = document.getElementById('output');
   output.classList.add('show');
-  output.textContent = `✅ Configuration files downloaded successfully!\n\n` +
+  output.innerHTML = `✅ Configuration files downloaded successfully!\n\n` +
     `Files generated:\n` +
     `  • config.yaml    — ASRP agent configuration\n` +
     `  • .env           — API keys (keep secure!)\n` +
@@ -1344,6 +1348,7 @@ function generateConfig() {
     `  3. Run: asrp init\n` +
     `  4. Register your first experiment: asrp register\n` +
     `  5. Start researching!\n\n` +
+    `🎉 Setup complete! <a href="dashboard.html" style="color:var(--accent);font-weight:bold;">Go to Dashboard →</a>\n\n` +
     `Need help? Join our Discord: https://discord.gg/DFmwBkDTB`;
   
   // Scroll to output
@@ -1362,6 +1367,23 @@ document.querySelectorAll('.section').forEach((s, i) => {
       }
     });
   });
+});
+
+// Auth check on page load
+document.addEventListener('DOMContentLoaded', function() {
+  // Check if user is logged in
+  if (!Auth.isLoggedIn()) {
+    // Show message and redirect to login
+    const message = new URLSearchParams(window.location.search).get('message');
+    if (message) {
+      alert(message);
+    }
+    // Allow anonymous access to setup wizard, but prompt to login
+    const shouldLogin = confirm('You need to login or create an account to save your setup. Would you like to login now?');
+    if (shouldLogin) {
+      window.location.href = 'login.html';
+    }
+  }
 });
 </script>
 
