@@ -1339,8 +1339,29 @@ function switchLang(lang) {
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', function() {
   // Get saved language or default to English
-  const savedLang = localStorage.getItem('asrp-lang') || 'en';
-  switchLang(savedLang);
+  // Auto-detect language: localStorage > IP geolocation > default English
+    const savedLang = localStorage.getItem('asrp-lang');
+    if (savedLang) {
+      switchLang(savedLang);
+    } else {
+      // Detect country via free IP geolocation API
+      fetch('https://ipapi.co/json/', { signal: AbortSignal.timeout(3000) })
+        .then(r => r.json())
+        .then(data => {
+          const cc = (data.country_code || '').toUpperCase();
+          const langMap = {
+            'CN': 'zh',                    // China → Simplified Chinese
+            'HK': 'zht', 'MO': 'zht',     // Hong Kong, Macau → Traditional Chinese
+            'TW': 'zht', 'SG': 'zht',     // Taiwan, Singapore → Traditional Chinese
+            'DE': 'de', 'CH': 'de', 'AT': 'de'  // Germany, Switzerland, Austria → German
+          };
+          const detectedLang = langMap[cc] || 'en';
+          switchLang(detectedLang);
+        })
+        .catch(() => {
+          // API failed or timeout — keep English default
+        });
+    }
 });
 </script>
 
