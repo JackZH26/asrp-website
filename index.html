@@ -5,241 +5,992 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ASRP — Agent Science Research Platform</title>
 <meta name="description" content="Open-source framework that turns AI agents into rigorous research collaborators. Experiment registration, cross-validation, audit trails.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔬</text></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2240%22 fill=%22%236c8cff%22/></svg>">
 <style>
-:root{--bg:#0a0a0f;--card:#12121a;--border:#1e1e2e;--text:#e0e0e8;--muted:#8888a0;--accent:#6c8cff;--accent2:#a78bfa;--green:#4ade80;--yellow:#fbbf24;--red:#f87171;--gradient:linear-gradient(135deg,#6c8cff,#a78bfa)}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;overflow-x:hidden}
-a{color:var(--accent);text-decoration:none}
-a:hover{text-decoration:underline}
-.container{max-width:1100px;margin:0 auto;padding:0 24px}
+/* ========== VARIABLES ========== */
+:root {
+  --bg: #0a0a0f;
+  --surface: #111118;
+  --card: #16161f;
+  --border: rgba(108, 140, 255, 0.08);
+  --border-hover: rgba(108, 140, 255, 0.2);
+  --text: #e4e4e7;
+  --text-secondary: #a1a1aa;
+  --text-tertiary: #71717a;
+  --accent: #6c8cff;
+  --accent-muted: #4f6cc9;
+  --success: #34d399;
+  --warning: #fbbf24;
+  --error: #f87171;
+  --gradient: linear-gradient(135deg, #6c8cff 0%, #8b7fdb 100%);
+}
 
-/* Nav */
-nav{position:fixed;top:0;width:100%;z-index:100;background:rgba(10,10,15,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
-nav .inner{max-width:1100px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;justify-content:space-between}
-nav .logo{font-size:18px;font-weight:700;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-nav .links{display:flex;gap:24px;font-size:14px}
-nav .links a{color:var(--muted)}
-nav .links a:hover{color:var(--text);text-decoration:none}
-.btn{display:inline-block;padding:10px 24px;border-radius:8px;font-weight:600;font-size:14px;transition:.2s}
-.btn-primary{background:var(--gradient);color:#fff}
-.btn-primary:hover{opacity:.9;text-decoration:none}
-.btn-outline{border:1px solid var(--border);color:var(--text)}
-.btn-outline:hover{border-color:var(--accent);text-decoration:none}
+/* ========== RESET ========== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-/* Hero */
-.hero{padding:160px 0 100px;text-align:center}
-.hero .badge{display:inline-block;padding:4px 14px;border-radius:20px;font-size:12px;font-weight:600;background:rgba(108,140,255,.12);color:var(--accent);margin-bottom:20px;border:1px solid rgba(108,140,255,.2)}
-.hero h1{font-size:clamp(36px,5vw,56px);font-weight:800;line-height:1.15;margin-bottom:20px;max-width:800px;margin-left:auto;margin-right:auto}
-.hero h1 span{background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.hero p{font-size:18px;color:var(--muted);max-width:600px;margin:0 auto 32px}
-.hero .actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.hero .stats{display:flex;gap:40px;justify-content:center;margin-top:48px;flex-wrap:wrap}
-.hero .stat{text-align:center}
-.hero .stat .num{font-size:32px;font-weight:800;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.hero .stat .label{font-size:13px;color:var(--muted)}
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
 
-/* Sections */
-section{padding:80px 0}
-section h2{font-size:32px;font-weight:700;text-align:center;margin-bottom:12px}
-section .subtitle{text-align:center;color:var(--muted);font-size:16px;max-width:600px;margin:0 auto 48px}
+/* ========== TYPOGRAPHY ========== */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
 
-/* Feature cards */
-.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
-.feature{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:28px;transition:.2s}
-.feature:hover{border-color:var(--accent);transform:translateY(-2px)}
-.feature .icon{font-size:32px;margin-bottom:12px}
-.feature h3{font-size:18px;margin-bottom:8px}
-.feature p{font-size:14px;color:var(--muted)}
+h1 { font-size: clamp(2.5rem, 5vw, 3.5rem); }
+h2 { font-size: clamp(1.875rem, 4vw, 2.25rem); }
+h3 { font-size: 1.25rem; }
+h4 { font-size: 1.0625rem; }
 
-/* Agent roles */
-.roles{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
-@media(max-width:768px){.roles{grid-template-columns:repeat(2,1fr)}}
-.role{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center}
-.role .emoji{font-size:36px;margin-bottom:8px}
-.role h4{font-size:15px;margin-bottom:4px}
-.role p{font-size:12px;color:var(--muted)}
+p { color: var(--text-secondary); }
 
-/* Steps */
-.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
-@media(max-width:768px){.steps{grid-template-columns:1fr 1fr}}
-.step{text-align:center;padding:24px}
-.step .num{display:inline-flex;width:36px;height:36px;align-items:center;justify-content:center;border-radius:50%;background:var(--gradient);color:#fff;font-weight:700;font-size:16px;margin-bottom:12px}
-.step h4{font-size:15px;margin-bottom:6px}
-.step p{font-size:13px;color:var(--muted)}
+code, pre {
+  font-family: 'SF Mono', 'Menlo', 'Monaco', 'Courier New', monospace;
+  font-size: 0.875rem;
+}
 
-/* Case study */
-.case-study{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:40px;max-width:800px;margin:0 auto}
-.case-study h3{font-size:20px;margin-bottom:16px}
-.timeline{border-left:2px solid var(--accent);padding-left:20px;margin:16px 0}
-.timeline .event{margin-bottom:16px;position:relative}
-.timeline .event::before{content:'';position:absolute;left:-25px;top:6px;width:10px;height:10px;border-radius:50%;background:var(--accent)}
-.timeline .event.error::before{background:var(--red)}
-.timeline .event.fix::before{background:var(--green)}
-.timeline .time{font-size:12px;color:var(--muted)}
-.timeline .desc{font-size:14px}
+a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
 
-/* Open source */
-.oss-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
-@media(max-width:768px){.oss-grid{grid-template-columns:1fr}}
-.oss-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px}
-.oss-card h4{font-size:15px;margin-bottom:6px}
-.oss-card p{font-size:13px;color:var(--muted)}
+a:hover {
+  color: var(--text);
+}
 
-/* Footer */
-footer{border-top:1px solid var(--border);padding:40px 0;text-align:center;color:var(--muted);font-size:13px}
-footer .links{margin-bottom:12px}
-footer .links a{margin:0 12px}
+/* ========== LAYOUT ========== */
+.container {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
 
-/* Lang */
-.lang-bar{text-align:center;padding:8px;font-size:12px;color:var(--muted)}
-.lang-bar a{color:var(--muted);margin:0 6px}
+@media (max-width: 768px) {
+  .container {
+    padding: 0 1.25rem;
+  }
+}
+
+/* ========== NAVIGATION ========== */
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+  background: rgba(10, 10, 15, 0.8);
+  backdrop-filter: blur(16px) saturate(180%);
+  border-bottom: 1px solid var(--border);
+}
+
+nav .inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+nav .logo {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+nav .logo-icon {
+  width: 24px;
+  height: 24px;
+  background: var(--gradient);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+nav .links {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  font-size: 0.9375rem;
+}
+
+nav .links a {
+  color: var(--text-secondary);
+  transition: color 0.2s ease;
+}
+
+nav .links a:hover {
+  color: var(--text);
+}
+
+@media (max-width: 768px) {
+  nav .inner {
+    padding: 1rem 1.25rem;
+  }
+  
+  nav .links {
+    gap: 1rem;
+  }
+  
+  nav .links .hide-mobile {
+    display: none;
+  }
+}
+
+/* ========== BUTTONS ========== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 0.9375rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-primary {
+  background: var(--gradient);
+  color: white;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(108, 140, 255, 0.3);
+}
+
+.btn-outline {
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.btn-outline:hover {
+  border-color: var(--border-hover);
+  background: var(--surface);
+}
+
+.btn-sm {
+  padding: 0.375rem 1rem;
+  font-size: 0.875rem;
+}
+
+/* ========== HERO ========== */
+.hero {
+  padding: 10rem 0 6rem;
+  text-align: center;
+}
+
+.hero .badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.375rem 1rem;
+  border-radius: 24px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  background: rgba(108, 140, 255, 0.1);
+  color: var(--accent);
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--border);
+}
+
+.hero h1 {
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  letter-spacing: -0.03em;
+}
+
+.hero h1 .gradient-text {
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero .subtitle {
+  font-size: 1.125rem;
+  color: var(--text-secondary);
+  max-width: 640px;
+  margin: 0 auto 2.5rem;
+  line-height: 1.75;
+}
+
+.hero .actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 4rem;
+}
+
+.hero .stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 2.5rem;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.hero .stat {
+  text-align: center;
+}
+
+.hero .stat .num {
+  font-size: 2.5rem;
+  font-weight: 700;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.hero .stat .label {
+  font-size: 0.875rem;
+  color: var(--text-tertiary);
+  letter-spacing: 0.02em;
+}
+
+/* ========== SECTIONS ========== */
+section {
+  padding: 6rem 0;
+}
+
+section h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+section .section-subtitle {
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 1.0625rem;
+  max-width: 640px;
+  margin: 0 auto 3.5rem;
+  line-height: 1.65;
+}
+
+.section-alt {
+  background: var(--surface);
+}
+
+/* ========== FEATURE CARDS ========== */
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.feature {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2rem;
+  transition: all 0.2s ease;
+}
+
+.feature:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-2px);
+}
+
+.feature .icon {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 1.25rem;
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(108, 140, 255, 0.15), rgba(139, 127, 219, 0.1));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.feature .icon svg {
+  width: 20px;
+  height: 20px;
+  stroke: var(--accent);
+  fill: none;
+  stroke-width: 2;
+}
+
+.feature h3 {
+  font-size: 1.125rem;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.feature p {
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+/* ========== AGENT ROLES ========== */
+.roles {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .roles {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.role {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.75rem 1.25rem;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.role:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-2px);
+}
+
+.role .role-icon {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 1rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(108, 140, 255, 0.15), rgba(139, 127, 219, 0.1));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.role .role-icon svg {
+  width: 24px;
+  height: 24px;
+  stroke: var(--accent);
+  fill: none;
+  stroke-width: 2;
+}
+
+.role h4 {
+  font-size: 1rem;
+  margin-bottom: 0.375rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.role p {
+  font-size: 0.8125rem;
+  color: var(--text-tertiary);
+  line-height: 1.5;
+}
+
+/* ========== CASE STUDY ========== */
+.case-study {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 3rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.case-study h3 {
+  font-size: 1.375rem;
+  margin-bottom: 2rem;
+  font-weight: 600;
+}
+
+.timeline {
+  border-left: 2px solid rgba(108, 140, 255, 0.2);
+  padding-left: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.timeline .event {
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.timeline .event::before {
+  content: '';
+  position: absolute;
+  left: -1.875rem;
+  top: 0.375rem;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--bg);
+}
+
+.timeline .event.error::before {
+  background: var(--error);
+}
+
+.timeline .event.fix::before {
+  background: var(--success);
+}
+
+.timeline .time {
+  font-size: 0.8125rem;
+  color: var(--text-tertiary);
+  font-family: 'SF Mono', monospace;
+  margin-bottom: 0.25rem;
+  letter-spacing: 0.02em;
+}
+
+.timeline .desc {
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+.timeline .desc strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.case-study .note {
+  margin-top: 2rem;
+  padding: 1.25rem;
+  background: rgba(108, 140, 255, 0.05);
+  border-radius: 8px;
+  border-left: 3px solid var(--accent);
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+/* ========== STEPS ========== */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .steps {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+}
+
+.step {
+  text-align: center;
+}
+
+.step .num {
+  display: inline-flex;
+  width: 48px;
+  height: 48px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: var(--gradient);
+  color: white;
+  font-weight: 700;
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.step h4 {
+  font-size: 1.0625rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.step p {
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.step code {
+  color: var(--accent);
+  background: rgba(108, 140, 255, 0.1);
+  padding: 0.125rem 0.375rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+}
+
+/* ========== OSS GRID ========== */
+.oss-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .oss-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.oss-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2rem;
+  transition: all 0.2s ease;
+}
+
+.oss-card:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-2px);
+}
+
+.oss-card .oss-icon {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(108, 140, 255, 0.15), rgba(139, 127, 219, 0.1));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.oss-card .oss-icon svg {
+  width: 20px;
+  height: 20px;
+  stroke: var(--accent);
+  fill: none;
+  stroke-width: 2;
+}
+
+.oss-card h4 {
+  font-size: 1.0625rem;
+  margin-bottom: 0.625rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.oss-card p {
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+/* ========== FOOTER ========== */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 3rem 0;
+  text-align: center;
+}
+
+footer .links {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.9375rem;
+}
+
+footer .links a {
+  color: var(--text-secondary);
+  transition: color 0.2s ease;
+}
+
+footer .links a:hover {
+  color: var(--text);
+}
+
+footer .copyright {
+  font-size: 0.875rem;
+  color: var(--text-tertiary);
+}
+
+footer .lang-bar {
+  margin-top: 1.5rem;
+  font-size: 0.8125rem;
+}
+
+footer .lang-bar a {
+  color: var(--text-tertiary);
+  margin: 0 0.625rem;
+}
+
+footer .lang-bar a:hover {
+  color: var(--accent);
+}
+
+/* ========== TERMINAL PROMPT ========== */
+.terminal {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
+  font-family: 'SF Mono', monospace;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin: 2rem auto;
+  max-width: 600px;
+}
+
+.terminal .prompt {
+  color: var(--accent);
+}
 </style>
 </head>
 <body>
+
+<!-- NAVIGATION -->
 <nav>
-<div class="inner">
-<div class="logo">🔬 ASRP</div>
-<div class="links">
-<a href="#features">Features</a>
-<a href="#agents">Agents</a>
-<a href="#case-study">Case Study</a>
-<a href="#start">Get Started</a>
-<a href="https://github.com/JackZH26/agent-science-research-platform" class="btn btn-outline" style="padding:6px 16px">GitHub ⭐</a>
-</div>
-</div>
+  <div class="inner">
+    <div class="logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <circle cx="12" cy="12" r="3"/>
+        </svg>
+      </div>
+      ASRP
+    </div>
+    <div class="links">
+      <a href="#features" class="hide-mobile">Features</a>
+      <a href="#agents" class="hide-mobile">Agents</a>
+      <a href="#case-study" class="hide-mobile">Case Study</a>
+      <a href="#start">Get Started</a>
+      <a href="https://github.com/JackZH26/agent-science-research-platform" class="btn btn-outline btn-sm">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+        </svg>
+        GitHub
+      </a>
+    </div>
+  </div>
 </nav>
 
+<!-- HERO -->
 <div class="hero">
-<div class="container">
-<div class="badge">Open Source · Apache 2.0</div>
-<h1>Your next breakthrough<br>won't be <span>solo</span>.</h1>
-<p>ASRP is an open-source platform that turns AI agents into rigorous research collaborators. Pre-register experiments, cross-validate results, and audit every decision.</p>
-<div class="actions">
-<a href="https://jackzh26.github.io/agent-science-research-platform/setup/" class="btn btn-primary">Setup Wizard →</a>
-<a href="https://github.com/JackZH26/agent-science-research-platform" class="btn btn-outline">View on GitHub</a>
-</div>
-<div class="stats">
-<div class="stat"><div class="num">5</div><div class="label">Agent Roles</div></div>
-<div class="stat"><div class="num">77</div><div class="label">Tests Passing</div></div>
-<div class="stat"><div class="num">9</div><div class="label">DFT Benchmarks</div></div>
-<div class="stat"><div class="num">3</div><div class="label">Languages</div></div>
-</div>
-</div>
+  <div class="container">
+    <div class="badge">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+        <circle cx="12" cy="12" r="10"/>
+      </svg>
+      Open Source · Apache 2.0
+    </div>
+    <h1>Your next breakthrough<br>won't be <span class="gradient-text">solo</span>.</h1>
+    <p class="subtitle">ASRP is an open-source platform that turns AI agents into rigorous research collaborators. Pre-register experiments, cross-validate results, and audit every decision.</p>
+    <div class="actions">
+      <a href="https://jackzh26.github.io/agent-science-research-platform/setup/" class="btn btn-primary">
+        Setup Wizard
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+      <a href="https://github.com/JackZH26/agent-science-research-platform" class="btn btn-outline">View on GitHub</a>
+    </div>
+    <div class="stats">
+      <div class="stat">
+        <div class="num">5</div>
+        <div class="label">Agent Roles</div>
+      </div>
+      <div class="stat">
+        <div class="num">77</div>
+        <div class="label">Tests Passing</div>
+      </div>
+      <div class="stat">
+        <div class="num">9</div>
+        <div class="label">DFT Benchmarks</div>
+      </div>
+      <div class="stat">
+        <div class="num">3</div>
+        <div class="label">Languages</div>
+      </div>
+    </div>
+  </div>
 </div>
 
+<!-- FEATURES -->
 <section id="features">
-<div class="container">
-<h2>Built for scientific rigor.</h2>
-<p class="subtitle">Speed without rigor is noise. ASRP encodes the scientific method into AI agent workflows.</p>
-<div class="features">
-<div class="feature">
-<div class="icon">📋</div>
-<h3>Experiment Pre-Registration</h3>
-<p>Register hypotheses before running experiments. No post-hoc storytelling. Success and failure criteria defined upfront.</p>
-</div>
-<div class="feature">
-<div class="icon">🔄</div>
-<h3>Cross-Validation Protocol</h3>
-<p>Three levels: reproduction, independent implementation, alternative method. Different agents must verify results before publication.</p>
-</div>
-<div class="feature">
-<div class="icon">📝</div>
-<h3>Audit Trails</h3>
-<p>Every decision, every data point, every error correction logged in append-only format. Full reproducibility from hypothesis to conclusion.</p>
-</div>
-<div class="feature">
-<div class="icon">🔬</div>
-<h3>First Principles Thinking</h3>
-<p>Every agent is instructed to reason from first principles. Question assumptions, verify definitions, trust data over authority.</p>
-</div>
-<div class="feature">
-<div class="icon">💰</div>
-<h3>Token Budget Management</h3>
-<p>Right model for the right task. Opus for reasoning, Sonnet for code, Flash for search. Automatic cost tracking per experiment.</p>
-</div>
-<div class="feature">
-<div class="icon">🛡️</div>
-<h3>Role Separation</h3>
-<p>The agent that proposes a hypothesis is not the one that validates it. Reviewer has read-only access — true independent evaluation.</p>
-</div>
-</div>
-</div>
+  <div class="container">
+    <h2>Built for scientific rigor.</h2>
+    <p class="section-subtitle">Speed without rigor is noise. ASRP encodes the scientific method into AI agent workflows.</p>
+    <div class="features">
+      <div class="feature">
+        <div class="icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+          </svg>
+        </div>
+        <h3>Experiment Pre-Registration</h3>
+        <p>Register hypotheses before running experiments. No post-hoc storytelling. Success and failure criteria defined upfront.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+          </svg>
+        </div>
+        <h3>Cross-Validation Protocol</h3>
+        <p>Three levels: reproduction, independent implementation, alternative method. Different agents must verify results before publication.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+          </svg>
+        </div>
+        <h3>Audit Trails</h3>
+        <p>Every decision, every data point, every error correction logged in append-only format. Full reproducibility from hypothesis to conclusion.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
+          </svg>
+        </div>
+        <h3>First Principles Thinking</h3>
+        <p>Every agent is instructed to reason from first principles. Question assumptions, verify definitions, trust data over authority.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+        </div>
+        <h3>Token Budget Management</h3>
+        <p>Right model for the right task. Opus for reasoning, Sonnet for code, Flash for search. Automatic cost tracking per experiment.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+          </svg>
+        </div>
+        <h3>Role Separation</h3>
+        <p>The agent that proposes a hypothesis is not the one that validates it. Reviewer has read-only access — true independent evaluation.</p>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section id="agents" style="background:var(--card)">
-<div class="container">
-<h2>Five agents. One research team.</h2>
-<p class="subtitle">Each role has a SOUL template, skill manifest, and defined access permissions.</p>
-<div class="roles">
-<div class="role"><div class="emoji">🧠</div><h4>Theorist</h4><p>Hypotheses, reasoning, paper writing</p></div>
-<div class="role"><div class="emoji">⚙️</div><h4>Engineer</h4><p>Code, computation, data pipelines</p></div>
-<div class="role"><div class="emoji">📋</div><h4>Reviewer</h4><p>Independent review (read-only access)</p></div>
-<div class="role"><div class="emoji">📚</div><h4>Librarian</h4><p>Literature search, references</p></div>
-<div class="role"><div class="emoji">🏥</div><h4>ITDoctor</h4><p>Monitoring, backups, self-healing</p></div>
-</div>
-</div>
+<!-- AGENT ROLES -->
+<section id="agents" class="section-alt">
+  <div class="container">
+    <h2>Five agents. One research team.</h2>
+    <p class="section-subtitle">Each role has a SOUL template, skill manifest, and defined access permissions.</p>
+    <div class="roles">
+      <div class="role">
+        <div class="role-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+          </svg>
+        </div>
+        <h4>Theorist</h4>
+        <p>Hypotheses, reasoning, paper writing</p>
+      </div>
+      <div class="role">
+        <div class="role-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+          </svg>
+        </div>
+        <h4>Engineer</h4>
+        <p>Code, computation, data pipelines</p>
+      </div>
+      <div class="role">
+        <div class="role-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+          </svg>
+        </div>
+        <h4>Reviewer</h4>
+        <p>Independent review (read-only access)</p>
+      </div>
+      <div class="role">
+        <div class="role-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+          </svg>
+        </div>
+        <h4>Librarian</h4>
+        <p>Literature search, references</p>
+      </div>
+      <div class="role">
+        <div class="role-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+          </svg>
+        </div>
+        <h4>ITDoctor</h4>
+        <p>Monitoring, backups, self-healing</p>
+      </div>
+    </div>
+  </div>
 </section>
 
+<!-- CASE STUDY -->
 <section id="case-study">
-<div class="container">
-<h2>Errors caught in hours, not months.</h2>
-<p class="subtitle">A real case study: one-day DFT experiment with two self-corrections.</p>
-<div class="case-study">
-<h3>The iDEA Experiment — April 1, 2026</h3>
-<div class="timeline">
-<div class="event"><div class="time">T+0h</div><div class="desc">Literature review; iDEA code installed and benchmarked</div></div>
-<div class="event"><div class="time">T+2h</div><div class="desc">Hypothesis: "Prime-spaced wells produce anomalous negative DD"</div></div>
-<div class="event"><div class="time">T+4h</div><div class="desc">V1 results support hypothesis (DD = -0.070 Ha)</div></div>
-<div class="event error"><div class="time">T+4.5h — Error #1</div><div class="desc"><strong>Reviewer caught:</strong> Lattice spans unequal. Control experiment shows it's spacing asymmetry, not primes.</div></div>
-<div class="event error"><div class="time">T+9h — Error #2</div><div class="desc"><strong>Reviewer caught:</strong> Used approximate KS gap instead of exact. Wrong definition.</div></div>
-<div class="event fix"><div class="time">T+10h — Corrected</div><div class="desc">Exact KS gap flips DD sign from -0.041 to +0.084. "Negative DD" was an artifact.</div></div>
-<div class="event fix"><div class="time">T+11h — Conclusion</div><div class="desc">Paper retracted before submission. Two errors caught in one day.</div></div>
-</div>
-<p style="font-size:14px;color:var(--muted);margin-top:16px">In traditional research, these errors would survive to submission and be caught months later — if at all.</p>
-</div>
-</div>
+  <div class="container">
+    <h2>Errors caught in hours, not months.</h2>
+    <p class="section-subtitle">A real case study: one-day DFT experiment with two self-corrections.</p>
+    <div class="case-study">
+      <h3>The iDEA Experiment — April 1, 2026</h3>
+      <div class="timeline">
+        <div class="event">
+          <div class="time">T+0h</div>
+          <div class="desc">Literature review; iDEA code installed and benchmarked</div>
+        </div>
+        <div class="event">
+          <div class="time">T+2h</div>
+          <div class="desc">Hypothesis: "Prime-spaced wells produce anomalous negative DD"</div>
+        </div>
+        <div class="event">
+          <div class="time">T+4h</div>
+          <div class="desc">V1 results support hypothesis (DD = -0.070 Ha)</div>
+        </div>
+        <div class="event error">
+          <div class="time">T+4.5h — Error #1</div>
+          <div class="desc"><strong>Reviewer caught:</strong> Lattice spans unequal. Control experiment shows it's spacing asymmetry, not primes.</div>
+        </div>
+        <div class="event error">
+          <div class="time">T+9h — Error #2</div>
+          <div class="desc"><strong>Reviewer caught:</strong> Used approximate KS gap instead of exact. Wrong definition.</div>
+        </div>
+        <div class="event fix">
+          <div class="time">T+10h — Corrected</div>
+          <div class="desc">Exact KS gap flips DD sign from -0.041 to +0.084. "Negative DD" was an artifact.</div>
+        </div>
+        <div class="event fix">
+          <div class="time">T+11h — Conclusion</div>
+          <div class="desc">Paper retracted before submission. Two errors caught in one day.</div>
+        </div>
+      </div>
+      <div class="note">
+        In traditional research, these errors would survive to submission and be caught months later — if at all.
+      </div>
+    </div>
+  </div>
 </section>
 
-<section id="start">
-<div class="container">
-<h2>Get started in 4 steps.</h2>
-<p class="subtitle">From zero to running research platform in under an hour.</p>
-<div class="steps">
-<div class="step"><div class="num">1</div><h4>Configure</h4><p>Open the <a href="https://jackzh26.github.io/agent-science-research-platform/setup/">Setup Wizard</a>. Add API keys, name your agents, select tools.</p></div>
-<div class="step"><div class="num">2</div><h4>Initialize</h4><p><code>asrp init</code> creates your workspace with audit logs, registries, and agent directories.</p></div>
-<div class="step"><div class="num">3</div><h4>Register</h4><p><code>asrp register</code> pre-registers your first experiment with hypothesis and success criteria.</p></div>
-<div class="step"><div class="num">4</div><h4>Research</h4><p>Run experiments, cross-validate, and let ASRP track every decision from hypothesis to publication.</p></div>
-</div>
-</div>
+<!-- GET STARTED -->
+<section id="start" class="section-alt">
+  <div class="container">
+    <h2>Get started in 4 steps.</h2>
+    <p class="section-subtitle">From zero to running research platform in under an hour.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="num">1</div>
+        <h4>Configure</h4>
+        <p>Open the <a href="https://jackzh26.github.io/agent-science-research-platform/setup/">Setup Wizard</a>. Add API keys, name your agents, select tools.</p>
+      </div>
+      <div class="step">
+        <div class="num">2</div>
+        <h4>Initialize</h4>
+        <p><code>asrp init</code> creates your workspace with audit logs, registries, and agent directories.</p>
+      </div>
+      <div class="step">
+        <div class="num">3</div>
+        <h4>Register</h4>
+        <p><code>asrp register</code> pre-registers your first experiment with hypothesis and success criteria.</p>
+      </div>
+      <div class="step">
+        <div class="num">4</div>
+        <h4>Research</h4>
+        <p>Run experiments, cross-validate, and let ASRP track every decision from hypothesis to publication.</p>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section style="background:var(--card)">
-<div class="container">
-<h2>Open source for science.</h2>
-<p class="subtitle">Inspect every line. Self-host on your terms. Shape the future of AI-augmented research.</p>
-<div class="oss-grid">
-<div class="oss-card"><h4>🔍 Transparent</h4><p>Every line of code is auditable. See how agents make decisions and where your data flows.</p></div>
-<div class="oss-card"><h4>🏠 Self-Host</h4><p>Run ASRP on your own machine. Your research data never leaves your network.</p></div>
-<div class="oss-card"><h4>🔓 No Lock-In</h4><p>Bring your own LLM provider. Claude, Gemini, GPT, or OpenRouter — swap freely.</p></div>
-<div class="oss-card"><h4>🌍 Community</h4><p>Contribute benchmarks, agent templates, and domain-specific skills that benefit all researchers.</p></div>
-</div>
-</div>
+<!-- OPEN SOURCE -->
+<section>
+  <div class="container">
+    <h2>Open source for science.</h2>
+    <p class="section-subtitle">Inspect every line. Self-host on your terms. Shape the future of AI-augmented research.</p>
+    <div class="oss-grid">
+      <div class="oss-card">
+        <div class="oss-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+        </div>
+        <h4>Transparent</h4>
+        <p>Every line of code is auditable. See how agents make decisions and where your data flows.</p>
+      </div>
+      <div class="oss-card">
+        <div class="oss-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+          </svg>
+        </div>
+        <h4>Self-Host</h4>
+        <p>Run ASRP on your own machine. Your research data never leaves your network.</p>
+      </div>
+      <div class="oss-card">
+        <div class="oss-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"/>
+          </svg>
+        </div>
+        <h4>No Lock-In</h4>
+        <p>Bring your own LLM provider. Claude, Gemini, GPT, or OpenRouter — swap freely.</p>
+      </div>
+      <div class="oss-card">
+        <div class="oss-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+        </div>
+        <h4>Community</h4>
+        <p>Contribute benchmarks, agent templates, and domain-specific skills that benefit all researchers.</p>
+      </div>
+    </div>
+  </div>
 </section>
 
+<!-- FOOTER -->
 <footer>
-<div class="container">
-<div class="links">
-<a href="https://github.com/JackZH26/agent-science-research-platform">GitHub</a>
-<a href="https://jackzh26.github.io/agent-science-research-platform/setup/">Setup Wizard</a>
-<a href="https://jackz.sh/publications/">Publications</a>
-</div>
-<p>ASRP — Agent Science Research Platform · Apache 2.0 · Built by Jian Zhou</p>
-</div>
+  <div class="container">
+    <div class="links">
+      <a href="https://github.com/JackZH26/agent-science-research-platform">GitHub</a>
+      <a href="https://jackzh26.github.io/agent-science-research-platform/setup/">Setup Wizard</a>
+      <a href="https://jackz.sh/publications/">Publications</a>
+    </div>
+    <p class="copyright">ASRP — Agent Science Research Platform · Apache 2.0 · Built by Jian Zhou</p>
+    <div class="lang-bar">
+      <a href="#">English</a>
+      <span style="color: var(--border);">·</span>
+      <a href="#">中文</a>
+      <span style="color: var(--border);">·</span>
+      <a href="#">Deutsch</a>
+    </div>
+  </div>
 </footer>
 
-<div class="lang-bar">
-<a href="#">English</a> · <a href="#">中文</a> · <a href="#">Deutsch</a>
-</div>
 </body>
 </html>
