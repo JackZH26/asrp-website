@@ -649,9 +649,15 @@ footer .lang-bar {
 footer .lang-bar a {
   color: var(--text-tertiary);
   margin: 0 0.625rem;
+  cursor: pointer;
 }
 
 footer .lang-bar a:hover {
+  color: var(--accent);
+}
+
+footer .lang-bar a.active {
+  font-weight: 700;
   color: var(--accent);
 }
 
@@ -687,7 +693,7 @@ footer .lang-bar a:hover {
       <a href="#features" class="hide-mobile">Features</a>
       <a href="#agents" class="hide-mobile">Agents</a>
       <a href="#case-study" class="hide-mobile">Case Study</a>
-      <a href="#start">Get Started</a>
+      <a href="#start" data-i18n="nav.getStarted">Get Started</a>
       <a href="https://github.com/JackZH26/agent-science-research-platform" class="btn btn-outline btn-sm">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
           <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
@@ -710,35 +716,35 @@ footer .lang-bar a:hover {
       <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
         <circle cx="12" cy="12" r="10"/>
       </svg>
-      Open Source · Apache 2.0
+      <span data-i18n="hero.badge">Open Source · Apache 2.0</span>
     </div>
-    <h1>Your next breakthrough<br>won't be <span class="gradient-text">solo</span>.</h1>
-    <p class="subtitle">ASRP is an open-source platform that turns AI agents into rigorous research collaborators. Pre-register experiments, cross-validate results, and audit every decision.</p>
+    <h1><span data-i18n="hero.title1">Your next breakthrough</span><br><span data-i18n="hero.title2">won't be </span><span class="gradient-text" data-i18n="hero.title3">solo</span>.</h1>
+    <p class="subtitle" data-i18n="hero.subtitle">ASRP is an open-source platform that turns AI agents into rigorous research collaborators. Pre-register experiments, cross-validate results, and audit every decision.</p>
     <div class="actions">
       <a href="https://jackzh26.github.io/agent-science-research-platform/setup/" class="btn btn-primary">
-        Setup Wizard
+        <span data-i18n="hero.setupWizard">Setup Wizard</span>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M5 12h14M12 5l7 7-7 7"/>
         </svg>
       </a>
-      <a href="https://github.com/JackZH26/agent-science-research-platform" class="btn btn-outline">View on GitHub</a>
+      <a href="https://github.com/JackZH26/agent-science-research-platform" class="btn btn-outline" data-i18n="hero.viewGithub">View on GitHub</a>
     </div>
     <div class="stats">
       <div class="stat">
         <div class="num">5</div>
-        <div class="label">Agent Roles</div>
+        <div class="label" data-i18n="hero.stats.agentRoles">Agent Roles</div>
       </div>
       <div class="stat">
         <div class="num">77</div>
-        <div class="label">Tests Passing</div>
+        <div class="label" data-i18n="hero.stats.testsPassing">Tests Passing</div>
       </div>
       <div class="stat">
         <div class="num">9</div>
-        <div class="label">DFT Benchmarks</div>
+        <div class="label" data-i18n="hero.stats.dftBenchmarks">DFT Benchmarks</div>
       </div>
       <div class="stat">
         <div class="num">3</div>
-        <div class="label">Languages</div>
+        <div class="label" data-i18n="hero.stats.languages">Languages</div>
       </div>
     </div>
   </div>
@@ -747,8 +753,8 @@ footer .lang-bar a:hover {
 <!-- FEATURES -->
 <section id="features">
   <div class="container">
-    <h2>Built for scientific rigor.</h2>
-    <p class="section-subtitle">Speed without rigor is noise. ASRP encodes the scientific method into AI agent workflows.</p>
+    <h2 data-i18n="features.title">Built for scientific rigor.</h2>
+    <p class="section-subtitle" data-i18n="features.subtitle">Speed without rigor is noise. ASRP encodes the scientific method into AI agent workflows.</p>
     <div class="features">
       <div class="feature">
         <div class="icon">
@@ -756,8 +762,8 @@ footer .lang-bar a:hover {
             <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
           </svg>
         </div>
-        <h3>Experiment Pre-Registration</h3>
-        <p>Register hypotheses before running experiments. No post-hoc storytelling. Success and failure criteria defined upfront.</p>
+        <h3 data-i18n="features.preregistration.title">Experiment Pre-Registration</h3>
+        <p data-i18n="features.preregistration.desc">Register hypotheses before running experiments. No post-hoc storytelling. Success and failure criteria defined upfront.</p>
       </div>
       <div class="feature">
         <div class="icon">
@@ -765,8 +771,8 @@ footer .lang-bar a:hover {
             <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
           </svg>
         </div>
-        <h3>Cross-Validation Protocol</h3>
-        <p>Three levels: reproduction, independent implementation, alternative method. Different agents must verify results before publication.</p>
+        <h3 data-i18n="features.crossvalidation.title">Cross-Validation Protocol</h3>
+        <p data-i18n="features.crossvalidation.desc">Three levels: reproduction, independent implementation, alternative method. Different agents must verify results before publication.</p>
       </div>
       <div class="feature">
         <div class="icon">
@@ -774,8 +780,8 @@ footer .lang-bar a:hover {
             <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
           </svg>
         </div>
-        <h3>Audit Trails</h3>
-        <p>Every decision, every data point, every error correction logged in append-only format. Full reproducibility from hypothesis to conclusion.</p>
+        <h3 data-i18n="features.audit.title">Audit Trails</h3>
+        <p data-i18n="features.audit.desc">Every decision, every data point, every error correction logged in append-only format. Full reproducibility from hypothesis to conclusion.</p>
       </div>
       <div class="feature">
         <div class="icon">
@@ -783,8 +789,8 @@ footer .lang-bar a:hover {
             <path d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
           </svg>
         </div>
-        <h3>First Principles Thinking</h3>
-        <p>Every agent is instructed to reason from first principles. Question assumptions, verify definitions, trust data over authority.</p>
+        <h3 data-i18n="features.firstprinciples.title">First Principles Thinking</h3>
+        <p data-i18n="features.firstprinciples.desc">Every agent is instructed to reason from first principles. Question assumptions, verify definitions, trust data over authority.</p>
       </div>
       <div class="feature">
         <div class="icon">
@@ -792,8 +798,8 @@ footer .lang-bar a:hover {
             <path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
           </svg>
         </div>
-        <h3>Token Budget Management</h3>
-        <p>Right model for the right task. Opus for reasoning, Sonnet for code, Flash for search. Automatic cost tracking per experiment.</p>
+        <h3 data-i18n="features.tokenbudget.title">Token Budget Management</h3>
+        <p data-i18n="features.tokenbudget.desc">Right model for the right task. Opus for reasoning, Sonnet for code, Flash for search. Automatic cost tracking per experiment.</p>
       </div>
       <div class="feature">
         <div class="icon">
@@ -801,8 +807,8 @@ footer .lang-bar a:hover {
             <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
           </svg>
         </div>
-        <h3>Role Separation</h3>
-        <p>The agent that proposes a hypothesis is not the one that validates it. Reviewer has read-only access — true independent evaluation.</p>
+        <h3 data-i18n="features.roleseparation.title">Role Separation</h3>
+        <p data-i18n="features.roleseparation.desc">The agent that proposes a hypothesis is not the one that validates it. Reviewer has read-only access — true independent evaluation.</p>
       </div>
     </div>
   </div>
@@ -811,8 +817,8 @@ footer .lang-bar a:hover {
 <!-- AGENT ROLES -->
 <section id="agents" class="section-alt">
   <div class="container">
-    <h2>Five agents. One research team.</h2>
-    <p class="section-subtitle">Each role has a SOUL template, skill manifest, and defined access permissions.</p>
+    <h2 data-i18n="agents.title">Five agents. One research team.</h2>
+    <p class="section-subtitle" data-i18n="agents.subtitle">Each role has a SOUL template, skill manifest, and defined access permissions.</p>
     <div class="roles">
       <div class="role">
         <div class="role-icon">
@@ -821,7 +827,7 @@ footer .lang-bar a:hover {
           </svg>
         </div>
         <h4>Theorist</h4>
-        <p>Hypotheses, reasoning, paper writing</p>
+        <p data-i18n="agents.theorist.desc">Hypotheses, reasoning, paper writing</p>
       </div>
       <div class="role">
         <div class="role-icon">
@@ -830,7 +836,7 @@ footer .lang-bar a:hover {
           </svg>
         </div>
         <h4>Engineer</h4>
-        <p>Code, computation, data pipelines</p>
+        <p data-i18n="agents.engineer.desc">Code, computation, data pipelines</p>
       </div>
       <div class="role">
         <div class="role-icon">
@@ -839,7 +845,7 @@ footer .lang-bar a:hover {
           </svg>
         </div>
         <h4>Reviewer</h4>
-        <p>Independent review (read-only access)</p>
+        <p data-i18n="agents.reviewer.desc">Independent review (read-only access)</p>
       </div>
       <div class="role">
         <div class="role-icon">
@@ -848,7 +854,7 @@ footer .lang-bar a:hover {
           </svg>
         </div>
         <h4>Librarian</h4>
-        <p>Literature search, references</p>
+        <p data-i18n="agents.librarian.desc">Literature search, references</p>
       </div>
       <div class="role">
         <div class="role-icon">
@@ -857,7 +863,7 @@ footer .lang-bar a:hover {
           </svg>
         </div>
         <h4>ITDoctor</h4>
-        <p>Monitoring, backups, self-healing</p>
+        <p data-i18n="agents.itdoctor.desc">Monitoring, backups, self-healing</p>
       </div>
     </div>
   </div>
@@ -866,41 +872,41 @@ footer .lang-bar a:hover {
 <!-- CASE STUDY -->
 <section id="case-study">
   <div class="container">
-    <h2>Errors caught in hours, not months.</h2>
-    <p class="section-subtitle">A real case study: one-day DFT experiment with two self-corrections.</p>
+    <h2 data-i18n="casestudy.title">Errors caught in hours, not months.</h2>
+    <p class="section-subtitle" data-i18n="casestudy.subtitle">A real case study: one-day DFT experiment with two self-corrections.</p>
     <div class="case-study">
-      <h3>The iDEA Experiment — April 1, 2026</h3>
+      <h3 data-i18n="casestudy.expTitle">The iDEA Experiment — April 1, 2026</h3>
       <div class="timeline">
         <div class="event">
           <div class="time">T+0h</div>
-          <div class="desc">Literature review; iDEA code installed and benchmarked</div>
+          <div class="desc" data-i18n="casestudy.t0">Literature review; iDEA code installed and benchmarked</div>
         </div>
         <div class="event">
           <div class="time">T+2h</div>
-          <div class="desc">Hypothesis: "Prime-spaced wells produce anomalous negative DD"</div>
+          <div class="desc" data-i18n="casestudy.t2">Hypothesis: "Prime-spaced wells produce anomalous negative DD"</div>
         </div>
         <div class="event">
           <div class="time">T+4h</div>
-          <div class="desc">V1 results support hypothesis (DD = -0.070 Ha)</div>
+          <div class="desc" data-i18n="casestudy.t4">V1 results support hypothesis (DD = -0.070 Ha)</div>
         </div>
         <div class="event error">
-          <div class="time">T+4.5h — Error #1</div>
-          <div class="desc"><strong>Reviewer caught:</strong> Lattice spans unequal. Control experiment shows it's spacing asymmetry, not primes.</div>
+          <div class="time" data-i18n="casestudy.error1time">T+4.5h — Error #1</div>
+          <div class="desc"><strong data-i18n="casestudy.reviewerCaught">Reviewer caught:</strong> <span data-i18n="casestudy.error1desc">Lattice spans unequal. Control experiment shows it's spacing asymmetry, not primes.</span></div>
         </div>
         <div class="event error">
-          <div class="time">T+9h — Error #2</div>
-          <div class="desc"><strong>Reviewer caught:</strong> Used approximate KS gap instead of exact. Wrong definition.</div>
+          <div class="time" data-i18n="casestudy.error2time">T+9h — Error #2</div>
+          <div class="desc"><strong data-i18n="casestudy.reviewerCaught">Reviewer caught:</strong> <span data-i18n="casestudy.error2desc">Used approximate KS gap instead of exact. Wrong definition.</span></div>
         </div>
         <div class="event fix">
-          <div class="time">T+10h — Corrected</div>
-          <div class="desc">Exact KS gap flips DD sign from -0.041 to +0.084. "Negative DD" was an artifact.</div>
+          <div class="time" data-i18n="casestudy.fixtime">T+10h — Corrected</div>
+          <div class="desc" data-i18n="casestudy.fixdesc">Exact KS gap flips DD sign from -0.041 to +0.084. "Negative DD" was an artifact.</div>
         </div>
         <div class="event fix">
-          <div class="time">T+11h — Conclusion</div>
-          <div class="desc">Paper retracted before submission. Two errors caught in one day.</div>
+          <div class="time" data-i18n="casestudy.conclusiontime">T+11h — Conclusion</div>
+          <div class="desc" data-i18n="casestudy.conclusiondesc">Paper retracted before submission. Two errors caught in one day.</div>
         </div>
       </div>
-      <div class="note">
+      <div class="note" data-i18n="casestudy.note">
         In traditional research, these errors would survive to submission and be caught months later — if at all.
       </div>
     </div>
@@ -910,28 +916,28 @@ footer .lang-bar a:hover {
 <!-- GET STARTED -->
 <section id="start" class="section-alt">
   <div class="container">
-    <h2>Get started in 4 steps.</h2>
-    <p class="section-subtitle">From zero to running research platform in under an hour.</p>
+    <h2 data-i18n="getstarted.title">Get started in 4 steps.</h2>
+    <p class="section-subtitle" data-i18n="getstarted.subtitle">From zero to running research platform in under an hour.</p>
     <div class="steps">
       <div class="step">
         <div class="num">1</div>
-        <h4>Configure</h4>
-        <p>Open the <a href="https://jackzh26.github.io/agent-science-research-platform/setup/">Setup Wizard</a>. Add API keys, name your agents, select tools.</p>
+        <h4 data-i18n="getstarted.step1.title">Configure</h4>
+        <p data-i18n="getstarted.step1.desc">Open the <a href="https://jackzh26.github.io/agent-science-research-platform/setup/">Setup Wizard</a>. Add API keys, name your agents, select tools.</p>
       </div>
       <div class="step">
         <div class="num">2</div>
-        <h4>Initialize</h4>
-        <p><code>asrp init</code> creates your workspace with audit logs, registries, and agent directories.</p>
+        <h4 data-i18n="getstarted.step2.title">Initialize</h4>
+        <p><code>asrp init</code> <span data-i18n="getstarted.step2.desc">creates your workspace with audit logs, registries, and agent directories.</span></p>
       </div>
       <div class="step">
         <div class="num">3</div>
-        <h4>Register</h4>
-        <p><code>asrp register</code> pre-registers your first experiment with hypothesis and success criteria.</p>
+        <h4 data-i18n="getstarted.step3.title">Register</h4>
+        <p><code>asrp register</code> <span data-i18n="getstarted.step3.desc">pre-registers your first experiment with hypothesis and success criteria.</span></p>
       </div>
       <div class="step">
         <div class="num">4</div>
-        <h4>Research</h4>
-        <p>Run experiments, cross-validate, and let ASRP track every decision from hypothesis to publication.</p>
+        <h4 data-i18n="getstarted.step4.title">Research</h4>
+        <p data-i18n="getstarted.step4.desc">Run experiments, cross-validate, and let ASRP track every decision from hypothesis to publication.</p>
       </div>
     </div>
   </div>
@@ -940,8 +946,8 @@ footer .lang-bar a:hover {
 <!-- OPEN SOURCE -->
 <section>
   <div class="container">
-    <h2>Open source for science.</h2>
-    <p class="section-subtitle">Inspect every line. Self-host on your terms. Shape the future of AI-augmented research.</p>
+    <h2 data-i18n="opensource.title">Open source for science.</h2>
+    <p class="section-subtitle" data-i18n="opensource.subtitle">Inspect every line. Self-host on your terms. Shape the future of AI-augmented research.</p>
     <div class="oss-grid">
       <div class="oss-card">
         <div class="oss-icon">
@@ -949,8 +955,8 @@ footer .lang-bar a:hover {
             <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
           </svg>
         </div>
-        <h4>Transparent</h4>
-        <p>Every line of code is auditable. See how agents make decisions and where your data flows.</p>
+        <h4 data-i18n="opensource.transparent.title">Transparent</h4>
+        <p data-i18n="opensource.transparent.desc">Every line of code is auditable. See how agents make decisions and where your data flows.</p>
       </div>
       <div class="oss-card">
         <div class="oss-icon">
@@ -958,8 +964,8 @@ footer .lang-bar a:hover {
             <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
           </svg>
         </div>
-        <h4>Self-Host</h4>
-        <p>Run ASRP on your own machine. Your research data never leaves your network.</p>
+        <h4 data-i18n="opensource.selfhost.title">Self-Host</h4>
+        <p data-i18n="opensource.selfhost.desc">Run ASRP on your own machine. Your research data never leaves your network.</p>
       </div>
       <div class="oss-card">
         <div class="oss-icon">
@@ -967,8 +973,8 @@ footer .lang-bar a:hover {
             <path d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"/>
           </svg>
         </div>
-        <h4>No Lock-In</h4>
-        <p>Bring your own LLM provider. Claude, Gemini, GPT, or OpenRouter — swap freely.</p>
+        <h4 data-i18n="opensource.nolockin.title">No Lock-In</h4>
+        <p data-i18n="opensource.nolockin.desc">Bring your own LLM provider. Claude, Gemini, GPT, or OpenRouter — swap freely.</p>
       </div>
       <div class="oss-card">
         <div class="oss-icon">
@@ -976,8 +982,8 @@ footer .lang-bar a:hover {
             <path d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
           </svg>
         </div>
-        <h4>Community</h4>
-        <p>Contribute benchmarks, agent templates, and domain-specific skills that benefit all researchers.</p>
+        <h4 data-i18n="opensource.community.title">Community</h4>
+        <p data-i18n="opensource.community.desc">Contribute benchmarks, agent templates, and domain-specific skills that benefit all researchers.</p>
       </div>
     </div>
   </div>
@@ -992,16 +998,279 @@ footer .lang-bar a:hover {
       <a href="https://jackz.sh/publications/">Publications</a>
       <a href="https://discord.gg/DFmwBkDTB">Discord</a>
     </div>
-    <p class="copyright">ASRP — Agent Science Research Platform · Apache 2.0 · Built by Jian Zhou</p>
+    <p class="copyright" data-i18n="footer.copyright">ASRP — Agent Science Research Platform · Apache 2.0 · Built by Jian Zhou</p>
     <div class="lang-bar">
-      <a href="#">English</a>
+      <a href="#" onclick="switchLang('en'); return false;" id="lang-en">English</a>
       <span style="color: var(--border);">·</span>
-      <a href="#">中文</a>
+      <a href="#" onclick="switchLang('zh'); return false;" id="lang-zh">中文</a>
       <span style="color: var(--border);">·</span>
-      <a href="#">Deutsch</a>
+      <a href="#" onclick="switchLang('de'); return false;" id="lang-de">Deutsch</a>
     </div>
   </div>
 </footer>
+
+<script>
+// Translation data
+const translations = {
+  en: {
+    "nav.getStarted": "Get Started",
+    "hero.badge": "Open Source · Apache 2.0",
+    "hero.title1": "Your next breakthrough",
+    "hero.title2": "won't be ",
+    "hero.title3": "solo",
+    "hero.subtitle": "ASRP is an open-source platform that turns AI agents into rigorous research collaborators. Pre-register experiments, cross-validate results, and audit every decision.",
+    "hero.setupWizard": "Setup Wizard",
+    "hero.viewGithub": "View on GitHub",
+    "hero.stats.agentRoles": "Agent Roles",
+    "hero.stats.testsPassing": "Tests Passing",
+    "hero.stats.dftBenchmarks": "DFT Benchmarks",
+    "hero.stats.languages": "Languages",
+    "features.title": "Built for scientific rigor.",
+    "features.subtitle": "Speed without rigor is noise. ASRP encodes the scientific method into AI agent workflows.",
+    "features.preregistration.title": "Experiment Pre-Registration",
+    "features.preregistration.desc": "Register hypotheses before running experiments. No post-hoc storytelling. Success and failure criteria defined upfront.",
+    "features.crossvalidation.title": "Cross-Validation Protocol",
+    "features.crossvalidation.desc": "Three levels: reproduction, independent implementation, alternative method. Different agents must verify results before publication.",
+    "features.audit.title": "Audit Trails",
+    "features.audit.desc": "Every decision, every data point, every error correction logged in append-only format. Full reproducibility from hypothesis to conclusion.",
+    "features.firstprinciples.title": "First Principles Thinking",
+    "features.firstprinciples.desc": "Every agent is instructed to reason from first principles. Question assumptions, verify definitions, trust data over authority.",
+    "features.tokenbudget.title": "Token Budget Management",
+    "features.tokenbudget.desc": "Right model for the right task. Opus for reasoning, Sonnet for code, Flash for search. Automatic cost tracking per experiment.",
+    "features.roleseparation.title": "Role Separation",
+    "features.roleseparation.desc": "The agent that proposes a hypothesis is not the one that validates it. Reviewer has read-only access — true independent evaluation.",
+    "agents.title": "Five agents. One research team.",
+    "agents.subtitle": "Each role has a SOUL template, skill manifest, and defined access permissions.",
+    "agents.theorist.desc": "Hypotheses, reasoning, paper writing",
+    "agents.engineer.desc": "Code, computation, data pipelines",
+    "agents.reviewer.desc": "Independent review (read-only access)",
+    "agents.librarian.desc": "Literature search, references",
+    "agents.itdoctor.desc": "Monitoring, backups, self-healing",
+    "casestudy.title": "Errors caught in hours, not months.",
+    "casestudy.subtitle": "A real case study: one-day DFT experiment with two self-corrections.",
+    "casestudy.expTitle": "The iDEA Experiment — April 1, 2026",
+    "casestudy.t0": "Literature review; iDEA code installed and benchmarked",
+    "casestudy.t2": "Hypothesis: \"Prime-spaced wells produce anomalous negative DD\"",
+    "casestudy.t4": "V1 results support hypothesis (DD = -0.070 Ha)",
+    "casestudy.error1time": "T+4.5h — Error #1",
+    "casestudy.error2time": "T+9h — Error #2",
+    "casestudy.reviewerCaught": "Reviewer caught:",
+    "casestudy.error1desc": "Lattice spans unequal. Control experiment shows it's spacing asymmetry, not primes.",
+    "casestudy.error2desc": "Used approximate KS gap instead of exact. Wrong definition.",
+    "casestudy.fixtime": "T+10h — Corrected",
+    "casestudy.fixdesc": "Exact KS gap flips DD sign from -0.041 to +0.084. \"Negative DD\" was an artifact.",
+    "casestudy.conclusiontime": "T+11h — Conclusion",
+    "casestudy.conclusiondesc": "Paper retracted before submission. Two errors caught in one day.",
+    "casestudy.note": "In traditional research, these errors would survive to submission and be caught months later — if at all.",
+    "getstarted.title": "Get started in 4 steps.",
+    "getstarted.subtitle": "From zero to running research platform in under an hour.",
+    "getstarted.step1.title": "Configure",
+    "getstarted.step1.desc": "Open the <a href=\"https://jackzh26.github.io/agent-science-research-platform/setup/\">Setup Wizard</a>. Add API keys, name your agents, select tools.",
+    "getstarted.step2.title": "Initialize",
+    "getstarted.step2.desc": "creates your workspace with audit logs, registries, and agent directories.",
+    "getstarted.step3.title": "Register",
+    "getstarted.step3.desc": "pre-registers your first experiment with hypothesis and success criteria.",
+    "getstarted.step4.title": "Research",
+    "getstarted.step4.desc": "Run experiments, cross-validate, and let ASRP track every decision from hypothesis to publication.",
+    "opensource.title": "Open source for science.",
+    "opensource.subtitle": "Inspect every line. Self-host on your terms. Shape the future of AI-augmented research.",
+    "opensource.transparent.title": "Transparent",
+    "opensource.transparent.desc": "Every line of code is auditable. See how agents make decisions and where your data flows.",
+    "opensource.selfhost.title": "Self-Host",
+    "opensource.selfhost.desc": "Run ASRP on your own machine. Your research data never leaves your network.",
+    "opensource.nolockin.title": "No Lock-In",
+    "opensource.nolockin.desc": "Bring your own LLM provider. Claude, Gemini, GPT, or OpenRouter — swap freely.",
+    "opensource.community.title": "Community",
+    "opensource.community.desc": "Contribute benchmarks, agent templates, and domain-specific skills that benefit all researchers.",
+    "footer.copyright": "ASRP — Agent Science Research Platform · Apache 2.0 · Built by Jian Zhou"
+  },
+  zh: {
+    "nav.getStarted": "开始使用",
+    "hero.badge": "开源 · Apache 2.0",
+    "hero.title1": "您的下一个突破",
+    "hero.title2": "不会是",
+    "hero.title3": "独自完成",
+    "hero.subtitle": "ASRP 是一个开源平台，将 AI 智能体转变为严谨的科研合作者。预注册实验、交叉验证结果并审计每个决策。",
+    "hero.setupWizard": "设置向导",
+    "hero.viewGithub": "在 GitHub 上查看",
+    "hero.stats.agentRoles": "智能体角色",
+    "hero.stats.testsPassing": "测试通过",
+    "hero.stats.dftBenchmarks": "DFT 基准",
+    "hero.stats.languages": "语言",
+    "features.title": "为科学严谨性而构建",
+    "features.subtitle": "速度而无严谨即噪音。ASRP 将科学方法编码到 AI 智能体工作流程中。",
+    "features.preregistration.title": "实验预注册",
+    "features.preregistration.desc": "在运行实验前注册假设。杜绝事后叙事。成功和失败标准预先定义。",
+    "features.crossvalidation.title": "交叉验证协议",
+    "features.crossvalidation.desc": "三个层次：重现、独立实现、替代方法。不同智能体必须在发表前验证结果。",
+    "features.audit.title": "审计跟踪",
+    "features.audit.desc": "每个决策、每个数据点、每次错误修正都记录在仅追加格式中。从假设到结论的完整可重现性。",
+    "features.firstprinciples.title": "第一性原理思维",
+    "features.firstprinciples.desc": "每个智能体都被指示从第一性原理推理。质疑假设、验证定义、信任数据而非权威。",
+    "features.tokenbudget.title": "令牌预算管理",
+    "features.tokenbudget.desc": "为正确任务选择正确模型。Opus 用于推理，Sonnet 用于代码，Flash 用于搜索。每个实验的自动成本跟踪。",
+    "features.roleseparation.title": "角色分离",
+    "features.roleseparation.desc": "提出假设的智能体不是验证假设的智能体。审查者拥有只读访问权限——真正的独立评估。",
+    "agents.title": "五个智能体，一个研究团队",
+    "agents.subtitle": "每个角色都有 SOUL 模板、技能清单和定义的访问权限。",
+    "agents.theorist.desc": "假设、推理、论文写作",
+    "agents.engineer.desc": "代码、计算、数据管道",
+    "agents.reviewer.desc": "独立审查（只读访问）",
+    "agents.librarian.desc": "文献搜索、参考文献",
+    "agents.itdoctor.desc": "监控、备份、自愈",
+    "casestudy.title": "数小时内发现错误，而非数月",
+    "casestudy.subtitle": "真实案例研究：一天内完成的 DFT 实验，包含两次自我修正。",
+    "casestudy.expTitle": "iDEA 实验 — 2026年4月1日",
+    "casestudy.t0": "文献综述；iDEA 代码已安装并进行基准测试",
+    "casestudy.t2": "假设：\"素数间隔势阱产生异常负 DD\"",
+    "casestudy.t4": "V1 结果支持假设（DD = -0.070 Ha）",
+    "casestudy.error1time": "T+4.5h — 错误 #1",
+    "casestudy.error2time": "T+9h — 错误 #2",
+    "casestudy.reviewerCaught": "审查者发现：",
+    "casestudy.error1desc": "晶格跨度不等。对照实验表明这是间距不对称，而非素数。",
+    "casestudy.error2desc": "使用了近似 KS 能隙而非精确值。定义错误。",
+    "casestudy.fixtime": "T+10h — 已更正",
+    "casestudy.fixdesc": "精确 KS 能隙将 DD 符号从 -0.041 翻转至 +0.084。\"负 DD\" 是伪影。",
+    "casestudy.conclusiontime": "T+11h — 结论",
+    "casestudy.conclusiondesc": "论文在提交前撤回。一天内发现两个错误。",
+    "casestudy.note": "在传统研究中，这些错误会存活到提交阶段，并在数月后被发现——如果有的话。",
+    "getstarted.title": "四步开始使用",
+    "getstarted.subtitle": "从零到运行研究平台，不到一小时。",
+    "getstarted.step1.title": "配置",
+    "getstarted.step1.desc": "打开<a href=\"https://jackzh26.github.io/agent-science-research-platform/setup/\">设置向导</a>。添加 API 密钥，命名智能体，选择工具。",
+    "getstarted.step2.title": "初始化",
+    "getstarted.step2.desc": "创建包含审计日志、注册表和智能体目录的工作空间。",
+    "getstarted.step3.title": "注册",
+    "getstarted.step3.desc": "预注册您的第一个实验，包含假设和成功标准。",
+    "getstarted.step4.title": "研究",
+    "getstarted.step4.desc": "运行实验、交叉验证，让 ASRP 跟踪从假设到发表的每个决策。",
+    "opensource.title": "为科学开源",
+    "opensource.subtitle": "审查每一行代码。按您的条件自托管。塑造 AI 增强研究的未来。",
+    "opensource.transparent.title": "透明",
+    "opensource.transparent.desc": "每行代码都可审计。了解智能体如何做出决策以及数据流向何处。",
+    "opensource.selfhost.title": "自托管",
+    "opensource.selfhost.desc": "在您自己的机器上运行 ASRP。您的研究数据永远不会离开您的网络。",
+    "opensource.nolockin.title": "无锁定",
+    "opensource.nolockin.desc": "使用您自己的 LLM 提供商。Claude、Gemini、GPT 或 OpenRouter——自由切换。",
+    "opensource.community.title": "社区",
+    "opensource.community.desc": "贡献基准测试、智能体模板和领域特定技能，惠及所有研究人员。",
+    "footer.copyright": "ASRP — 智能体科学研究平台 · Apache 2.0 · 由周坚构建"
+  },
+  de: {
+    "nav.getStarted": "Erste Schritte",
+    "hero.badge": "Open Source · Apache 2.0",
+    "hero.title1": "Ihr nächster Durchbruch",
+    "hero.title2": "wird nicht",
+    "hero.title3": "allein",
+    "hero.subtitle": "ASRP ist eine Open-Source-Plattform, die KI-Agenten in rigorose Forschungspartner verwandelt. Experimente vorregistrieren, Ergebnisse kreuzvalidieren und jede Entscheidung prüfen.",
+    "hero.setupWizard": "Setup-Assistent",
+    "hero.viewGithub": "Auf GitHub ansehen",
+    "hero.stats.agentRoles": "Agentenrollen",
+    "hero.stats.testsPassing": "Tests bestanden",
+    "hero.stats.dftBenchmarks": "DFT-Benchmarks",
+    "hero.stats.languages": "Sprachen",
+    "features.title": "Für wissenschaftliche Strenge gebaut",
+    "features.subtitle": "Geschwindigkeit ohne Strenge ist Rauschen. ASRP kodiert die wissenschaftliche Methode in KI-Agenten-Workflows.",
+    "features.preregistration.title": "Experimentvorregistrierung",
+    "features.preregistration.desc": "Hypothesen vor der Durchführung von Experimenten registrieren. Keine nachträglichen Narrative. Erfolgs- und Fehlschlagskriterien werden im Voraus definiert.",
+    "features.crossvalidation.title": "Kreuzvalidierungsprotokoll",
+    "features.crossvalidation.desc": "Drei Ebenen: Reproduktion, unabhängige Implementierung, alternative Methode. Verschiedene Agenten müssen Ergebnisse vor der Veröffentlichung überprüfen.",
+    "features.audit.title": "Prüfpfade",
+    "features.audit.desc": "Jede Entscheidung, jeder Datenpunkt, jede Fehlerkorrektur wird im Append-Only-Format protokolliert. Vollständige Reproduzierbarkeit von der Hypothese bis zur Schlussfolgerung.",
+    "features.firstprinciples.title": "Denken aus ersten Prinzipien",
+    "features.firstprinciples.desc": "Jeder Agent wird angewiesen, aus ersten Prinzipien zu argumentieren. Annahmen hinterfragen, Definitionen verifizieren, Daten über Autorität vertrauen.",
+    "features.tokenbudget.title": "Token-Budget-Verwaltung",
+    "features.tokenbudget.desc": "Das richtige Modell für die richtige Aufgabe. Opus für Argumentation, Sonnet für Code, Flash für Suche. Automatische Kostenverfolgung pro Experiment.",
+    "features.roleseparation.title": "Rollentrennung",
+    "features.roleseparation.desc": "Der Agent, der eine Hypothese vorschlägt, ist nicht derjenige, der sie validiert. Der Prüfer hat schreibgeschützten Zugriff — echte unabhängige Bewertung.",
+    "agents.title": "Fünf Agenten. Ein Forschungsteam.",
+    "agents.subtitle": "Jede Rolle hat eine SOUL-Vorlage, ein Skill-Manifest und definierte Zugriffsberechtigungen.",
+    "agents.theorist.desc": "Hypothesen, Argumentation, Verfassen von Arbeiten",
+    "agents.engineer.desc": "Code, Berechnung, Datenpipelines",
+    "agents.reviewer.desc": "Unabhängige Überprüfung (schreibgeschützter Zugriff)",
+    "agents.librarian.desc": "Literatursuche, Referenzen",
+    "agents.itdoctor.desc": "Überwachung, Backups, Selbstheilung",
+    "casestudy.title": "Fehler in Stunden erkannt, nicht Monaten",
+    "casestudy.subtitle": "Eine echte Fallstudie: eintägiges DFT-Experiment mit zwei Selbstkorrekturen.",
+    "casestudy.expTitle": "Das iDEA-Experiment — 1. April 2026",
+    "casestudy.t0": "Literaturrecherche; iDEA-Code installiert und getestet",
+    "casestudy.t2": "Hypothese: \"Primzahl-beabstandete Potentialtöpfe erzeugen anomales negatives DD\"",
+    "casestudy.t4": "V1-Ergebnisse unterstützen Hypothese (DD = -0.070 Ha)",
+    "casestudy.error1time": "T+4,5h — Fehler #1",
+    "casestudy.error2time": "T+9h — Fehler #2",
+    "casestudy.reviewerCaught": "Prüfer entdeckte:",
+    "casestudy.error1desc": "Gitterspannen ungleich. Kontrollexperiment zeigt, es ist Abstandsasymmetrie, nicht Primzahlen.",
+    "casestudy.error2desc": "Ungefähre KS-Lücke anstelle der exakten verwendet. Falsche Definition.",
+    "casestudy.fixtime": "T+10h — Korrigiert",
+    "casestudy.fixdesc": "Exakte KS-Lücke kehrt DD-Vorzeichen von -0.041 auf +0.084 um. \"Negatives DD\" war ein Artefakt.",
+    "casestudy.conclusiontime": "T+11h — Schlussfolgerung",
+    "casestudy.conclusiondesc": "Arbeit vor Einreichung zurückgezogen. Zwei Fehler in einem Tag erkannt.",
+    "casestudy.note": "In der traditionellen Forschung würden diese Fehler bis zur Einreichung überleben und Monate später erkannt werden — wenn überhaupt.",
+    "getstarted.title": "In 4 Schritten starten",
+    "getstarted.subtitle": "Von Null bis zur laufenden Forschungsplattform in unter einer Stunde.",
+    "getstarted.step1.title": "Konfigurieren",
+    "getstarted.step1.desc": "Öffnen Sie den <a href=\"https://jackzh26.github.io/agent-science-research-platform/setup/\">Setup-Assistenten</a>. API-Schlüssel hinzufügen, Agenten benennen, Tools auswählen.",
+    "getstarted.step2.title": "Initialisieren",
+    "getstarted.step2.desc": "erstellt Ihren Arbeitsbereich mit Prüfprotokollen, Registern und Agentenverzeichnissen.",
+    "getstarted.step3.title": "Registrieren",
+    "getstarted.step3.desc": "registriert Ihr erstes Experiment mit Hypothese und Erfolgskriterien vor.",
+    "getstarted.step4.title": "Forschen",
+    "getstarted.step4.desc": "Experimente durchführen, kreuzvalidieren und ASRP jede Entscheidung von der Hypothese bis zur Veröffentlichung verfolgen lassen.",
+    "opensource.title": "Open Source für die Wissenschaft",
+    "opensource.subtitle": "Jede Zeile inspizieren. Zu Ihren Bedingungen selbst hosten. Die Zukunft der KI-gestützten Forschung gestalten.",
+    "opensource.transparent.title": "Transparent",
+    "opensource.transparent.desc": "Jede Codezeile ist überprüfbar. Sehen Sie, wie Agenten Entscheidungen treffen und wohin Ihre Daten fließen.",
+    "opensource.selfhost.title": "Selbst hosten",
+    "opensource.selfhost.desc": "ASRP auf Ihrer eigenen Maschine ausführen. Ihre Forschungsdaten verlassen niemals Ihr Netzwerk.",
+    "opensource.nolockin.title": "Keine Bindung",
+    "opensource.nolockin.desc": "Bringen Sie Ihren eigenen LLM-Anbieter mit. Claude, Gemini, GPT oder OpenRouter — frei wechseln.",
+    "opensource.community.title": "Gemeinschaft",
+    "opensource.community.desc": "Benchmarks, Agentenvorlagen und domänenspezifische Fähigkeiten beisteuern, die allen Forschern zugutekommen.",
+    "footer.copyright": "ASRP — Agenten-Wissenschafts-Forschungsplattform · Apache 2.0 · Erstellt von Jian Zhou"
+  }
+};
+
+// Language switching function
+function switchLang(lang) {
+  // Validate language
+  if (!translations[lang]) {
+    console.error('Language not supported:', lang);
+    return;
+  }
+
+  // Save to localStorage
+  localStorage.setItem('asrp-lang', lang);
+
+  // Update all elements with data-i18n attribute
+  document.querySelectorAll('[data-i18n]').forEach(element => {
+    const key = element.getAttribute('data-i18n');
+    if (translations[lang][key]) {
+      // Handle HTML content in translations (like links in step descriptions)
+      if (translations[lang][key].includes('<a href')) {
+        element.innerHTML = translations[lang][key];
+      } else {
+        element.textContent = translations[lang][key];
+      }
+    }
+  });
+
+  // Update active language indicator
+  document.querySelectorAll('.lang-bar a').forEach(link => {
+    link.classList.remove('active');
+  });
+  document.getElementById('lang-' + lang).classList.add('active');
+
+  // Update html lang attribute
+  document.documentElement.lang = lang;
+}
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+  // Get saved language or default to English
+  const savedLang = localStorage.getItem('asrp-lang') || 'en';
+  switchLang(savedLang);
+});
+</script>
 
 </body>
 </html>
