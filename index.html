@@ -678,10 +678,10 @@ footer .copyright {
 
     </div>
     <div class="links">
-      <a href="#">Home</a>
-      <a href="#features" class="hide-mobile">Features</a>
-      <a href="#agents" class="hide-mobile">Agents</a>
-      <a href="#case-study" class="hide-mobile">Case Study</a>
+      <a href="#" data-i18n="nav.home">Home</a>
+      <a href="#features" class="hide-mobile" data-i18n="nav.features">Features</a>
+      <a href="#agents" class="hide-mobile" data-i18n="nav.agents">Agents</a>
+      <a href="#case-study" class="hide-mobile" data-i18n="nav.caseStudy">Case Study</a>
       <a href="#start" data-i18n="nav.getStarted">Get Started</a>
       <a href="https://github.com/JackZH26/agent-science-research-platform" class="btn btn-outline btn-sm">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
@@ -830,7 +830,7 @@ footer .copyright {
             <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
           </svg>
         </div>
-        <h4>Theorist</h4>
+        <h4 data-i18n="agents.theorist.name">Theorist</h4>
         <p data-i18n="agents.theorist.desc">Hypotheses, reasoning, paper writing</p>
       </div>
       <div class="role">
@@ -839,7 +839,7 @@ footer .copyright {
             <path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
           </svg>
         </div>
-        <h4>Engineer</h4>
+        <h4 data-i18n="agents.engineer.name">Engineer</h4>
         <p data-i18n="agents.engineer.desc">Code, computation, data pipelines</p>
       </div>
       <div class="role">
@@ -848,7 +848,7 @@ footer .copyright {
             <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
           </svg>
         </div>
-        <h4>Reviewer</h4>
+        <h4 data-i18n="agents.reviewer.name">Reviewer</h4>
         <p data-i18n="agents.reviewer.desc">Independent review (read-only access)</p>
       </div>
       <div class="role">
@@ -857,7 +857,7 @@ footer .copyright {
             <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
           </svg>
         </div>
-        <h4>Librarian</h4>
+        <h4 data-i18n="agents.librarian.name">Librarian</h4>
         <p data-i18n="agents.librarian.desc">Literature search, references</p>
       </div>
       <div class="role">
@@ -866,7 +866,7 @@ footer .copyright {
             <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
           </svg>
         </div>
-        <h4>ITDoctor</h4>
+        <h4 data-i18n="agents.itdoctor.name">ITDoctor</h4>
         <p data-i18n="agents.itdoctor.desc">Monitoring, backups, self-healing</p>
       </div>
     </div>
@@ -1028,6 +1028,16 @@ document.addEventListener('click', function(e) {
 // Translation data
 const translations = {
   en: {
+    "nav.home": "Home",
+    "nav.features": "Features",
+    "nav.agents": "Agents",
+    "nav.caseStudy": "Case Study",
+    "nav.github": "GitHub",
+    "agents.theorist.name": "Theorist",
+    "agents.engineer.name": "Engineer",
+    "agents.reviewer.name": "Reviewer",
+    "agents.librarian.name": "Librarian",
+    "agents.itdoctor.name": "ITDoctor",
     "nav.getStarted": "Get Started",
     "hero.badge": "Open Source · Apache 2.0",
     "hero.title1": "Your next breakthrough",
@@ -1100,6 +1110,16 @@ const translations = {
     "footer.copyright": "ASRP — Agent Science Research Platform · Apache 2.0 · Built by <a href='https://www.jzis.org' target='_blank' style='color:inherit;text-decoration:underline'>JZIS</a>"
   },
   zh: {
+    "nav.home": "首页",
+    "nav.features": "功能",
+    "nav.agents": "智能体",
+    "nav.caseStudy": "案例研究",
+    "nav.github": "GitHub",
+    "agents.theorist.name": "理论家",
+    "agents.engineer.name": "工程师",
+    "agents.reviewer.name": "审稿人",
+    "agents.librarian.name": "文献员",
+    "agents.itdoctor.name": "运维医生",
     "nav.getStarted": "开始使用",
     "hero.badge": "开源 · Apache 2.0",
     "hero.title1": "您的下一个突破",
@@ -1172,6 +1192,16 @@ const translations = {
     "footer.copyright": "ASRP — 智能体科学研究平台 · Apache 2.0 · 由<a href='https://www.jzis.org' target='_blank' style='color:inherit;text-decoration:underline'>JZIS</a>开发"
   },
   zht: {
+    "nav.home": "首頁",
+    "nav.features": "功能",
+    "nav.agents": "智能體",
+    "nav.caseStudy": "案例研究",
+    "nav.github": "GitHub",
+    "agents.theorist.name": "理論家",
+    "agents.engineer.name": "工程師",
+    "agents.reviewer.name": "審稿人",
+    "agents.librarian.name": "文獻員",
+    "agents.itdoctor.name": "運維醫生",
     "nav.getStarted": "開始使用",
     "hero.badge": "開源 · Apache 2.0",
     "hero.title1": "您的下一個突破",
@@ -1244,6 +1274,16 @@ const translations = {
     "footer.copyright": "ASRP — 智能體科學研究平台 · Apache 2.0 · 由<a href='https://www.jzis.org' target='_blank' style='color:inherit;text-decoration:underline'>JZIS</a>開發"
   },
   de: {
+    "nav.home": "Startseite",
+    "nav.features": "Funktionen",
+    "nav.agents": "Agenten",
+    "nav.caseStudy": "Fallstudie",
+    "nav.github": "GitHub",
+    "agents.theorist.name": "Theoretiker",
+    "agents.engineer.name": "Ingenieur",
+    "agents.reviewer.name": "Gutachter",
+    "agents.librarian.name": "Bibliothekar",
+    "agents.itdoctor.name": "IT-Doktor",
     "nav.getStarted": "Erste Schritte",
     "hero.badge": "Open Source · Apache 2.0",
     "hero.title1": "Ihr nächster Durchbruch",
