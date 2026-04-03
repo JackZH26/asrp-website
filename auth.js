@@ -133,14 +133,18 @@ const Auth = {
         <span style="color:var(--text-secondary);">👤 ${user.name}</span>
         <button onclick="Auth.logout()" class="btn btn-outline btn-sm" style="padding:0.25rem 0.75rem;font-size:0.875rem;">Logout</button>
       `;
-      navLinks.appendChild(userMenu);
+      const langDrop = navLinks.querySelector('.lang-dropdown');
+      if (langDrop) navLinks.insertBefore(userMenu, langDrop);
+      else navLinks.appendChild(userMenu);
     } else {
       // User not logged in - show Login button
       const loginLink = document.createElement('a');
       loginLink.href = 'login.html';
       loginLink.className = 'btn btn-primary btn-sm auth-element';
       loginLink.textContent = 'Login / Sign Up';
-      navLinks.appendChild(loginLink);
+      const langDrop2 = navLinks.querySelector('.lang-dropdown');
+      if (langDrop2) navLinks.insertBefore(loginLink, langDrop2);
+      else navLinks.appendChild(loginLink);
     }
   }
 };

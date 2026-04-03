@@ -1021,7 +1021,7 @@ function toggleLangMenu(event) {
 // Close on click outside
 document.addEventListener('click', function(e) {
   if (!e.target.closest('.lang-dropdown')) {
-    document.getElementById('lang-menu')?.classList.remove('show');
+    var lm = document.getElementById('lang-menu'); if(lm) lm.classList.remove('show');
   }
 });
 
@@ -1354,7 +1354,7 @@ function switchLang(lang) {
   });
 
   // Close dropdown
-  document.getElementById('lang-menu')?.classList.remove('show');
+  var lm = document.getElementById('lang-menu'); if(lm) lm.classList.remove('show');
 
   // Update html lang attribute
   document.documentElement.lang = lang;
