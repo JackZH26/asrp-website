@@ -358,6 +358,54 @@ section h2 {
   line-height: 1.65;
 }
 
+/* ========== DOWNLOAD BUTTON ========== */
+.download-btn {
+  display: inline-block;
+  padding: 0.75rem 2rem;
+  background: var(--gradient);
+  color: white;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(74, 140, 106, 0.25);
+}
+
+.download-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(74, 140, 106, 0.35);
+  color: white;
+}
+
+.coming-soon-badge {
+  display: inline-block;
+  padding: 0.5rem 1.5rem;
+  background: var(--surface);
+  color: var(--text-tertiary);
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.platform-card.disabled {
+  cursor: default;
+  opacity: 0.7;
+}
+
+.platform-card.disabled:hover {
+  transform: none;
+  box-shadow: var(--shadow);
+  border-color: var(--border);
+}
+
+@media (max-width: 768px) {
+  .info-grid[style*="repeat(4"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
 /* ========== HELP SECTION ========== */
 .help-section {
   background: var(--surface);
@@ -478,89 +526,126 @@ footer .copyright {
   <div class="container">
     
     <!-- Hero -->
-    <h1>Install ASRP</h1>
-    <p class="subtitle">One command. Your AI research team is ready in minutes.</p>
+    <h1>Download ASRP Desktop</h1>
+    <p class="subtitle">Install like any app. Your AI research team is ready in minutes.</p>
 
-    <!-- Step 1: Choose Platform -->
+    <!-- Download Section -->
     <section>
-      <h2>Step 1: Choose Your Platform</h2>
+      <h2>Choose Your Platform</h2>
       <div class="platform-grid">
         
         <!-- Mac -->
-        <div class="platform-card" onclick="selectPlatform('mac')">
+        <div class="platform-card" id="card-mac" onclick="selectPlatform('mac')">
           <div class="platform-icon">
             <svg viewBox="0 0 24 24">
               <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
             </svg>
           </div>
-          <h3>Mac</h3>
-          <p class="version">macOS 12+</p>
+          <h3>macOS</h3>
+          <p class="version">macOS 12+ · Universal (Intel & Apple Silicon)</p>
+          <div style="margin-top:1.25rem">
+            <a href="https://github.com/JackZH26/agent-science-research-platform/releases/latest/download/ASRP_Setup.dmg" class="download-btn" onclick="event.stopPropagation()">
+              ↓ Download .dmg
+            </a>
+          </div>
+          <p style="font-size:0.8rem;color:var(--text-tertiary);margin-top:0.75rem">~90 MB · v1.0.0</p>
         </div>
 
         <!-- Windows -->
-        <div class="platform-card" onclick="selectPlatform('windows')">
+        <div class="platform-card" id="card-windows" onclick="selectPlatform('windows')">
           <div class="platform-icon">
             <svg viewBox="0 0 24 24">
               <path d="M3 5.45L10.95 4.3v6.65H3V5.45zm0 13.1l7.95-1.15V11.05H3v7.5zm8.85 1.15l9.15-1.3V11.05h-9.15v8.65zm0-16.8v6.65h9.15V2.6L11.85 3.9z"/>
             </svg>
           </div>
           <h3>Windows</h3>
-          <p class="version">Windows 10+</p>
+          <p class="version">Windows 10+ · x64 & ARM64</p>
+          <div style="margin-top:1.25rem">
+            <a href="https://github.com/JackZH26/agent-science-research-platform/releases/latest/download/ASRP_Setup.exe" class="download-btn" onclick="event.stopPropagation()">
+              ↓ Download .exe
+            </a>
+          </div>
+          <p style="font-size:0.8rem;color:var(--text-tertiary);margin-top:0.75rem">~95 MB · v1.0.0</p>
         </div>
 
-        <!-- Linux / VPS -->
-        <div class="platform-card" onclick="selectPlatform('linux')">
-          <div class="platform-icon">
+        <!-- Linux / VPS — LOCKED -->
+        <div class="platform-card disabled" id="card-linux">
+          <div class="platform-icon" style="opacity:0.4">
             <svg viewBox="0 0 24 24">
               <rect x="4" y="4" width="16" height="16" rx="2"/>
               <path d="M8 10h8M8 14h8"/>
             </svg>
           </div>
-          <h3>Linux / VPS</h3>
+          <h3 style="color:var(--text-tertiary)">Linux / VPS</h3>
           <p class="version">Ubuntu, Debian, CentOS</p>
+          <div style="margin-top:1.25rem">
+            <span class="coming-soon-badge">Coming Soon</span>
+          </div>
+          <p style="font-size:0.8rem;color:var(--text-tertiary);margin-top:0.75rem">CLI mode · Under development</p>
         </div>
 
       </div>
     </section>
 
-    <!-- Step 2: Run Install Command -->
+    <!-- Install Steps -->
     <section>
-      <h2>Step 2: Run the Install Command</h2>
-      <div class="code-section">
-        <div class="code-wrapper">
-          <button class="copy-btn" onclick="copyCommand()">Copy</button>
-          <pre class="code-block" id="install-command">Select a platform above</pre>
+      <h2>How it works</h2>
+      <div class="info-grid" style="grid-template-columns: repeat(4, 1fr)">
+        
+        <div class="info-item" style="text-align:center">
+          <div class="icon" style="font-size:2rem;margin-bottom:0.75rem">1</div>
+          <h4>Download & Install</h4>
+          <p>Standard installer. Choose your install path. Done in 2 minutes.</p>
         </div>
+
+        <div class="info-item" style="text-align:center">
+          <div class="icon" style="font-size:2rem;margin-bottom:0.75rem">2</div>
+          <h4>Login & Setup</h4>
+          <p>Create account. A trial API key is auto-assigned. 4-step guided wizard.</p>
+        </div>
+
+        <div class="info-item" style="text-align:center">
+          <div class="icon" style="font-size:2rem;margin-bottom:0.75rem">3</div>
+          <h4>Agent Team Ready</h4>
+          <p>6 AI agents auto-configure: Theorist, Engineer, Reviewer, Librarian, ITDoctor, Assistant.</p>
+        </div>
+
+        <div class="info-item" style="text-align:center">
+          <div class="icon" style="font-size:2rem;margin-bottom:0.75rem">4</div>
+          <h4>Start Researching</h4>
+          <p>Dashboard, experiments, paper pipeline — all from a clean desktop interface.</p>
+        </div>
+
       </div>
     </section>
 
-    <!-- What Happens Next -->
+    <!-- What's Included -->
     <section>
-      <h2>What happens next</h2>
+      <h2>What's included</h2>
       <div class="info-grid">
         
         <div class="info-item">
-          <div class="icon">✓</div>
-          <h4>Dependencies auto-installed</h4>
-          <p>Node.js, Python, Git and all required libraries are set up automatically.</p>
+          <div class="icon">📊</div>
+          <h4>Research Dashboard</h4>
+          <p>Real-time overview of experiments, agent status, token usage, and research progress.</p>
         </div>
 
         <div class="info-item">
-          <div class="icon">✓</div>
-          <h4>ASRP framework downloaded</h4>
-          <p>The complete research platform with all agent roles and workflows.</p>
+          <div class="icon">💬</div>
+          <h4>AI Assistant</h4>
+          <p>Built-in chat panel (Cmd+J). Optional local Gemma 27B model for zero-cost queries.</p>
         </div>
 
         <div class="info-item">
-          <div class="icon">✓</div>
-          <h4>Trial API key provisioned</h4>
-          <p>7 days free access to get started. Add your own keys anytime.</p>
+          <div class="icon">📄</div>
+          <h4>Paper Pipeline</h4>
+          <p>6-stage paper management with version diff, peer review tracking, and submission log.</p>
         </div>
 
         <div class="info-item">
-          <div class="icon">✓</div>
-          <h4>Assistant Agent starts</h4>
-          <p>Your personal setup guide walks you through configuration and first experiment.</p>
+          <div class="icon">🔬</div>
+          <h4>Experiment Registry</h4>
+          <p>Pre-register hypotheses, track results, audit trail. No post-hoc storytelling.</p>
         </div>
 
       </div>
@@ -635,48 +720,26 @@ document.addEventListener('DOMContentLoaded', function() {
   switchLang(savedLang);
 });
 
-// Platform selection
-let selectedPlatform = null;
-
-const commands = {
-  mac: 'curl -fsSL https://asrp.jzis.org/install.sh | bash',
-  linux: 'curl -fsSL https://asrp.jzis.org/install.sh | bash',
-  windows: 'irm https://asrp.jzis.org/install.ps1 | iex'
-};
-
+// Platform selection — highlight card
 function selectPlatform(platform) {
-  selectedPlatform = platform;
-  
-  // Update card selection
   document.querySelectorAll('.platform-card').forEach(card => {
     card.classList.remove('selected');
   });
-  event.currentTarget.classList.add('selected');
-  
-  // Update command
-  document.getElementById('install-command').textContent = commands[platform];
+  var card = document.getElementById('card-' + platform);
+  if (card && !card.classList.contains('disabled')) {
+    card.classList.add('selected');
+  }
 }
 
-function copyCommand() {
-  if (!selectedPlatform) {
-    alert('Please select a platform first');
-    return;
+// Auto-detect platform and highlight
+(function() {
+  var ua = navigator.userAgent.toLowerCase();
+  if (ua.indexOf('mac') !== -1) {
+    selectPlatform('mac');
+  } else if (ua.indexOf('win') !== -1) {
+    selectPlatform('windows');
   }
-  
-  const command = commands[selectedPlatform];
-  navigator.clipboard.writeText(command).then(() => {
-    const btn = document.querySelector('.copy-btn');
-    btn.textContent = 'Copied!';
-    btn.classList.add('copied');
-    
-    setTimeout(() => {
-      btn.textContent = 'Copy';
-      btn.classList.remove('copied');
-    }, 2000);
-  }).catch(err => {
-    alert('Failed to copy: ' + err);
-  });
-}
+})();
 </script>
 
 </body>
