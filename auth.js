@@ -93,12 +93,15 @@ const Auth = {
       const langDrop = navLinks.querySelector('.lang-dropdown');
 
       if (user) {
-        const dashLink = document.createElement('a');
-        dashLink.href = 'dashboard.html';
-        dashLink.textContent = 'Dashboard';
-        dashLink.className = 'auth-element';
-        if (langDrop) navLinks.insertBefore(dashLink, langDrop);
-        else navLinks.appendChild(dashLink);
+        // Only add Dashboard link if not already present
+        if (!navLinks.querySelector('a[href="dashboard.html"]')) {
+          const dashLink = document.createElement('a');
+          dashLink.href = 'dashboard.html';
+          dashLink.textContent = 'Dashboard';
+          dashLink.className = 'auth-element';
+          if (langDrop) navLinks.insertBefore(dashLink, langDrop);
+          else navLinks.appendChild(dashLink);
+        }
 
         const userEl = document.createElement('div');
         userEl.className = 'auth-element';
