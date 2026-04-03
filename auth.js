@@ -1,158 +1,125 @@
-/**
- * ASRP Authentication Helper
- * Client-side auth system using localStorage
- */
+// ASRP Auth Module — API-backed authentication
+const API_BASE = '/api';
 
 const Auth = {
-  // Get all users
-  getUsers() {
-    return JSON.parse(localStorage.getItem('asrp-users') || '[]');
+  _user: null,
+  _token: null,
+
+  async register(name, email, password) {
+    const res = await fetch(`${API_BASE}/auth/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({ name, email, password })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Registration failed');
+    this._user = data.user;
+    if (data.token) localStorage.setItem('asrp-token', data.token);
+    return data.user;
   },
 
-  // Get current logged-in user
-  getCurrentUser() {
-    return JSON.parse(localStorage.getItem('asrp-current-user') || 'null');
+  async login(email, password) {
+    const res = await fetch(`${API_BASE}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({ email, password })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Login failed');
+    this._user = data.user;
+    if (data.token) localStorage.setItem('asrp-token', data.token);
+    return data.user;
   },
 
-  // Check if logged in
-  isLoggedIn() {
-    return !!this.getCurrentUser();
+  async logout() {
+    await fetch(`${API_BASE}/auth/logout`, { method: 'POST', credentials: 'include' }).catch(() => {});
+    this._user = null;
+    localStorage.removeItem('asrp-token');
+    localStorage.removeItem('asrp-setup-complete');
+    window.location.href = 'login.html';
   },
 
-  // Check if setup is complete
+  async getUser() {
+    if (this._user) return this._user;
+    const token = localStorage.getItem('asrp-token');
+    const headers = { 'Content-Type': 'application/json' };
+    if (token) headers['Authorization'] = `Bearer ${token}`;
+    try {
+      const res = await fetch(`${API_BASE}/auth/me`, { credentials: 'include', headers });
+      if (!res.ok) return null;
+      const data = await res.json();
+      this._user = data.user;
+      return data.user;
+    } catch (e) { return null; }
+  },
+
+  async isLoggedIn() {
+    return !!(await this.getUser());
+  },
+
   isSetupComplete() {
     return localStorage.getItem('asrp-setup-complete') === 'true';
   },
 
-  // Register new user
-  register(name, email, password) {
-    if (!name || !email || !password) {
-      return { success: false, error: 'All fields are required' };
-    }
-
-    if (password.length < 6) {
-      return { success: false, error: 'Password must be at least 6 characters' };
-    }
-
-    const users = this.getUsers();
-    
-    // Check if email already exists
-    if (users.find(u => u.email === email)) {
-      return { success: false, error: 'Email already registered' };
-    }
-
-    // Create new user
-    const newUser = {
-      id: Date.now().toString(),
-      name,
-      email,
-      password, // In production, hash this!
-      createdAt: new Date().toISOString()
-    };
-
-    users.push(newUser);
-    localStorage.setItem('asrp-users', JSON.stringify(users));
-
-    // Auto-login
-    const userWithoutPassword = { ...newUser };
-    delete userWithoutPassword.password;
-    localStorage.setItem('asrp-current-user', JSON.stringify(userWithoutPassword));
-
-    return { success: true };
+  async markSetupComplete() {
+    const token = localStorage.getItem('asrp-token');
+    const headers = { 'Content-Type': 'application/json' };
+    if (token) headers['Authorization'] = `Bearer ${token}`;
+    await fetch(`${API_BASE}/auth/setup-complete`, { method: 'POST', credentials: 'include', headers }).catch(() => {});
+    localStorage.setItem('asrp-setup-complete', 'true');
   },
 
-  // Login
-  login(email, password, remember = false) {
-    if (!email || !password) {
-      return { success: false, error: 'Email and password are required' };
-    }
-
-    const users = this.getUsers();
-    const user = users.find(u => u.email === email && u.password === password);
-
-    if (!user) {
-      return { success: false, error: 'Invalid email or password' };
-    }
-
-    // Store session
-    const userWithoutPassword = { ...user };
-    delete userWithoutPassword.password;
-    localStorage.setItem('asrp-current-user', JSON.stringify(userWithoutPassword));
-
-    if (remember) {
-      localStorage.setItem('asrp-remember', 'true');
-    }
-
-    return { success: true };
-  },
-
-  // Logout
-  logout() {
-    localStorage.removeItem('asrp-current-user');
-    localStorage.removeItem('asrp-remember');
-    window.location.href = 'login.html';
-  },
-
-  // Require auth (redirect to login if not authenticated)
   requireAuth() {
-    if (!this.isLoggedIn()) {
-      window.location.href = 'login.html';
-    }
+    this.getUser().then(user => {
+      if (!user) window.location.href = 'login.html';
+    });
   },
 
-  // Require setup complete (redirect to setup if not complete)
   requireSetup() {
-    if (!this.isSetupComplete()) {
-      window.location.href = 'setup.html?message=Please complete setup first';
-    }
+    if (!this.isSetupComplete()) window.location.href = 'setup.html';
   },
 
   // Update nav bar based on auth state
   updateNav() {
-    const navLinks = document.querySelector('nav .links');
-    if (!navLinks) return;
+    this.getUser().then(user => {
+      const navLinks = document.querySelector('nav .links');
+      if (!navLinks) return;
 
-    const user = this.getCurrentUser();
-    
-    // Remove existing auth elements
-    const existing = navLinks.querySelectorAll('.auth-element');
-    existing.forEach(el => el.remove());
+      // Remove existing auth elements
+      navLinks.querySelectorAll('.auth-element').forEach(el => el.remove());
 
-    if (user) {
-      // User is logged in - show Dashboard + user menu
-      const dashboardLink = document.createElement('a');
-      dashboardLink.href = 'dashboard.html';
-      dashboardLink.textContent = 'Dashboard';
-      dashboardLink.className = 'auth-element';
-      navLinks.insertBefore(dashboardLink, navLinks.children[2]);
-
-      const userMenu = document.createElement('div');
-      userMenu.className = 'auth-element user-menu';
-      userMenu.style.cssText = 'display:flex;align-items:center;gap:0.5rem;color:var(--text);font-weight:500;';
-      userMenu.innerHTML = `
-        <span style="color:var(--text-secondary);">👤 ${user.name}</span>
-        <button onclick="Auth.logout()" class="btn btn-outline btn-sm" style="padding:0.25rem 0.75rem;font-size:0.875rem;">Logout</button>
-      `;
       const langDrop = navLinks.querySelector('.lang-dropdown');
-      if (langDrop) navLinks.insertBefore(userMenu, langDrop);
-      else navLinks.appendChild(userMenu);
-    } else {
-      // User not logged in - show Login button
-      const loginLink = document.createElement('a');
-      loginLink.href = 'login.html';
-      loginLink.className = 'auth-element';
-      loginLink.style.cssText = 'padding:6px 14px;background:rgba(74,140,106,0.15);color:#4a8c6a;border:1px solid #4a8c6a;border-radius:6px;font-size:13px;font-weight:500;text-decoration:none;white-space:nowrap;';
-      loginLink.textContent = 'Login / Sign Up';
-      const langDrop2 = navLinks.querySelector('.lang-dropdown');
-      if (langDrop2) navLinks.insertBefore(loginLink, langDrop2);
-      else navLinks.appendChild(loginLink);
-    }
+
+      if (user) {
+        const dashLink = document.createElement('a');
+        dashLink.href = 'dashboard.html';
+        dashLink.textContent = 'Dashboard';
+        dashLink.className = 'auth-element';
+        if (langDrop) navLinks.insertBefore(dashLink, langDrop);
+        else navLinks.appendChild(dashLink);
+
+        const userEl = document.createElement('div');
+        userEl.className = 'auth-element';
+        userEl.style.cssText = 'display:inline-flex;align-items:center;gap:6px;';
+        userEl.innerHTML = `<span style="color:#5a6b5a;font-size:13px">${user.name}</span><button onclick="Auth.logout()" style="padding:4px 10px;background:none;border:1px solid #d4e4d4;border-radius:4px;color:#5a6b5a;font-size:12px;cursor:pointer">Logout</button>`;
+        if (langDrop) navLinks.insertBefore(userEl, langDrop);
+        else navLinks.appendChild(userEl);
+      } else {
+        const loginLink = document.createElement('a');
+        loginLink.href = 'login.html';
+        loginLink.className = 'auth-element';
+        loginLink.textContent = 'Login / Sign Up';
+        loginLink.style.cssText = 'padding:6px 14px;background:rgba(74,140,106,0.15);color:#4a8c6a;border:1px solid #4a8c6a;border-radius:6px;font-size:13px;font-weight:500;text-decoration:none;white-space:nowrap;';
+        if (langDrop) navLinks.insertBefore(loginLink, langDrop);
+        else navLinks.appendChild(loginLink);
+      }
+    });
   }
 };
 
 // Update nav on page load
 if (typeof document !== 'undefined') {
-  document.addEventListener('DOMContentLoaded', () => {
-    Auth.updateNav();
-  });
+  document.addEventListener('DOMContentLoaded', () => { Auth.updateNav(); });
 }
