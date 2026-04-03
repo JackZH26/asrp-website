@@ -437,13 +437,13 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Check if already logged in
-if (Auth.isLoggedIn()) {
+Auth.isLoggedIn().then(loggedIn => { if (loggedIn) {
   if (Auth.isSetupComplete()) {
     window.location.href = 'dashboard.html';
   } else {
     window.location.href = 'setup.html';
   }
-}
+}});
 
 // Switch between login and register tabs
 function switchTab(tab) {
@@ -479,51 +479,35 @@ function showAlert(message, type = 'error') {
 }
 
 // Handle login
-function handleLogin(e) {
+async function handleLogin(e) {
   e.preventDefault();
-  
   const email = document.getElementById('login-email').value;
   const password = document.getElementById('login-password').value;
-  const remember = document.getElementById('login-remember').checked;
-
-  const result = Auth.login(email, password, remember);
-
-  if (result.success) {
-    // Check if setup is complete
-    if (Auth.isSetupComplete()) {
-      window.location.href = 'dashboard.html';
-    } else {
-      window.location.href = 'setup.html';
-    }
-  } else {
-    showAlert(result.error, 'error');
+  try {
+    const user = await Auth.login(email, password);
+    showAlert('Login successful! Redirecting...', 'success');
+    setTimeout(() => {
+      window.location.href = user.setup_complete ? 'dashboard.html' : 'setup.html';
+    }, 500);
+  } catch (err) {
+    showAlert(err.message || 'Login failed', 'error');
   }
 }
 
 // Handle registration
-function handleRegister(e) {
+async function handleRegister(e) {
   e.preventDefault();
-  
   const name = document.getElementById('register-name').value;
   const email = document.getElementById('register-email').value;
   const password = document.getElementById('register-password').value;
   const confirm = document.getElementById('register-confirm').value;
-
-  // Validate password match
-  if (password !== confirm) {
-    showAlert('Passwords do not match', 'error');
-    return;
-  }
-
-  const result = Auth.register(name, email, password);
-
-  if (result.success) {
-    showAlert('Account created successfully! Redirecting...', 'success');
-    setTimeout(() => {
-      window.location.href = 'setup.html';
-    }, 1000);
-  } else {
-    showAlert(result.error, 'error');
+  if (password !== confirm) { showAlert('Passwords do not match', 'error'); return; }
+  try {
+    await Auth.register(name, email, password);
+    showAlert('Account created! Redirecting...', 'success');
+    setTimeout(() => { window.location.href = 'setup.html'; }, 1000);
+  } catch (err) {
+    showAlert(err.message || 'Registration failed', 'error');
   }
 }
 </script>
