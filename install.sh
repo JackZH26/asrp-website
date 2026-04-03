@@ -105,7 +105,7 @@ echo -e "${BOLD}Initializing workspace...${NC}"
 export PATH="$WORKSPACE/bin:$PATH"
 if [ -f bin/asrp ]; then
     chmod +x bin/asrp
-    bin/asrp init . 2>/dev/null || true
+    bin/asrp-auto-setup . 2>/dev/null
 fi
 echo -e "  ${GREEN}✓${NC} Workspace initialized"
 echo ""
