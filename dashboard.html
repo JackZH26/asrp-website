@@ -522,7 +522,7 @@ nav .links a:hover, nav .links a.active {
         <button onclick="Auth.logout()" class="btn btn-outline">Logout</button>
       </div>
       <div class="lang-dropdown">
-        <button class="lang-toggle" onclick="toggleLangMenu()">
+        <button class="lang-toggle" onclick="toggleLangMenu(event)">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
           </svg>
@@ -751,8 +751,10 @@ nav .links a:hover, nav .links a.active {
 <script src="auth.js"></script>
 <script>
 // Toggle language menu
-function toggleLangMenu() {
-  document.getElementById('lang-menu').classList.toggle('show');
+function toggleLangMenu(event) {
+  event.stopPropagation();
+  var menu = document.getElementById("lang-menu");
+  menu.classList.toggle("show");
 }
 
 // Close on click outside
