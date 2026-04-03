@@ -140,7 +140,8 @@ const Auth = {
       // User not logged in - show Login button
       const loginLink = document.createElement('a');
       loginLink.href = 'login.html';
-      loginLink.className = 'btn btn-primary btn-sm auth-element';
+      loginLink.className = 'auth-element';
+      loginLink.style.cssText = 'padding:6px 14px;background:rgba(74,140,106,0.15);color:#4a8c6a;border:1px solid #4a8c6a;border-radius:6px;font-size:13px;font-weight:500;text-decoration:none;white-space:nowrap;';
       loginLink.textContent = 'Login / Sign Up';
       const langDrop2 = navLinks.querySelector('.lang-dropdown');
       if (langDrop2) navLinks.insertBefore(loginLink, langDrop2);
