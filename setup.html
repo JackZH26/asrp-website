@@ -611,25 +611,14 @@ footer .copyright {
   color: var(--text-tertiary);
 }
 
-footer .lang-bar {
-  margin-top: 1.5rem;
-  font-size: 0.8125rem;
-}
-
-footer .lang-bar a {
-  color: var(--text-tertiary);
-  margin: 0 0.625rem;
-  cursor: pointer;
-}
-
-footer .lang-bar a:hover {
-  color: var(--accent);
-}
-
-footer .lang-bar a.active {
-  font-weight: 700;
-  color: var(--accent);
-}
+.lang-dropdown { position: relative; margin-left: 8px; }
+.lang-toggle { display: flex; align-items: center; gap: 4px; padding: 6px 10px; background: transparent; border: 1px solid var(--border, #d4e4d4); border-radius: 6px; color: var(--text-secondary, #5a6b5a); font-size: 13px; cursor: pointer; transition: all 0.2s; }
+.lang-toggle:hover { border-color: var(--accent, #4a8c6a); color: var(--text-primary, #2d3b2d); }
+.lang-menu { display: none; position: absolute; right: 0; top: 100%; margin-top: 4px; background: #ffffff; border: 1px solid #d4e4d4; border-radius: 8px; box-shadow: 0 8px 24px rgba(74,140,106,0.12); min-width: 140px; z-index: 1000; overflow: hidden; }
+.lang-menu.show { display: block; }
+.lang-menu a { display: block; padding: 8px 16px; color: #2d3b2d; text-decoration: none; font-size: 13px; transition: background 0.15s; }
+.lang-menu a:hover { background: rgba(74,140,106,0.06); }
+.lang-menu a.active { color: #4a8c6a; font-weight: 600; background: rgba(74,140,106,0.08); }
 </style>
 </head>
 <body>
@@ -652,6 +641,21 @@ footer .lang-bar a.active {
           <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/>
         </svg>
       </a>
+      <div class="lang-dropdown">
+        <button class="lang-toggle" onclick="toggleLangMenu()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+          <span id="current-lang">EN</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="lang-menu" id="lang-menu">
+          <a href="#" onclick="switchLang('en'); return false;" data-lang="en">English</a>
+          <a href="#" onclick="switchLang('zh'); return false;" data-lang="zh">中文</a>
+          <a href="#" onclick="switchLang('zht'); return false;" data-lang="zht">繁體中文</a>
+          <a href="#" onclick="switchLang('de'); return false;" data-lang="de">Deutsch</a>
+        </div>
+      </div>
     </div>
   </div>
 </nav>
@@ -1118,17 +1122,22 @@ footer .lang-bar a.active {
       <a href="https://discord.gg/DFmwBkDTB">Discord</a>
     </div>
     <p class="copyright" data-i18n="footer.copyright">ASRP — Agent Science Research Platform · Apache 2.0 · Built by <a href="https://jackz.sh" target="_blank" style="color:inherit;text-decoration:underline">Jian Zhou</a></p>
-    <div class="lang-bar">
-      <a href="#" onclick="switchLang('en'); return false;" id="lang-en" class="active">English</a>
-      <span style="color: var(--border);">·</span>
-      <a href="#" onclick="switchLang('zh'); return false;" id="lang-zh">中文</a>
-      <span style="color: var(--border);">·</span>
-      <a href="#" onclick="switchLang('de'); return false;" id="lang-de">Deutsch</a>
-    </div>
   </div>
 </footer>
 
 <script>
+// Toggle language menu
+function toggleLangMenu() {
+  document.getElementById('lang-menu').classList.toggle('show');
+}
+
+// Close on click outside
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.lang-dropdown')) {
+    document.getElementById('lang-menu')?.classList.remove('show');
+  }
+});
+
 // Translation data
 const i18n = {
   en: {
@@ -1146,8 +1155,21 @@ function switchLang(lang) {
   if (!i18n[lang]) return;
   localStorage.setItem('asrp-setup-lang', lang);
   document.getElementById('subtitle').textContent = i18n[lang].subtitle;
-  document.querySelectorAll('.lang-bar a').forEach(a => a.classList.remove('active'));
-  document.getElementById('lang-' + lang).classList.add('active');
+  
+  // Update current-lang display
+  const langNames = { en: 'EN', zh: '中文', zht: '繁體', de: 'DE' };
+  document.getElementById('current-lang').textContent = langNames[lang] || 'EN';
+  
+  // Update active menu item
+  document.querySelectorAll('.lang-menu a').forEach(link => {
+    link.classList.remove('active');
+    if (link.getAttribute('data-lang') === lang) {
+      link.classList.add('active');
+    }
+  });
+  
+  // Close dropdown
+  document.getElementById('lang-menu')?.classList.remove('show');
 }
 
 // Initialize language

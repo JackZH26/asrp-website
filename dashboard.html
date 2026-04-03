@@ -457,6 +457,16 @@ nav .links a:hover, nav .links a.active {
   font-size: 16px;
 }
 
+/* ========== LANG DROPDOWN ========== */
+.lang-dropdown { position: relative; margin-left: 8px; }
+.lang-toggle { display: flex; align-items: center; gap: 4px; padding: 6px 10px; background: transparent; border: 1px solid var(--border, #d4e4d4); border-radius: 6px; color: var(--text-secondary, #5a6b5a); font-size: 13px; cursor: pointer; transition: all 0.2s; }
+.lang-toggle:hover { border-color: var(--accent, #4a8c6a); color: var(--text-primary, #2d3b2d); }
+.lang-menu { display: none; position: absolute; right: 0; top: 100%; margin-top: 4px; background: #ffffff; border: 1px solid #d4e4d4; border-radius: 8px; box-shadow: 0 8px 24px rgba(74,140,106,0.12); min-width: 140px; z-index: 1000; overflow: hidden; }
+.lang-menu.show { display: block; }
+.lang-menu a { display: block; padding: 8px 16px; color: #2d3b2d; text-decoration: none; font-size: 13px; transition: background 0.15s; }
+.lang-menu a:hover { background: rgba(74,140,106,0.06); }
+.lang-menu a.active { color: #4a8c6a; font-weight: 600; background: rgba(74,140,106,0.08); }
+
 /* ========== SYSTEM HEALTH ========== */
 .health-grid {
   display: grid;
@@ -510,6 +520,21 @@ nav .links a:hover, nav .links a.active {
       <div class="user-menu">
         <span style="color:var(--text-secondary);" id="user-name">👤 User</span>
         <button onclick="Auth.logout()" class="btn btn-outline">Logout</button>
+      </div>
+      <div class="lang-dropdown">
+        <button class="lang-toggle" onclick="toggleLangMenu()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+          <span id="current-lang">EN</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="lang-menu" id="lang-menu">
+          <a href="#" onclick="switchLang('en'); return false;" data-lang="en">English</a>
+          <a href="#" onclick="switchLang('zh'); return false;" data-lang="zh">中文</a>
+          <a href="#" onclick="switchLang('zht'); return false;" data-lang="zht">繁體中文</a>
+          <a href="#" onclick="switchLang('de'); return false;" data-lang="de">Deutsch</a>
+        </div>
       </div>
     </div>
   </div>
@@ -725,6 +750,38 @@ nav .links a:hover, nav .links a.active {
 
 <script src="auth.js"></script>
 <script>
+// Toggle language menu
+function toggleLangMenu() {
+  document.getElementById('lang-menu').classList.toggle('show');
+}
+
+// Close on click outside
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.lang-dropdown')) {
+    document.getElementById('lang-menu')?.classList.remove('show');
+  }
+});
+
+// Language switching
+function switchLang(lang) {
+  const langNames = { en: 'EN', zh: '中文', zht: '繁體', de: 'DE' };
+  document.getElementById('current-lang').textContent = langNames[lang] || 'EN';
+  
+  document.querySelectorAll('.lang-menu a').forEach(link => {
+    link.classList.remove('active');
+    if (link.getAttribute('data-lang') === lang) {
+      link.classList.add('active');
+    }
+  });
+  
+  document.getElementById('lang-menu')?.classList.remove('show');
+  localStorage.setItem('asrp-lang', lang);
+}
+
+// Initialize language on load
+const savedLang = localStorage.getItem('asrp-lang') || 'en';
+switchLang(savedLang);
+
 // Auth check on page load
 Auth.requireAuth();
 Auth.requireSetup();
