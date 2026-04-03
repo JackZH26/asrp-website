@@ -725,7 +725,7 @@ footer .copyright {
     <h1><span data-i18n="hero.title1">Your next breakthrough</span><br><span data-i18n="hero.title2">won't be </span><span class="gradient-text" data-i18n="hero.title3">solo</span>.</h1>
     <p class="subtitle" data-i18n="hero.subtitle">ASRP is an open-source platform that turns AI agents into rigorous research collaborators. Pre-register experiments, cross-validate results, and audit every decision.</p>
     <div class="actions">
-      <a href="setup.html" class="btn btn-primary">
+      <a href="setup.html" class="btn btn-primary" onclick="gotoSetup(event)">
         <span data-i18n="hero.setupWizard">Setup Wizard</span>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M5 12h14M12 5l7 7-7 7"/>
@@ -945,7 +945,7 @@ footer .copyright {
       </div>
     </div>
     <div style="display:flex;gap:12px;justify-content:center;margin-top:32px">
-      <a href="setup.html" class="btn btn-primary">Setup Wizard →</a>
+      <a href="setup.html" class="btn btn-primary" onclick="gotoSetup(event)">Setup Wizard →</a>
       <a href="https://github.com/JackZH26/agent-science-research-platform" class="btn btn-outline">View on GitHub</a>
     </div>
   </div>
@@ -1447,5 +1447,97 @@ document.addEventListener('click', function(e) {
   }
 });
 </script>
+
+<!-- Login Modal -->
+<div id="login-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.4);z-index:9999;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:12px;padding:32px;max-width:400px;width:90%;box-shadow:0 16px 48px rgba(0,0,0,0.15);position:relative">
+    <button onclick="closeLoginModal()" style="position:absolute;top:12px;right:16px;background:none;border:none;font-size:20px;cursor:pointer;color:#5a6b5a">✕</button>
+    <h3 style="margin-bottom:4px;color:#2d3b2d;font-size:18px" id="modal-title">Login to continue</h3>
+    <p style="color:#5a6b5a;font-size:13px;margin-bottom:20px">You need an account to access Setup Wizard</p>
+    <div style="display:flex;gap:8px;margin-bottom:16px">
+      <button onclick="switchModalTab('login')" id="modal-tab-login" style="flex:1;padding:8px;border:1px solid #d4e4d4;border-radius:6px;background:#4a8c6a;color:#fff;cursor:pointer;font-size:13px;font-weight:500">Login</button>
+      <button onclick="switchModalTab('register')" id="modal-tab-register" style="flex:1;padding:8px;border:1px solid #d4e4d4;border-radius:6px;background:transparent;color:#5a6b5a;cursor:pointer;font-size:13px;font-weight:500">Register</button>
+    </div>
+    <form id="modal-login-form" onsubmit="handleModalLogin(event)">
+      <input type="email" id="modal-login-email" placeholder="Email" required style="width:100%;padding:10px 12px;border:1px solid #d4e4d4;border-radius:6px;margin-bottom:10px;font-size:14px;box-sizing:border-box">
+      <input type="password" id="modal-login-password" placeholder="Password" required minlength="6" style="width:100%;padding:10px 12px;border:1px solid #d4e4d4;border-radius:6px;margin-bottom:12px;font-size:14px;box-sizing:border-box">
+      <button type="submit" style="width:100%;padding:10px;background:linear-gradient(135deg,#7bc4a0,#4a8c6a);color:#fff;border:none;border-radius:6px;font-size:14px;font-weight:600;cursor:pointer">Login</button>
+    </form>
+    <form id="modal-register-form" style="display:none" onsubmit="handleModalRegister(event)">
+      <input type="text" id="modal-reg-name" placeholder="Full name" required style="width:100%;padding:10px 12px;border:1px solid #d4e4d4;border-radius:6px;margin-bottom:10px;font-size:14px;box-sizing:border-box">
+      <input type="email" id="modal-reg-email" placeholder="Email" required style="width:100%;padding:10px 12px;border:1px solid #d4e4d4;border-radius:6px;margin-bottom:10px;font-size:14px;box-sizing:border-box">
+      <input type="password" id="modal-reg-password" placeholder="Password (min 6 chars)" required minlength="6" style="width:100%;padding:10px 12px;border:1px solid #d4e4d4;border-radius:6px;margin-bottom:10px;font-size:14px;box-sizing:border-box">
+      <input type="password" id="modal-reg-confirm" placeholder="Confirm password" required minlength="6" style="width:100%;padding:10px 12px;border:1px solid #d4e4d4;border-radius:6px;margin-bottom:12px;font-size:14px;box-sizing:border-box">
+      <button type="submit" style="width:100%;padding:10px;background:linear-gradient(135deg,#7bc4a0,#4a8c6a);color:#fff;border:none;border-radius:6px;font-size:14px;font-weight:600;cursor:pointer">Create Account</button>
+    </form>
+    <div id="modal-alert" style="display:none;margin-top:12px;padding:8px 12px;border-radius:6px;font-size:13px"></div>
+  </div>
+</div>
+
+
+<script>
+// Login Modal
+function openLoginModal() {
+  document.getElementById('login-modal').style.display = 'flex';
+}
+function closeLoginModal() {
+  document.getElementById('login-modal').style.display = 'none';
+  document.getElementById('modal-alert').style.display = 'none';
+}
+function switchModalTab(tab) {
+  document.getElementById('modal-login-form').style.display = tab === 'login' ? 'block' : 'none';
+  document.getElementById('modal-register-form').style.display = tab === 'register' ? 'block' : 'none';
+  document.getElementById('modal-tab-login').style.background = tab === 'login' ? '#4a8c6a' : 'transparent';
+  document.getElementById('modal-tab-login').style.color = tab === 'login' ? '#fff' : '#5a6b5a';
+  document.getElementById('modal-tab-register').style.background = tab === 'register' ? '#4a8c6a' : 'transparent';
+  document.getElementById('modal-tab-register').style.color = tab === 'register' ? '#fff' : '#5a6b5a';
+}
+function showModalAlert(msg, type) {
+  var el = document.getElementById('modal-alert');
+  el.style.display = 'block';
+  el.style.background = type === 'error' ? 'rgba(200,60,60,0.1)' : 'rgba(74,140,106,0.1)';
+  el.style.color = type === 'error' ? '#c45c5c' : '#4a8c6a';
+  el.textContent = msg;
+}
+async function handleModalLogin(e) {
+  e.preventDefault();
+  try {
+    var user = await Auth.login(
+      document.getElementById('modal-login-email').value,
+      document.getElementById('modal-login-password').value
+    );
+    showModalAlert('Success! Redirecting...', 'success');
+    setTimeout(function() { window.location.href = 'setup.html'; }, 500);
+  } catch(err) { showModalAlert(err.message, 'error'); }
+}
+async function handleModalRegister(e) {
+  e.preventDefault();
+  var pw = document.getElementById('modal-reg-password').value;
+  if (pw !== document.getElementById('modal-reg-confirm').value) { showModalAlert('Passwords do not match', 'error'); return; }
+  try {
+    await Auth.register(
+      document.getElementById('modal-reg-name').value,
+      document.getElementById('modal-reg-email').value, pw
+    );
+    showModalAlert('Account created! Redirecting...', 'success');
+    setTimeout(function() { window.location.href = 'setup.html'; }, 800);
+  } catch(err) { showModalAlert(err.message, 'error'); }
+}
+// Close modal on background click
+document.getElementById('login-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeLoginModal();
+});
+
+// Intercept Setup Wizard button: check auth first
+async function gotoSetup(e) {
+  e.preventDefault();
+  if (await Auth.isLoggedIn()) {
+    window.location.href = 'setup.html';
+  } else {
+    openLoginModal();
+  }
+}
+</script>
+
 </body>
 </html>
