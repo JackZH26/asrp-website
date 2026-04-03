@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ASRP Setup Wizard — Configure Your Research Platform</title>
-<script src="auth.js"></script>
-<meta name="description" content="One-stop configuration wizard for ASRP. Configure API keys, agents, and tools in minutes.">
+<title>Install ASRP — Agent Science Research Platform</title>
+<meta name="description" content="Install ASRP in minutes with one command. Your AI research team is ready to go.">
 <link rel="icon" href="favicon.ico" type="image/x-icon">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script src="auth.js"></script>
 <style>
 /* ========== VARIABLES (Mint Apple Theme) ========== */
 :root {
@@ -32,8 +32,6 @@
   --code-text: #2d5a3d;
   --shadow: 0 2px 8px rgba(74, 140, 106, 0.06);
   --shadow-hover: 0 4px 16px rgba(74, 140, 106, 0.12);
-  --input-bg: #ffffff;
-  --input-border: #d4e4d4;
 }
 
 /* ========== RESET ========== */
@@ -61,10 +59,9 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--text);
 }
 
-h1 { font-size: clamp(2rem, 5vw, 2.5rem); }
-h2 { font-size: clamp(1.5rem, 4vw, 1.875rem); }
-h3 { font-size: 1.125rem; }
-h4 { font-size: 1rem; }
+h1 { font-size: clamp(2.5rem, 5vw, 3.5rem); }
+h2 { font-size: clamp(1.875rem, 4vw, 2.25rem); }
+h3 { font-size: 1.25rem; }
 
 p { color: var(--text-secondary); }
 
@@ -145,7 +142,7 @@ nav .links a:hover, nav .links a.active {
 
 /* ========== LAYOUT ========== */
 .container {
-  max-width: 900px;
+  max-width: 1120px;
   margin: 0 auto;
   padding: 0 2rem;
 }
@@ -158,426 +155,242 @@ nav .links a:hover, nav .links a.active {
 
 /* ========== MAIN CONTENT ========== */
 main {
-  padding: 8rem 0 4rem;
-  min-height: calc(100vh - 200px);
-}
-
-.page-header {
+  padding: 10rem 0 6rem;
   text-align: center;
-  margin-bottom: 3rem;
 }
 
-.page-header h1 {
+main h1 {
   font-weight: 700;
   margin-bottom: 1rem;
   letter-spacing: -0.03em;
 }
 
-.page-header .gradient-text {
-  background: var(--gradient-text);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.page-header .subtitle {
-  font-size: 1.0625rem;
+main .subtitle {
+  font-size: 1.125rem;
   color: var(--text-secondary);
   max-width: 640px;
-  margin: 0 auto;
-}
-
-/* ========== PROGRESS BAR ========== */
-.progress-bar {
-  display: flex;
-  gap: 0.5rem;
-  margin-bottom: 3rem;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.progress-step {
-  flex: 1;
-  height: 6px;
-  border-radius: 3px;
-  background: var(--border);
-  transition: background 0.3s ease;
-}
-
-.progress-step.active {
-  background: var(--accent);
-}
-
-.progress-step.done {
-  background: var(--success);
+  margin: 0 auto 4rem;
+  line-height: 1.75;
 }
 
 /* ========== SECTIONS ========== */
-.section {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 2.5rem;
-  margin-bottom: 2rem;
-  box-shadow: var(--shadow);
-  transition: all 0.2s ease;
+section {
+  padding: 4rem 0;
 }
 
-.section:hover {
-  box-shadow: var(--shadow-hover);
-}
-
-.section-header {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 0.5rem;
-}
-
-.step-badge {
-  display: inline-flex;
-  width: 32px;
-  height: 32px;
-  align-items: center;
-  justify-content: center;
-  border-radius: 8px;
-  background: var(--gradient);
-  color: white;
-  font-weight: 700;
-  font-size: 1rem;
-}
-
-.section h2 {
+section h2 {
   font-size: 1.5rem;
-  margin: 0;
-}
-
-.section .desc {
-  color: var(--text-secondary);
-  font-size: 0.9375rem;
-  margin-bottom: 1.5rem;
-  line-height: 1.65;
-}
-
-/* ========== INFO BOX ========== */
-.info-box {
-  background: var(--accent-light);
-  border: 1px solid var(--border);
-  border-left: 3px solid var(--accent);
-  border-radius: 8px;
-  padding: 1rem 1.25rem;
-  font-size: 0.9375rem;
-  margin-bottom: 1.5rem;
-  line-height: 1.65;
-}
-
-.info-box strong {
-  color: var(--accent);
+  text-align: center;
+  margin-bottom: 3rem;
   font-weight: 600;
-}
-
-/* ========== FORM ELEMENTS ========== */
-.field {
-  margin-bottom: 1.25rem;
-}
-
-label {
-  display: block;
-  font-size: 0.875rem;
-  font-weight: 500;
   color: var(--text);
-  margin-bottom: 0.5rem;
 }
 
-input, select {
-  width: 100%;
-  padding: 0.625rem 1rem;
-  background: var(--input-bg);
-  border: 1px solid var(--input-border);
-  border-radius: 8px;
-  color: var(--text);
-  font-size: 0.9375rem;
-  transition: all 0.2s ease;
-  font-family: inherit;
-}
-
-input:focus, select:focus {
-  outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-light);
-}
-
-input::placeholder {
-  color: var(--text-tertiary);
-}
-
-input[type="password"] {
-  font-family: 'SF Mono', monospace;
-}
-
-.model-auto {
-  font-size: 0.8125rem;
-  color: var(--success);
-  margin-top: 0.375rem;
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-}
-
-.model-auto::before {
-  content: '→';
-  font-weight: 700;
-}
-
-/* ========== GRID LAYOUTS ========== */
-.grid-2 {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.25rem;
-}
-
-.grid-3 {
+/* ========== PLATFORM CARDS ========== */
+.platform-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
+  gap: 1.5rem;
+  max-width: 900px;
+  margin: 0 auto 4rem;
 }
 
 @media (max-width: 768px) {
-  .grid-2, .grid-3 {
+  .platform-grid {
     grid-template-columns: 1fr;
   }
 }
 
-/* ========== TAGS ========== */
-.tag {
-  display: inline-block;
-  font-size: 0.6875rem;
+.platform-card {
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  padding: 2.5rem 2rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+
+.platform-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--border-hover);
+}
+
+.platform-card.selected {
+  border-color: var(--accent);
+  border-width: 3px;
+  background: rgba(74, 140, 106, 0.02);
+}
+
+.platform-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.platform-icon svg {
+  width: 48px;
+  height: 48px;
+  stroke: var(--text);
+  fill: none;
+  stroke-width: 1.5;
+}
+
+.platform-card.selected .platform-icon svg {
+  stroke: var(--accent);
+}
+
+.platform-card h3 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
   font-weight: 600;
-  text-transform: uppercase;
-  padding: 0.125rem 0.5rem;
-  border-radius: 4px;
-  margin-left: 0.5rem;
-  letter-spacing: 0.03em;
+  color: var(--text);
 }
 
-.tag-required {
-  background: rgba(200, 92, 92, 0.15);
-  color: var(--error);
-}
-
-.tag-recommended {
-  background: rgba(184, 154, 74, 0.15);
-  color: var(--warning);
-}
-
-.tag-optional {
-  background: rgba(139, 148, 158, 0.15);
+.platform-card .version {
+  font-size: 0.875rem;
   color: var(--text-tertiary);
 }
 
-.tag-fallback {
-  background: var(--accent-light);
-  color: var(--accent);
+/* ========== CODE BLOCK ========== */
+.code-section {
+  max-width: 800px;
+  margin: 0 auto;
 }
 
-/* ========== AGENT CARDS ========== */
-.agent-card {
+.code-wrapper {
+  background: var(--code-bg);
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 1.5rem;
-  margin-bottom: 1rem;
-  transition: all 0.2s ease;
-  background: var(--card-alt);
-}
-
-.agent-card:hover {
-  border-color: var(--accent);
+  position: relative;
   box-shadow: var(--shadow);
 }
 
-.agent-header {
-  display: flex;
-  align-items: center;
-  gap: 0.875rem;
-  margin-bottom: 1.25rem;
+.code-block {
+  background: transparent;
+  border: none;
+  font-family: 'SF Mono', monospace;
+  font-size: 0.9375rem;
+  color: var(--code-text);
+  padding: 0;
+  margin: 0;
+  line-height: 1.6;
+  text-align: left;
+  overflow-x: auto;
 }
 
-.agent-icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: var(--accent-light);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.agent-icon svg {
-  width: 24px;
-  height: 24px;
-  stroke: var(--accent);
-  fill: none;
-  stroke-width: 2;
-}
-
-.agent-title {
-  font-size: 1.0625rem;
-  font-weight: 600;
+.copy-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
   color: var(--text);
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-.agent-role {
-  font-size: 0.8125rem;
-  color: var(--text-secondary);
+.copy-btn:hover {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
 }
 
-/* ========== TOOL GRID ========== */
-.tool-grid {
+.copy-btn.copied {
+  background: var(--success);
+  color: white;
+  border-color: var(--success);
+}
+
+/* ========== INFO SECTION ========== */
+.info-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 0.875rem;
+  gap: 1.5rem;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 @media (max-width: 768px) {
-  .tool-grid {
+  .info-grid {
     grid-template-columns: 1fr;
   }
 }
 
-.tool-item {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.875rem 1rem;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease;
+.info-item {
   background: var(--card);
-}
-
-.tool-item:hover {
-  border-color: var(--accent);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: left;
   box-shadow: var(--shadow);
 }
 
-.tool-item.checked {
-  border-color: var(--success);
-  background: rgba(74, 140, 106, 0.05);
+.info-item .icon {
+  width: 32px;
+  height: 32px;
+  margin-bottom: 1rem;
+  color: var(--success);
+  font-size: 1.5rem;
+  font-weight: 600;
 }
 
-.tool-item input[type="checkbox"] {
-  accent-color: var(--success);
-  width: 18px;
-  height: 18px;
-  cursor: pointer;
+.info-item h4 {
+  font-size: 1.0625rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--text);
 }
 
-.tool-name {
+.info-item p {
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+/* ========== HELP SECTION ========== */
+.help-section {
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 2.5rem;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.help-section h3 {
+  font-size: 1.25rem;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+.help-links {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.help-links a {
+  color: var(--accent);
   font-size: 0.9375rem;
   font-weight: 500;
-  color: var(--text);
+  transition: color 0.2s ease;
 }
 
-.tool-desc {
-  font-size: 0.8125rem;
-  color: var(--text-tertiary);
-  line-height: 1.4;
-}
-
-.tools-category {
-  margin-bottom: 2rem;
-}
-
-.tools-category h3 {
-  font-size: 0.875rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 0.875rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.tools-category h3.required { color: var(--error); }
-.tools-category h3.recommended { color: var(--warning); }
-.tools-category h3.optional { color: var(--text-tertiary); }
-
-/* ========== BUTTONS ========== */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1.5rem;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 0.9375rem;
-  transition: all 0.2s ease;
-  cursor: pointer;
-  border: none;
-  font-family: inherit;
-}
-
-.btn-primary {
-  background: var(--gradient);
-  color: white;
-}
-
-.btn-primary:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(74, 140, 106, 0.3);
-}
-
-.btn-secondary {
-  border: 1px solid var(--border);
-  color: var(--text);
-  background: white;
-}
-
-.btn-secondary:hover {
-  border-color: var(--accent);
-  background: var(--card-alt);
-}
-
-.actions {
-  display: flex;
-  gap: 1rem;
-  justify-content: flex-end;
-  margin-top: 2rem;
-}
-
-@media (max-width: 768px) {
-  .actions {
-    flex-direction: column-reverse;
-  }
-  
-  .actions .btn {
-    width: 100%;
-    justify-content: center;
-  }
-}
-
-/* ========== OUTPUT AREA ========== */
-.output-area {
-  background: var(--code-bg);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 1.25rem;
-  font-family: 'SF Mono', monospace;
-  font-size: 0.8125rem;
-  white-space: pre-wrap;
-  max-height: 500px;
-  overflow-y: auto;
-  display: none;
-  margin-top: 1.5rem;
-  color: var(--code-text);
-  line-height: 1.6;
-}
-
-.output-area.show {
-  display: block;
+.help-links a:hover {
+  color: var(--accent-muted);
+  text-decoration: underline;
 }
 
 /* ========== FOOTER ========== */
@@ -586,6 +399,7 @@ footer {
   padding: 3rem 0;
   text-align: center;
   background: var(--card-alt);
+  margin-top: 6rem;
 }
 
 footer .links {
@@ -594,7 +408,6 @@ footer .links {
   gap: 2rem;
   margin-bottom: 1.25rem;
   font-size: 0.9375rem;
-  flex-wrap: wrap;
 }
 
 footer .links a {
@@ -627,18 +440,18 @@ footer .copyright {
 <nav>
   <div class="inner">
     <div class="logo">
-      <a href="https://asrp.jzis.org" style="display:flex;align-items:center;text-decoration:none;color:inherit">
-        <img src="logo-nav.png?v=4" alt="ASRP" style="height:40px;vertical-align:middle">
+      <a href="index.html" style="display:flex;align-items:center;text-decoration:none;color:inherit">
+        <img src="logo-nav.png?v=11" alt="ASRP" style="height:28px;vertical-align:middle">
       </a>
     </div>
     <div class="links">
-      <a href="https://asrp.jzis.org">Home</a>
-      <a href="https://asrp.jzis.org/setup.html" class="active">Setup</a>
+      <a href="index.html">Home</a>
+      <a href="setup.html" class="active">Setup</a>
       <a href="dashboard.html" class="hide-mobile">Dashboard</a>
       <a href="https://github.com/JackZH26/agent-science-research-platform" class="hide-mobile">GitHub</a>
       <a href="https://discord.gg/DFmwBkDTB" target="_blank" title="Discord">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/>
+          <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.095 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.095 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
         </svg>
       </a>
       <div class="lang-dropdown">
@@ -664,450 +477,106 @@ footer .copyright {
 <main>
   <div class="container">
     
-    <!-- Page Header -->
-    <div class="page-header">
-      <h1><span class="gradient-text">ASRP</span> Setup Wizard</h1>
-      <p class="subtitle" id="subtitle">Configure your AI-powered research platform in minutes. All configuration is generated locally — no data leaves your browser.</p>
-    </div>
+    <!-- Hero -->
+    <h1>Install ASRP</h1>
+    <p class="subtitle">One command. Your AI research team is ready in minutes.</p>
 
-    <!-- Progress Bar -->
-    <div class="progress-bar">
-      <div class="progress-step active" id="ps1"></div>
-      <div class="progress-step" id="ps2"></div>
-      <div class="progress-step" id="ps3"></div>
-      <div class="progress-step" id="ps4"></div>
-    </div>
-
-    <!-- Step 1: API Keys -->
-    <div class="section" id="step1">
-      <div class="section-header">
-        <div class="step-badge">1</div>
-        <h2>API Keys</h2>
-      </div>
-      <p class="desc">Provide at least 2 API keys for redundancy. The system will automatically assign optimal models to each agent role. An OpenRouter key is recommended as fallback.</p>
-
-      <div class="info-box">
-        <strong>💡 Best Practice:</strong> Multiple providers ensure uninterrupted research — if one service goes down, agents automatically switch to backup providers.
-      </div>
-
-      <div class="grid-2">
-        <div class="field">
-          <label>Anthropic API Key <span class="tag tag-recommended">Recommended</span></label>
-          <input type="password" id="key-anthropic" placeholder="sk-ant-..." autocomplete="off">
-          <div class="model-auto">Opus for deep reasoning, Sonnet for code</div>
-        </div>
-        <div class="field">
-          <label>Google AI API Key <span class="tag tag-recommended">Recommended</span></label>
-          <input type="password" id="key-google" placeholder="AIza...">
-          <div class="model-auto">Flash for fast searches and routine tasks</div>
-        </div>
-      </div>
-      <div class="grid-2">
-        <div class="field">
-          <label>OpenAI API Key <span class="tag tag-optional">Optional</span></label>
-          <input type="password" id="key-openai" placeholder="sk-...">
-          <div class="model-auto">Available as alternative for any role</div>
-        </div>
-        <div class="field">
-          <label>OpenRouter API Key <span class="tag tag-fallback">Fallback</span></label>
-          <input type="password" id="key-openrouter" placeholder="sk-or-...">
-          <div class="model-auto">Automatic fallback if primary provider fails</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Step 2: Agent Configuration -->
-    <div class="section" id="step2">
-      <div class="section-header">
-        <div class="step-badge">2</div>
-        <h2>Agent Configuration</h2>
-      </div>
-      <p class="desc">Name your agents and configure their communication channel. Each agent has a specialized role in the research workflow.</p>
-
-      <div class="field">
-        <label>Communication Channel</label>
-        <select id="channel-type">
-          <option value="discord" selected>Discord (Recommended)</option>
-          <option value="telegram">Telegram</option>
-          <option value="slack">Slack</option>
-          <option value="local">Local Only (No external channel)</option>
-        </select>
-      </div>
-
-      <!-- Theorist Agent -->
-      <div class="agent-card">
-        <div class="agent-header">
-          <div class="agent-icon">
+    <!-- Step 1: Choose Platform -->
+    <section>
+      <h2>Step 1: Choose Your Platform</h2>
+      <div class="platform-grid">
+        
+        <!-- Mac -->
+        <div class="platform-card" onclick="selectPlatform('mac')">
+          <div class="platform-icon">
             <svg viewBox="0 0 24 24">
-              <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+              <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
             </svg>
           </div>
-          <div>
-            <div class="agent-title">Theorist</div>
-            <div class="agent-role">Hypotheses, reasoning, paper writing</div>
-          </div>
+          <h3>Mac</h3>
+          <p class="version">macOS 12+</p>
         </div>
-        <div class="grid-3">
-          <div class="field">
-            <label>Agent Name</label>
-            <input type="text" id="name-theorist" value="Theorist" placeholder="e.g., Albert">
-          </div>
-          <div class="field">
-            <label>Model</label>
-            <select id="model-theorist">
-              <option value="auto">Auto (Opus)</option>
-              <option value="anthropic/claude-opus-4-6">Claude Opus 4.6</option>
-              <option value="anthropic/claude-sonnet-4-5">Claude Sonnet 4.5</option>
-              <option value="google/gemini-2.5-pro">Gemini 2.5 Pro</option>
-              <option value="google/gemma-4-31b">Gemma 4 31B (Local)</option>
-              <option value="openai/o3">OpenAI o3</option>
-              <option value="google/gemma-4-31b">Gemma 4 31B (Local)</option>
-              <option value="google/gemma-4-26b-moe">Gemma 4 26B MoE (Local)</option>
-            </select>
-          </div>
-          <div class="field">
-            <label>Thinking Level</label>
-            <select id="think-theorist">
-              <option value="high" selected>High (Deep)</option>
-              <option value="medium">Medium</option>
-              <option value="off">Off</option>
-            </select>
-          </div>
-        </div>
-      </div>
 
-      <!-- Engineer Agent -->
-      <div class="agent-card">
-        <div class="agent-header">
-          <div class="agent-icon">
+        <!-- Windows -->
+        <div class="platform-card" onclick="selectPlatform('windows')">
+          <div class="platform-icon">
             <svg viewBox="0 0 24 24">
-              <path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+              <path d="M3 5.45L10.95 4.3v6.65H3V5.45zm0 13.1l7.95-1.15V11.05H3v7.5zm8.85 1.15l9.15-1.3V11.05h-9.15v8.65zm0-16.8v6.65h9.15V2.6L11.85 3.9z"/>
             </svg>
           </div>
-          <div>
-            <div class="agent-title">Engineer</div>
-            <div class="agent-role">Code, computation, data pipelines</div>
-          </div>
+          <h3>Windows</h3>
+          <p class="version">Windows 10+</p>
         </div>
-        <div class="grid-3">
-          <div class="field">
-            <label>Agent Name</label>
-            <input type="text" id="name-engineer" value="Engineer" placeholder="e.g., Wall-E">
-          </div>
-          <div class="field">
-            <label>Model</label>
-            <select id="model-engineer">
-              <option value="auto">Auto (Sonnet)</option>
-              <option value="anthropic/claude-sonnet-4-5">Claude Sonnet 4.5</option>
-              <option value="anthropic/claude-opus-4-6">Claude Opus 4.6</option>
-              <option value="google/gemini-2.5-flash">Gemini 2.5 Flash</option>
-              <option value="google/gemma-4-26b-moe">Gemma 4 26B MoE (Local)</option>
-              <option value="google/gemma-4-31b">Gemma 4 31B (Local)</option>
-            </select>
-          </div>
-          <div class="field">
-            <label>Thinking Level</label>
-            <select id="think-engineer">
-              <option value="off" selected>Off (Speed)</option>
-              <option value="medium">Medium</option>
-              <option value="high">High</option>
-            </select>
-          </div>
-        </div>
-      </div>
 
-      <!-- Reviewer Agent -->
-      <div class="agent-card">
-        <div class="agent-header">
-          <div class="agent-icon">
+        <!-- Linux / VPS -->
+        <div class="platform-card" onclick="selectPlatform('linux')">
+          <div class="platform-icon">
             <svg viewBox="0 0 24 24">
-              <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+              <rect x="4" y="4" width="16" height="16" rx="2"/>
+              <path d="M8 10h8M8 14h8"/>
             </svg>
           </div>
-          <div>
-            <div class="agent-title">Reviewer</div>
-            <div class="agent-role">Independent review (read-only access)</div>
-          </div>
+          <h3>Linux / VPS</h3>
+          <p class="version">Ubuntu, Debian, CentOS</p>
         </div>
-        <div class="grid-3">
-          <div class="field">
-            <label>Agent Name</label>
-            <input type="text" id="name-reviewer" value="Reviewer" placeholder="e.g., Critic">
-          </div>
-          <div class="field">
-            <label>Model</label>
-            <select id="model-reviewer">
-              <option value="auto">Auto (Opus)</option>
-              <option value="anthropic/claude-opus-4-6">Claude Opus 4.6</option>
-              <option value="google/gemini-2.5-pro">Gemini 2.5 Pro</option>
-              <option value="google/gemma-4-31b">Gemma 4 31B (Local)</option>
-            </select>
-          </div>
-          <div class="field">
-            <label>Thinking Level</label>
-            <select id="think-reviewer">
-              <option value="high" selected>High (Deep)</option>
-              <option value="medium">Medium</option>
-            </select>
-          </div>
+
+      </div>
+    </section>
+
+    <!-- Step 2: Run Install Command -->
+    <section>
+      <h2>Step 2: Run the Install Command</h2>
+      <div class="code-section">
+        <div class="code-wrapper">
+          <button class="copy-btn" onclick="copyCommand()">Copy</button>
+          <pre class="code-block" id="install-command">Select a platform above</pre>
         </div>
       </div>
+    </section>
 
-      <!-- Librarian Agent -->
-      <div class="agent-card">
-        <div class="agent-header">
-          <div class="agent-icon">
-            <svg viewBox="0 0 24 24">
-              <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
-            </svg>
-          </div>
-          <div>
-            <div class="agent-title">Librarian</div>
-            <div class="agent-role">Literature search, references</div>
-          </div>
+    <!-- What Happens Next -->
+    <section>
+      <h2>What happens next</h2>
+      <div class="info-grid">
+        
+        <div class="info-item">
+          <div class="icon">✓</div>
+          <h4>Dependencies auto-installed</h4>
+          <p>Node.js, Python, Git and all required libraries are set up automatically.</p>
         </div>
-        <div class="grid-3">
-          <div class="field">
-            <label>Agent Name</label>
-            <input type="text" id="name-librarian" value="Librarian" placeholder="e.g., Scholar">
-          </div>
-          <div class="field">
-            <label>Model</label>
-            <select id="model-librarian">
-              <option value="auto">Auto (Flash)</option>
-              <option value="google/gemini-2.5-flash">Gemini 2.5 Flash</option>
-              <option value="google/gemma-4-26b-moe">Gemma 4 26B MoE (Local)</option>
-              <option value="google/gemma-4-31b">Gemma 4 31B (Local)</option>
-              <option value="anthropic/claude-sonnet-4-5">Claude Sonnet 4.5</option>
-              <option value="google/gemma-4-26b-moe">Gemma 4 26B MoE (Local)</option>
-            </select>
-          </div>
-          <div class="field">
-            <label>Thinking Level</label>
-            <select id="think-librarian">
-              <option value="off" selected>Off</option>
-              <option value="medium">Medium</option>
-            </select>
-          </div>
+
+        <div class="info-item">
+          <div class="icon">✓</div>
+          <h4>ASRP framework downloaded</h4>
+          <p>The complete research platform with all agent roles and workflows.</p>
         </div>
+
+        <div class="info-item">
+          <div class="icon">✓</div>
+          <h4>Trial API key provisioned</h4>
+          <p>7 days free access to get started. Add your own keys anytime.</p>
+        </div>
+
+        <div class="info-item">
+          <div class="icon">✓</div>
+          <h4>Assistant Agent starts</h4>
+          <p>Your personal setup guide walks you through configuration and first experiment.</p>
+        </div>
+
       </div>
+    </section>
 
-      <!-- ITDoctor Agent -->
-      <div class="agent-card">
-        <div class="agent-header">
-          <div class="agent-icon">
-            <svg viewBox="0 0 24 24">
-              <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-            </svg>
-          </div>
-          <div>
-            <div class="agent-title">ITDoctor</div>
-            <div class="agent-role">Monitoring, backups, self-healing</div>
-          </div>
-        </div>
-        <div class="grid-3">
-          <div class="field">
-            <label>Agent Name</label>
-            <input type="text" id="name-itdoctor" value="ITDoctor" placeholder="e.g., DocMario">
-          </div>
-          <div class="field">
-            <label>Model</label>
-            <select id="model-itdoctor">
-              <option value="auto">Auto (Flash)</option>
-              <option value="google/gemini-2.5-flash">Gemini 2.5 Flash</option>
-              <option value="google/gemma-4-26b-moe">Gemma 4 26B MoE (Local)</option>
-              <option value="google/gemma-4-31b">Gemma 4 31B (Local)</option>
-              <option value="google/gemini-2.5-flash-lite">Gemini Flash Lite</option>
-              <option value="google/gemma-4-e4b">Gemma 4 E4B (Local)</option>
-              <option value="google/gemma-4-e2b">Gemma 4 E2B (Local)</option>
-            </select>
-          </div>
-          <div class="field">
-            <label>Health Check Interval</label>
-            <select id="itdoc-interval">
-              <option value="300" selected>5 minutes</option>
-              <option value="600">10 minutes</option>
-              <option value="900">15 minutes</option>
-            </select>
-          </div>
+    <!-- Help Section -->
+    <section>
+      <div class="help-section">
+        <h3>Need help?</h3>
+        <div class="help-links">
+          <a href="https://github.com/JackZH26/agent-science-research-platform/wiki">Documentation</a>
+          <a href="https://discord.gg/DFmwBkDTB">Discord Community</a>
+          <a href="https://github.com/JackZH26/agent-science-research-platform/issues">GitHub Issues</a>
         </div>
       </div>
-    </div>
-
-    <!-- Step 3: Tools -->
-    <div class="section" id="step3">
-      <div class="section-header">
-        <div class="step-badge">3</div>
-        <h2>Research Tools</h2>
-      </div>
-      <p class="desc">Select the tools you need for your research. Required tools are pre-checked. Recommended tools enhance research quality and workflow efficiency.</p>
-
-      <!-- Required Tools -->
-      <div class="tools-category">
-        <h3 class="required">Required Tools</h3>
-        <div class="tool-grid">
-          <label class="tool-item checked">
-            <input type="checkbox" checked disabled data-tool="python3">
-            <div>
-              <div class="tool-name">Python 3.8+</div>
-              <div class="tool-desc">Core runtime for all computations</div>
-            </div>
-          </label>
-          <label class="tool-item checked">
-            <input type="checkbox" checked disabled data-tool="numpy">
-            <div>
-              <div class="tool-name">NumPy + SciPy</div>
-              <div class="tool-desc">Scientific computing libraries</div>
-            </div>
-          </label>
-          <label class="tool-item checked">
-            <input type="checkbox" checked disabled data-tool="git">
-            <div>
-              <div class="tool-name">Git</div>
-              <div class="tool-desc">Version control for code and data</div>
-            </div>
-          </label>
-          <label class="tool-item checked">
-            <input type="checkbox" checked disabled data-tool="matplotlib">
-            <div>
-              <div class="tool-name">Matplotlib</div>
-              <div class="tool-desc">Plotting and visualization</div>
-            </div>
-          </label>
-        </div>
-      </div>
-
-      <!-- Recommended Tools -->
-      <div class="tools-category">
-        <h3 class="recommended">Recommended Tools</h3>
-        <div class="tool-grid">
-          <label class="tool-item checked" onclick="toggleTool(this)">
-            <input type="checkbox" checked data-tool="latex">
-            <div>
-              <div class="tool-name">LaTeX (Tectonic)</div>
-              <div class="tool-desc">Paper compilation — lightweight TeX engine</div>
-            </div>
-          </label>
-          <label class="tool-item checked" onclick="toggleTool(this)">
-            <input type="checkbox" checked data-tool="idea">
-            <div>
-              <div class="tool-name">iDEA Code</div>
-              <div class="tool-desc">Exact DFT solver — benchmark computations</div>
-            </div>
-          </label>
-          <label class="tool-item checked" onclick="toggleTool(this)">
-            <input type="checkbox" checked data-tool="himalaya">
-            <div>
-              <div class="tool-name">Himalaya</div>
-              <div class="tool-desc">CLI email client — submission tracking</div>
-            </div>
-          </label>
-          <label class="tool-item checked" onclick="toggleTool(this)">
-            <input type="checkbox" checked data-tool="rclone">
-            <div>
-              <div class="tool-name">Rclone</div>
-              <div class="tool-desc">Cloud backup — Google Drive, S3, etc.</div>
-            </div>
-          </label>
-          <label class="tool-item checked" onclick="toggleTool(this)">
-            <input type="checkbox" checked data-tool="jq">
-            <div>
-              <div class="tool-name">jq</div>
-              <div class="tool-desc">JSON processing for experiment data</div>
-            </div>
-          </label>
-          <label class="tool-item checked" onclick="toggleTool(this)">
-            <input type="checkbox" checked data-tool="pdf-tools">
-            <div>
-              <div class="tool-name">PDF Tools</div>
-              <div class="tool-desc">opendataloader-pdf for paper analysis</div>
-            </div>
-          </label>
-        </div>
-      </div>
-
-      <!-- Optional Tools -->
-      <div class="tools-category">
-        <h3 class="optional">Optional Tools</h3>
-        <div class="tool-grid">
-          <label class="tool-item" onclick="toggleTool(this)">
-            <input type="checkbox" data-tool="whisper">
-            <div>
-              <div class="tool-name">Whisper</div>
-              <div class="tool-desc">Speech-to-text for lecture transcription</div>
-            </div>
-          </label>
-          <label class="tool-item" onclick="toggleTool(this)">
-            <input type="checkbox" data-tool="ytdlp">
-            <div>
-              <div class="tool-name">yt-dlp</div>
-              <div class="tool-desc">Video/audio download for research talks</div>
-            </div>
-          </label>
-          <label class="tool-item" onclick="toggleTool(this)">
-            <input type="checkbox" data-tool="ffmpeg">
-            <div>
-              <div class="tool-name">FFmpeg</div>
-              <div class="tool-desc">Audio/video processing</div>
-            </div>
-          </label>
-          <label class="tool-item" onclick="toggleTool(this)">
-            <input type="checkbox" data-tool="redis">
-            <div>
-              <div class="tool-name">Redis</div>
-              <div class="tool-desc">Message queue for multi-agent communication</div>
-            </div>
-          </label>
-          <label class="tool-item" onclick="toggleTool(this)">
-            <input type="checkbox" data-tool="docker">
-            <div>
-              <div class="tool-name">Docker</div>
-              <div class="tool-desc">Container deployment for agent isolation</div>
-            </div>
-          </label>
-          <label class="tool-item" onclick="toggleTool(this)">
-            <input type="checkbox" data-tool="memsearch">
-            <div>
-              <div class="tool-name">Memsearch</div>
-              <div class="tool-desc">Local semantic search for knowledge base</div>
-            </div>
-          </label>
-        </div>
-      </div>
-    </div>
-
-    <!-- Step 4: Generate -->
-    <div class="section" id="step4">
-      <div class="section-header">
-        <div class="step-badge">4</div>
-        <h2>Generate Configuration</h2>
-      </div>
-      <p class="desc">Review your configuration and generate the necessary files. All processing happens locally in your browser — no data is sent to any server.</p>
-
-      <div class="info-box">
-        <strong>🔒 Privacy First:</strong> Your API keys and configuration are processed entirely in your browser. Nothing is uploaded or stored externally.
-      </div>
-
-      <div class="actions">
-        <button class="btn btn-secondary" onclick="previewConfig()">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-            <circle cx="12" cy="12" r="3"/>
-          </svg>
-          Preview Configuration
-        </button>
-        <button class="btn btn-primary" onclick="generateConfig()">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-            <polyline points="7 10 12 15 17 10"/>
-            <line x1="12" y1="15" x2="12" y2="3"/>
-          </svg>
-          Generate & Download
-        </button>
-      </div>
-
-      <div class="output-area" id="output"></div>
-    </div>
+    </section>
 
   </div>
 </main>
@@ -1117,11 +586,11 @@ footer .copyright {
   <div class="container">
     <div class="links">
       <a href="https://github.com/JackZH26/agent-science-research-platform">GitHub</a>
-      <a href="https://asrp.jzis.org/setup.html">Setup Wizard</a>
+      <a href="setup.html">Setup Wizard</a>
       <a href="https://jackz.sh/publications/">Publications</a>
       <a href="https://discord.gg/DFmwBkDTB">Discord</a>
     </div>
-    <p class="copyright" data-i18n="footer.copyright">ASRP — Agent Science Research Platform · Apache 2.0 · Built by <a href="https://jackz.sh" target="_blank" style="color:inherit;text-decoration:underline">Jian Zhou</a></p>
+    <p class="copyright">ASRP — Agent Science Research Platform · Apache 2.0 · Built by <a href="https://www.jzis.org" target="_blank" style="color:inherit;text-decoration:underline">JZIS</a></p>
   </div>
 </footer>
 
@@ -1136,29 +605,14 @@ function toggleLangMenu(event) {
 // Close on click outside
 document.addEventListener('click', function(e) {
   if (!e.target.closest('.lang-dropdown')) {
-    document.getElementById('lang-menu')?.classList.remove('show');
+    var lm = document.getElementById('lang-menu'); 
+    if(lm) lm.classList.remove('show');
   }
 });
 
-// Translation data
-const i18n = {
-  en: {
-    subtitle: "Configure your AI-powered research platform in minutes. All configuration is generated locally — no data leaves your browser."
-  },
-  zh: {
-    subtitle: "几分钟内配置你的 AI 驱动研究平台。所有配置在本地生成——数据不会离开你的浏览器。"
-  },
-  de: {
-    subtitle: "Konfigurieren Sie Ihre KI-gestützte Forschungsplattform in wenigen Minuten. Alle Konfigurationen werden lokal generiert — keine Daten verlassen Ihren Browser."
-  }
-};
-
+// Language switching (minimal implementation for this page)
 function switchLang(lang) {
-  if (!i18n[lang]) return;
-  localStorage.setItem('asrp-setup-lang', lang);
-  document.getElementById('subtitle').textContent = i18n[lang].subtitle;
-  
-  // Update current-lang display
+  localStorage.setItem('asrp-lang', lang);
   const langNames = { en: 'EN', zh: '中文', zht: '繁體', de: 'DE' };
   document.getElementById('current-lang').textContent = langNames[lang] || 'EN';
   
@@ -1171,257 +625,58 @@ function switchLang(lang) {
   });
   
   // Close dropdown
-  document.getElementById('lang-menu')?.classList.remove('show');
+  var lm = document.getElementById('lang-menu'); 
+  if(lm) lm.classList.remove('show');
 }
 
 // Initialize language
 document.addEventListener('DOMContentLoaded', function() {
-  const savedLang = localStorage.getItem('asrp-setup-lang') || 'en';
+  const savedLang = localStorage.getItem('asrp-lang') || 'en';
   switchLang(savedLang);
 });
 
-// Toggle tool checkbox
-function toggleTool(element) {
-  const checkbox = element.querySelector('input[type="checkbox"]');
-  if (!checkbox.disabled) {
-    checkbox.checked = !checkbox.checked;
-    element.classList.toggle('checked', checkbox.checked);
-  }
-}
+// Platform selection
+let selectedPlatform = null;
 
-// Get configuration
-function getConfig() {
-  const tools = [];
-  document.querySelectorAll('.tool-item input[type="checkbox"]:checked').forEach(cb => {
-    tools.push(cb.dataset.tool);
+const commands = {
+  mac: 'curl -fsSL https://asrp.jzis.org/install.sh | bash',
+  linux: 'curl -fsSL https://asrp.jzis.org/install.sh | bash',
+  windows: 'irm https://asrp.jzis.org/install.ps1 | iex'
+};
+
+function selectPlatform(platform) {
+  selectedPlatform = platform;
+  
+  // Update card selection
+  document.querySelectorAll('.platform-card').forEach(card => {
+    card.classList.remove('selected');
   });
-
-  return {
-    api_keys: {
-      anthropic: document.getElementById('key-anthropic').value.trim() || '',
-      google: document.getElementById('key-google').value.trim() || '',
-      openai: document.getElementById('key-openai').value.trim() || '',
-      openrouter: document.getElementById('key-openrouter').value.trim() || '',
-    },
-    agents: {
-      theorist: {
-        name: document.getElementById('name-theorist').value,
-        model: document.getElementById('model-theorist').value,
-        thinking: document.getElementById('think-theorist').value
-      },
-      engineer: {
-        name: document.getElementById('name-engineer').value,
-        model: document.getElementById('model-engineer').value,
-        thinking: document.getElementById('think-engineer').value
-      },
-      reviewer: {
-        name: document.getElementById('name-reviewer').value,
-        model: document.getElementById('model-reviewer').value,
-        thinking: document.getElementById('think-reviewer').value,
-        read_only: true
-      },
-      librarian: {
-        name: document.getElementById('name-librarian').value,
-        model: document.getElementById('model-librarian').value,
-        thinking: document.getElementById('think-librarian').value
-      },
-      itdoctor: {
-        name: document.getElementById('name-itdoctor').value,
-        model: document.getElementById('model-itdoctor').value,
-        heartbeat_interval: parseInt(document.getElementById('itdoc-interval').value)
-      },
-    },
-    channel: document.getElementById('channel-type').value,
-    tools: tools
-  };
+  event.currentTarget.classList.add('selected');
+  
+  // Update command
+  document.getElementById('install-command').textContent = commands[platform];
 }
 
-// Resolve auto model selection
-function resolveModel(agent, cfg) {
-  const m = cfg.agents[agent].model;
-  if (m !== 'auto') return m;
-  
-  const hasAnthropic = !!cfg.api_keys.anthropic;
-  const hasGoogle = !!cfg.api_keys.google;
-  const hasOpenAI = !!cfg.api_keys.openai;
-  
-  const mapping = {
-    theorist: hasAnthropic ? 'anthropic/claude-opus-4-6' : hasGoogle ? 'google/gemini-2.5-pro' : 'openai/o3',
-    engineer: hasAnthropic ? 'anthropic/claude-sonnet-4-5' : hasGoogle ? 'google/gemini-2.5-flash' : 'openai/gpt-4o',
-    reviewer: hasAnthropic ? 'anthropic/claude-opus-4-6' : hasGoogle ? 'google/gemini-2.5-pro' : 'openai/o3',
-    librarian: hasGoogle ? 'google/gemini-2.5-flash' : hasAnthropic ? 'anthropic/claude-sonnet-4-5' : 'openai/gpt-4o-mini',
-    itdoctor: hasGoogle ? 'google/gemini-2.5-flash' : hasAnthropic ? 'anthropic/claude-haiku-4-5' : 'openai/gpt-4o-mini',
-  };
-  
-  return mapping[agent] || 'anthropic/claude-sonnet-4-5';
-}
-
-// Generate YAML config
-function generateYAML(cfg) {
-  let yaml = `# ASRP Configuration — Generated by Setup Wizard\n`;
-  yaml += `# ${new Date().toISOString()}\n\n`;
-  yaml += `deployment:\n  mode: "single"\n  workspace: "./workspace"\n  channel: "${cfg.channel}"\n\n`;
-  yaml += `agents:\n`;
-  
-  for (const [role, a] of Object.entries(cfg.agents)) {
-    const model = resolveModel(role, cfg);
-    yaml += `  ${role}:\n    name: "${a.name}"\n    model: "${model}"\n`;
-    if (a.thinking) yaml += `    thinking: "${a.thinking}"\n`;
-    if (a.read_only) yaml += `    read_only: true\n`;
-    if (a.heartbeat_interval) yaml += `    heartbeat_interval: ${a.heartbeat_interval}\n`;
-  }
-  
-  yaml += `\nfallback:\n  provider: "openrouter"\n  enabled: ${!!cfg.api_keys.openrouter}\n`;
-  yaml += `\nresearch:\n  require_preregistration: true\n  require_cross_validation: true\n  max_parallel_lines: 3\n`;
-  
-  return yaml;
-}
-
-// Generate .env file
-function generateEnv(cfg) {
-  let env = `# ASRP Environment — Generated by Setup Wizard\n`;
-  env += `# ${new Date().toISOString()}\n\n`;
-  
-  if (cfg.api_keys.anthropic) env += `ANTHROPIC_API_KEY=${cfg.api_keys.anthropic}\n`;
-  if (cfg.api_keys.google) env += `GOOGLE_API_KEY=${cfg.api_keys.google}\n`;
-  if (cfg.api_keys.openai) env += `OPENAI_API_KEY=${cfg.api_keys.openai}\n`;
-  if (cfg.api_keys.openrouter) env += `OPENROUTER_API_KEY=${cfg.api_keys.openrouter}\n`;
-  
-  return env;
-}
-
-// Generate install script
-function generateInstallScript(cfg) {
-  let sh = `#!/bin/bash\n# ASRP Tool Installation Script\n# Generated by Setup Wizard\n`;
-  sh += `set -e\n\necho "Installing ASRP tools..."\n\n`;
-  
-  const cmds = {
-    python3: '# Python 3 — assumed pre-installed\npython3 --version',
-    numpy: 'pip install numpy scipy',
-    matplotlib: 'pip install matplotlib',
-    git: '# Git — assumed pre-installed\ngit --version',
-    latex: 'pip install tectonic || echo "Install tectonic from https://tectonic-typesetting.github.io/"',
-    idea: 'pip install iDEA-latest',
-    himalaya: 'echo "Install himalaya from https://github.com/pimalaya/himalaya"',
-    rclone: 'curl https://rclone.org/install.sh | bash || echo "Install rclone from https://rclone.org/"',
-    jq: 'apt-get install -y jq 2>/dev/null || brew install jq 2>/dev/null || echo "Install jq manually"',
-    'pdf-tools': 'pip install opendataloader-pdf',
-    whisper: 'pip install openai-whisper',
-    ytdlp: 'pip install yt-dlp',
-    ffmpeg: 'apt-get install -y ffmpeg 2>/dev/null || brew install ffmpeg 2>/dev/null || echo "Install ffmpeg manually"',
-    redis: 'apt-get install -y redis-server 2>/dev/null || brew install redis 2>/dev/null || echo "Install redis manually"',
-    docker: 'echo "Install Docker from https://docs.docker.com/get-docker/"',
-    memsearch: 'echo "Install memsearch — see ASRP docs"',
-  };
-  
-  for (const tool of cfg.tools) {
-    if (cmds[tool]) {
-      sh += `echo "→ ${tool}"\n${cmds[tool]}\n\n`;
-    }
-  }
-  
-  sh += `echo "✅ Installation complete"\n`;
-  return sh;
-}
-
-// Preview configuration
-function previewConfig() {
-  const cfg = getConfig();
-  const keys = Object.values(cfg.api_keys).filter(Boolean).length;
-  
-  if (keys < 2) {
-    alert('⚠️ Please provide at least 2 API keys for redundancy.\n\nMultiple providers ensure your research workflow continues uninterrupted if one service experiences downtime.');
+function copyCommand() {
+  if (!selectedPlatform) {
+    alert('Please select a platform first');
     return;
   }
-
-  const output = document.getElementById('output');
-  output.classList.add('show');
-  output.textContent = `=== config.yaml ===\n${generateYAML(cfg)}\n\n=== .env ===\n${generateEnv(cfg)}\n\n=== install-tools.sh ===\n${generateInstallScript(cfg)}`;
   
-  // Scroll to output
-  output.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-}
-
-// Generate and download configuration
-function generateConfig() {
-  const cfg = getConfig();
-  const keys = Object.values(cfg.api_keys).filter(Boolean).length;
-  
-  if (keys < 2) {
-    alert('⚠️ Please provide at least 2 API keys for redundancy.\n\nMultiple providers ensure your research workflow continues uninterrupted if one service experiences downtime.');
-    return;
-  }
-
-  const files = {
-    'config.yaml': generateYAML(cfg),
-    '.env': generateEnv(cfg),
-    'install-tools.sh': generateInstallScript(cfg),
-  };
-
-  // Download each file
-  for (const [name, content] of Object.entries(files)) {
-    const blob = new Blob([content], { type: 'text/plain' });
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = name;
-    a.click();
-    URL.revokeObjectURL(a.href);
-  }
-
-  // Mark setup as complete
-  localStorage.setItem('asrp-setup-complete', 'true');
-
-  // Show success message with dashboard link
-  const output = document.getElementById('output');
-  output.classList.add('show');
-  output.innerHTML = `✅ Configuration files downloaded successfully!\n\n` +
-    `Files generated:\n` +
-    `  • config.yaml    — ASRP agent configuration\n` +
-    `  • .env           — API keys (keep secure!)\n` +
-    `  • install-tools.sh — Tool installation script\n\n` +
-    `Next steps:\n` +
-    `  1. Move these files to your ASRP workspace directory\n` +
-    `  2. Run: chmod +x install-tools.sh && ./install-tools.sh\n` +
-    `  3. Run: asrp init\n` +
-    `  4. Register your first experiment: asrp register\n` +
-    `  5. Start researching!\n\n` +
-    `🎉 Setup complete! <a href="dashboard.html" style="color:var(--accent);font-weight:bold;">Go to Dashboard →</a>\n\n` +
-    `Need help? Join our Discord: https://discord.gg/DFmwBkDTB`;
-  
-  // Scroll to output
-  output.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-}
-
-// Progress bar interaction
-document.querySelectorAll('.section').forEach((s, i) => {
-  s.addEventListener('click', () => {
-    document.querySelectorAll('.progress-step').forEach((p, j) => {
-      if (j <= i) {
-        p.classList.add('active');
-      }
-      if (j < i) {
-        p.classList.add('done');
-      }
-    });
+  const command = commands[selectedPlatform];
+  navigator.clipboard.writeText(command).then(() => {
+    const btn = document.querySelector('.copy-btn');
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    
+    setTimeout(() => {
+      btn.textContent = 'Copy';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(err => {
+    alert('Failed to copy: ' + err);
   });
-});
-
-// Auth check on page load
-document.addEventListener('DOMContentLoaded', function() {
-  // Check if user is logged in
-  if (!Auth.isLoggedIn()) {
-    // Show message and redirect to login
-    const message = new URLSearchParams(window.location.search).get('message');
-    if (message) {
-      alert(message);
-    }
-    // Allow anonymous access to setup wizard, but prompt to login
-    const shouldLogin = confirm('You need to login or create an account to save your setup. Would you like to login now?');
-    if (shouldLogin) {
-      window.location.href = 'login.html';
-    }
-  }
-});
+}
 </script>
 
 </body>
