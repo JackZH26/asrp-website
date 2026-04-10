@@ -3,10 +3,49 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ASRP — Agent Science Research Platform</title>
-<meta name="description" content="Open-source framework that turns AI agents into rigorous research collaborators. Experiment registration, cross-validation, audit trails.">
-<link rel="icon" href="favicon.ico" type="image/x-icon">
+<title>ASRP — AI Scientific Research Platform</title>
+<meta name="description" content="ASRP is an open-source AI Scientific Research Platform. A 3-agent research team that pre-registers experiments, cross-validates results, and audits every decision. Discord-native, runs locally, Apache 2.0.">
+<meta name="keywords" content="AI research, scientific research platform, AI agents, multi-agent, pre-registration, cross-validation, reproducibility, open science, Discord, Ollama, Claude, ASRP">
+
+<!-- Favicons -->
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="alternate icon" href="favicon.ico">
+
+<!-- Open Graph / Twitter -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://asrp.jzis.org/">
+<meta property="og:title" content="ASRP — AI Scientific Research Platform">
+<meta property="og:description" content="A 3-agent research team that pre-registers, cross-validates, and audits every decision. Open source, Discord-native, runs locally.">
+<meta property="og:image" content="https://asrp.jzis.org/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ASRP — AI Scientific Research Platform">
+<meta name="twitter:description" content="A 3-agent research team that pre-registers, cross-validates, and audits every decision.">
+<meta name="twitter:image" content="https://asrp.jzis.org/og-image.png">
+
+<!-- JSON-LD: SoftwareApplication -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "ASRP",
+  "alternateName": "AI Scientific Research Platform",
+  "applicationCategory": "ScienceApplication",
+  "operatingSystem": "macOS, Windows, Linux",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "license": "https://www.apache.org/licenses/LICENSE-2.0",
+  "url": "https://asrp.jzis.org",
+  "downloadUrl": "https://github.com/JackZH26/ASRP-JZIS/releases/latest",
+  "softwareVersion": "0.3.13",
+  "publisher": { "@type": "Organization", "name": "JZ Institute of Science", "url": "https://www.jzis.org" },
+  "description": "Open-source AI Scientific Research Platform — a 3-agent research team (Theorist, Engineer, Reviewer) that pre-registers experiments, cross-validates results, and audits every decision. Discord-native, runs locally."
+}
+</script>
+
 <style>
 /* ========== VARIABLES ========== */
 :root {
@@ -15,657 +54,247 @@
   --card: #ffffff;
   --card-alt: #f8faf8;
   --border: #d4e4d4;
-  --border-hover: #4a8c6a;
+  --border-hover: #3A7D5C;
   --text: #2d3b2d;
   --text-secondary: #5a6b5a;
   --text-tertiary: #6b7c6b;
-  --accent: #4a8c6a;
-  --accent-muted: #3d7559;
-  --accent-light: rgba(74, 140, 106, 0.08);
-  --success: #4a8c6a;
+  --accent: #3A7D5C;
+  --accent-deep: #24503A;
+  --accent-light: rgba(58, 125, 92, 0.08);
+  --accent-soft: rgba(58, 125, 92, 0.16);
+  --success: #3A7D5C;
   --warning: #b89a4a;
   --error: #c45c5c;
-  --gradient: linear-gradient(135deg, #7bc4a0, #4a8c6a);
-  --gradient-text: linear-gradient(135deg, #4a8c6a, #2d6b4a);
+  --gradient: linear-gradient(135deg, #4ea27a, #24503A);
+  --gradient-text: linear-gradient(135deg, #3A7D5C, #24503A);
   --code-bg: #e8f0e8;
-  --code-text: #2d5a3d;
-  --shadow: 0 2px 8px rgba(74, 140, 106, 0.06);
-  --shadow-hover: 0 4px 16px rgba(74, 140, 106, 0.12);
+  --code-text: #24503A;
+  --shadow: 0 2px 8px rgba(36, 80, 58, 0.06);
+  --shadow-hover: 0 8px 24px rgba(36, 80, 58, 0.14);
 }
 
-/* ========== RESET ========== */
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Helvetica, Arial, sans-serif;
   background: var(--bg);
   color: var(--text);
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
 }
-
-/* ========== TYPOGRAPHY ========== */
-h1, h2, h3, h4, h5, h6 {
-  font-weight: 600;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  color: var(--text);
-}
-
-h1 { font-size: clamp(2.5rem, 5vw, 3.5rem); }
-h2 { font-size: clamp(1.875rem, 4vw, 2.25rem); }
+h1, h2, h3, h4, h5, h6 { font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; color: var(--text); }
+h1 { font-size: clamp(2.5rem, 5vw, 3.75rem); }
+h2 { font-size: clamp(1.875rem, 4vw, 2.5rem); }
 h3 { font-size: 1.25rem; }
 h4 { font-size: 1.0625rem; }
-
 p { color: var(--text-secondary); }
+a { color: var(--accent); text-decoration: none; transition: color 0.2s ease; }
+a:hover { color: var(--accent-deep); }
+code, pre { font-family: 'SF Mono', 'Menlo', 'Monaco', 'Courier New', monospace; font-size: 0.875rem; }
 
-code, pre {
-  font-family: 'SF Mono', 'Menlo', 'Monaco', 'Courier New', monospace;
-  font-size: 0.875rem;
-}
+.container { max-width: 1120px; margin: 0 auto; padding: 0 2rem; }
+@media (max-width: 768px) { .container { padding: 0 1.25rem; } }
 
-a {
-  color: var(--accent);
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-a:hover {
-  color: var(--accent-muted);
-}
-
-/* ========== LAYOUT ========== */
-.container {
-  max-width: 1120px;
-  margin: 0 auto;
-  padding: 0 2rem;
-}
-
-@media (max-width: 768px) {
-  .container {
-    padding: 0 1.25rem;
-  }
-}
-
-/* ========== NAVIGATION ========== */
+/* ========== NAV ========== */
 nav {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 100;
-  background: rgba(240, 245, 240, 0.9);
+  position: fixed; top: 0; width: 100%; z-index: 100;
+  background: rgba(240, 245, 240, 0.85);
   backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
   border-bottom: 1px solid var(--border);
 }
-
-nav .inner {
-  max-width: 1120px;
-  margin: 0 auto;
-  padding: 1rem 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-nav .logo {
-  display: flex;
-  align-items: center;
-  gap: 0.625rem;
-  font-size: 1.0625rem;
-  font-weight: 600;
-  color: var(--text);
-}
-
-
-nav .links {
-  display: flex;
-  gap: 2rem;
-  align-items: center;
-  font-size: 0.9375rem;
-}
-
-nav .links a {
-  color: var(--text-secondary);
-  transition: color 0.2s ease;
-}
-
-nav .links a:hover {
-  color: var(--text);
-}
-
+nav .inner { max-width: 1120px; margin: 0 auto; padding: 0.875rem 2rem; display: flex; align-items: center; justify-content: space-between; }
+nav .logo { display: flex; align-items: center; gap: 0.625rem; font-size: 1.125rem; font-weight: 700; color: var(--text); letter-spacing: -0.02em; }
+nav .logo img { height: 32px; width: 32px; display: block; }
+nav .links { display: flex; gap: 1.75rem; align-items: center; font-size: 0.9375rem; }
+nav .links a { color: var(--text-secondary); transition: color 0.2s ease; }
+nav .links a:hover { color: var(--text); }
 @media (max-width: 768px) {
-  nav .inner {
-    padding: 1rem 1.25rem;
-  }
-  
-  nav .links {
-    gap: 1rem;
-  }
-  
-  nav .links .hide-mobile {
-    display: none;
-  }
+  nav .inner { padding: 0.875rem 1.25rem; }
+  nav .links { gap: 0.875rem; }
+  nav .links .hide-mobile { display: none; }
 }
 
 /* ========== BUTTONS ========== */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.625rem 1.25rem;
-  border-radius: 8px;
-  font-weight: 500;
-  font-size: 0.9375rem;
-  transition: all 0.2s ease;
-  cursor: pointer;
-  border: none;
-}
-
-.btn-primary {
-  background: var(--gradient);
-  color: white;
-}
-
-.btn-primary:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(74, 140, 106, 0.3);
-}
-
-.btn-outline {
-  border: 1px solid var(--border);
-  color: var(--text);
-  background: white;
-}
-
-.btn-outline:hover {
-  border-color: var(--accent);
-  background: var(--card-alt);
-}
-
-.btn-sm {
-  padding: 0.375rem 1rem;
-  font-size: 0.875rem;
-}
+.btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6875rem 1.25rem; border-radius: 10px; font-weight: 600; font-size: 0.9375rem; transition: all 0.2s ease; cursor: pointer; border: none; text-align: left; }
+.btn-primary { background: var(--gradient); color: white; }
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(36, 80, 58, 0.28); color: white; }
+.btn-outline { border: 1px solid var(--border); color: var(--text); background: white; }
+.btn-outline:hover { border-color: var(--accent); background: var(--card-alt); }
+.btn-sm { padding: 0.4375rem 0.875rem; font-size: 0.875rem; border-radius: 8px; }
 
 /* ========== HERO ========== */
-.hero {
-  padding: 10rem 0 6rem;
-  text-align: center;
-}
+.hero { padding: 9rem 0 5rem; text-align: center; }
+.hero .badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.375rem 1rem; border-radius: 24px; font-size: 0.8125rem; font-weight: 600; background: var(--accent-light); color: var(--accent); margin-bottom: 1.5rem; border: 1px solid var(--border); }
+.hero h1 { font-weight: 800; line-height: 1.05; margin-bottom: 1.5rem; max-width: 920px; margin-left: auto; margin-right: auto; letter-spacing: -0.035em; }
+.hero h1 .gradient-text { background: var(--gradient-text); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.hero .subtitle { font-size: 1.1875rem; color: var(--text-secondary); max-width: 700px; margin: 0 auto 2.5rem; line-height: 1.65; }
+.hero .actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 3rem; align-items: stretch; }
+.hero .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 2rem; max-width: 760px; margin: 0 auto; }
+.hero .stat { text-align: center; }
+.hero .stat .num { font-size: 2.5rem; font-weight: 800; background: var(--gradient-text); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; margin-bottom: 0.375rem; }
+.hero .stat .label { font-size: 0.8125rem; color: var(--text-tertiary); letter-spacing: 0.02em; text-transform: uppercase; font-weight: 600; }
 
-.hero .badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.375rem 1rem;
-  border-radius: 24px;
-  font-size: 0.8125rem;
-  font-weight: 500;
-  background: var(--accent-light);
-  color: var(--accent);
-  margin-bottom: 1.5rem;
-  border: 1px solid var(--border);
-}
-
-.hero h1 {
-  font-weight: 700;
-  line-height: 1.1;
-  margin-bottom: 1.5rem;
-  max-width: 900px;
-  margin-left: auto;
-  margin-right: auto;
-  letter-spacing: -0.03em;
-}
-
-.hero h1 .gradient-text {
-  background: var(--gradient-text);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.hero .subtitle {
-  font-size: 1.125rem;
-  color: var(--text-secondary);
-  max-width: 640px;
-  margin: 0 auto 2.5rem;
-  line-height: 1.75;
-}
-
-.hero .actions {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-bottom: 4rem;
-}
-
-.hero .stats {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 2.5rem;
-  max-width: 700px;
-  margin: 0 auto;
-}
-
-.hero .stat {
-  text-align: center;
-}
-
-.hero .stat .num {
-  font-size: 2.5rem;
-  font-weight: 700;
-  background: var(--gradient-text);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  line-height: 1;
-  margin-bottom: 0.5rem;
-}
-
-.hero .stat .label {
-  font-size: 0.875rem;
-  color: var(--text-tertiary);
-  letter-spacing: 0.02em;
-}
+/* ========== DOWNLOAD BUTTON (smart) ========== */
+.dl-btn { padding: 0.875rem 1.5rem; flex-direction: column; align-items: flex-start; gap: 0.125rem; min-width: 240px; }
+.dl-btn .dl-row1 { display: flex; align-items: center; gap: 0.5rem; font-size: 1rem; font-weight: 700; }
+.dl-btn .dl-row2 { font-size: 0.75rem; opacity: 0.85; font-weight: 500; letter-spacing: 0.01em; }
+.dl-btn .dl-row2 [data-dl-version] { font-family: 'SF Mono', monospace; }
+.dl-others { margin-top: 1.25rem; display: flex; flex-direction: column; gap: 0.375rem; max-width: 380px; margin-left: auto; margin-right: auto; }
+.dl-other { display: flex; justify-content: space-between; align-items: center; padding: 0.625rem 1rem; background: var(--card); border: 1px solid var(--border); border-radius: 8px; font-size: 0.875rem; transition: all 0.2s; }
+.dl-other:hover { border-color: var(--accent); background: var(--card-alt); }
+.dl-other-os { font-weight: 600; color: var(--text); }
+.dl-other-name { color: var(--text-tertiary); font-family: 'SF Mono', monospace; font-size: 0.75rem; }
 
 /* ========== SECTIONS ========== */
-section {
-  padding: 6rem 0;
-}
+section { padding: 5.5rem 0; }
+section h2 { text-align: center; margin-bottom: 1rem; }
+section .section-eyebrow { text-align: center; color: var(--accent); font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.75rem; }
+section .section-subtitle { text-align: center; color: var(--text-secondary); font-size: 1.0625rem; max-width: 680px; margin: 0 auto 3.5rem; line-height: 1.65; }
+.section-alt { background: var(--surface); }
 
-section h2 {
-  text-align: center;
-  margin-bottom: 1rem;
-  font-weight: 600;
-}
+/* ========== PROBLEM ========== */
+.problem-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; max-width: 980px; margin: 0 auto; }
+@media (max-width: 768px) { .problem-grid { grid-template-columns: 1fr; } }
+.problem-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1.75rem; text-align: center; }
+.problem-card .stat-num { font-size: 2.25rem; font-weight: 800; color: var(--accent); line-height: 1; margin-bottom: 0.5rem; }
+.problem-card p { font-size: 0.9375rem; line-height: 1.55; }
 
-section .section-subtitle {
-  text-align: center;
-  color: var(--text-secondary);
-  font-size: 1.0625rem;
-  max-width: 640px;
-  margin: 0 auto 3.5rem;
-  line-height: 1.65;
-}
+/* ========== SRW PHASES ========== */
+.srw-wrap { max-width: 1000px; margin: 0 auto; }
+.srw-phases { display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.625rem; position: relative; }
+@media (max-width: 900px) { .srw-phases { grid-template-columns: repeat(2, 1fr); } }
+.srw-phase { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 0.75rem; text-align: center; transition: all 0.2s; position: relative; }
+.srw-phase:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: var(--shadow-hover); }
+.srw-phase .num { display: inline-block; width: 28px; height: 28px; line-height: 28px; border-radius: 50%; background: var(--accent-light); color: var(--accent); font-weight: 700; font-size: 0.8125rem; margin-bottom: 0.5rem; }
+.srw-phase.active .num { background: var(--gradient); color: white; }
+.srw-phase h4 { font-size: 0.8125rem; font-weight: 700; margin-bottom: 0.25rem; color: var(--text); }
+.srw-phase p { font-size: 0.6875rem; color: var(--text-tertiary); line-height: 1.4; }
+.srw-meta { margin-top: 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+@media (max-width: 768px) { .srw-meta { grid-template-columns: 1fr; } }
+.srw-meta-card { background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 10px; padding: 1.25rem 1.5rem; }
+.srw-meta-card h4 { font-size: 0.9375rem; margin-bottom: 0.375rem; color: var(--text); }
+.srw-meta-card p { font-size: 0.875rem; line-height: 1.55; }
 
-.section-alt {
-  background: var(--surface);
-}
+/* ========== AGENT ROLES (3) ========== */
+.roles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; max-width: 1000px; margin: 0 auto; }
+@media (max-width: 768px) { .roles { grid-template-columns: 1fr; } }
+.role { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 2rem 1.75rem; transition: all 0.2s ease; box-shadow: var(--shadow); }
+.role:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: var(--shadow-hover); }
+.role .role-icon { width: 52px; height: 52px; margin-bottom: 1.125rem; border-radius: 12px; background: var(--accent-light); display: flex; align-items: center; justify-content: center; }
+.role .role-icon svg { width: 26px; height: 26px; stroke: var(--accent); fill: none; stroke-width: 2; }
+.role .role-name { font-size: 1.25rem; font-weight: 700; margin-bottom: 0.25rem; color: var(--text); }
+.role .role-model { display: inline-block; font-size: 0.6875rem; font-weight: 700; padding: 0.125rem 0.5rem; border-radius: 4px; background: var(--accent-soft); color: var(--accent-deep); margin-bottom: 0.875rem; letter-spacing: 0.02em; text-transform: uppercase; }
+.role p { font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 0.75rem; }
+.role ul { list-style: none; margin-top: 0.5rem; padding: 0; }
+.role ul li { font-size: 0.8125rem; color: var(--text-tertiary); padding: 0.25rem 0 0.25rem 1rem; position: relative; }
+.role ul li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+
+/* ========== DISCORD CARD ========== */
+.discord-wrap { max-width: 920px; margin: 0 auto; display: grid; grid-template-columns: 1.1fr 1fr; gap: 2rem; align-items: center; }
+@media (max-width: 768px) { .discord-wrap { grid-template-columns: 1fr; } }
+.discord-text h3 { font-size: 1.75rem; margin-bottom: 1rem; line-height: 1.2; }
+.discord-text p { font-size: 1rem; line-height: 1.65; margin-bottom: 1.25rem; }
+.discord-text ul { list-style: none; padding: 0; }
+.discord-text ul li { padding: 0.375rem 0 0.375rem 1.75rem; position: relative; font-size: 0.9375rem; color: var(--text-secondary); }
+.discord-text ul li::before { content: '✓'; position: absolute; left: 0; top: 0.375rem; color: var(--accent); font-weight: 700; width: 20px; height: 20px; line-height: 20px; text-align: center; background: var(--accent-light); border-radius: 50%; font-size: 0.75rem; }
+.discord-mock { background: #36393f; border-radius: 14px; padding: 1.25rem; box-shadow: 0 16px 48px rgba(0,0,0,0.18); font-size: 0.8125rem; color: #dcddde; line-height: 1.5; }
+.discord-mock .channel { color: #8e9297; font-size: 0.75rem; margin-bottom: 0.75rem; padding-bottom: 0.625rem; border-bottom: 1px solid #2e3034; }
+.discord-mock .channel b { color: #fff; }
+.discord-mock .msg { display: flex; gap: 0.625rem; margin-bottom: 0.875rem; }
+.discord-mock .msg .av { width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-weight: 700; color: white; font-size: 0.75rem; }
+.discord-mock .msg .body { flex: 1; min-width: 0; }
+.discord-mock .msg .name { font-weight: 600; color: #fff; font-size: 0.8125rem; margin-bottom: 0.125rem; }
+.discord-mock .msg .name .role-tag { font-size: 0.625rem; padding: 0.0625rem 0.375rem; border-radius: 3px; margin-left: 0.375rem; vertical-align: middle; }
+.discord-mock .msg .text { color: #dcddde; font-size: 0.8125rem; }
+.discord-mock .msg .text .mention { background: rgba(88, 101, 242, 0.3); color: #c9cdfb; padding: 0 0.25rem; border-radius: 3px; }
 
 /* ========== FEATURE CARDS ========== */
-.features {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 1.5rem;
-}
+.features { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+.feature { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.875rem; transition: all 0.2s ease; box-shadow: var(--shadow); }
+.feature:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: var(--shadow-hover); }
+.feature .icon { width: 44px; height: 44px; margin-bottom: 1.125rem; border-radius: 10px; background: var(--accent-light); display: flex; align-items: center; justify-content: center; }
+.feature .icon svg { width: 22px; height: 22px; stroke: var(--accent); fill: none; stroke-width: 2; }
+.feature h3 { font-size: 1.0625rem; margin-bottom: 0.625rem; }
+.feature p { font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.6; }
 
-.feature {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 2rem;
-  transition: all 0.2s ease;
-  box-shadow: var(--shadow);
-}
+/* ========== PIPELINE ========== */
+.pipeline { display: flex; align-items: stretch; gap: 0.5rem; max-width: 1000px; margin: 0 auto; flex-wrap: wrap; }
+.pipeline-step { flex: 1; min-width: 130px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 1.125rem 0.875rem; text-align: center; position: relative; transition: all 0.2s; }
+.pipeline-step:hover { border-color: var(--accent); transform: translateY(-2px); }
+.pipeline-step .icon { width: 36px; height: 36px; margin: 0 auto 0.625rem; border-radius: 8px; background: var(--accent-light); color: var(--accent); display: flex; align-items: center; justify-content: center; font-weight: 700; }
+.pipeline-step h4 { font-size: 0.8125rem; font-weight: 700; margin-bottom: 0.25rem; color: var(--text); }
+.pipeline-step p { font-size: 0.6875rem; color: var(--text-tertiary); line-height: 1.4; }
 
-.feature:hover {
-  border-color: var(--accent);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-hover);
-}
+/* ========== CHALLENGE ========== */
+.challenge-wrap { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: center; }
+@media (max-width: 768px) { .challenge-wrap { grid-template-columns: 1fr; } }
+.challenge-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 0.875rem; }
+.challenge-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; text-align: center; transition: all 0.2s; }
+.challenge-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: var(--shadow-hover); }
+.challenge-card .icon { font-size: 2rem; margin-bottom: 0.5rem; }
+.challenge-card h4 { font-size: 0.9375rem; margin-bottom: 0.125rem; color: var(--text); }
+.challenge-card .count { font-size: 0.75rem; color: var(--accent); font-weight: 700; }
 
-.feature .icon {
-  width: 40px;
-  height: 40px;
-  margin-bottom: 1.25rem;
-  border-radius: 8px;
-  background: var(--accent-light);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.feature .icon svg {
-  width: 20px;
-  height: 20px;
-  stroke: var(--accent);
-  fill: none;
-  stroke-width: 2;
-}
-
-.feature h3 {
-  font-size: 1.125rem;
-  margin-bottom: 0.75rem;
-  font-weight: 600;
-  color: var(--text);
-}
-
-.feature p {
-  font-size: 0.9375rem;
-  color: var(--text-secondary);
-  line-height: 1.65;
-}
-
-/* ========== AGENT ROLES ========== */
-.roles {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 1rem;
-  max-width: 1000px;
-  margin: 0 auto;
-}
-
-@media (max-width: 768px) {
-  .roles {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-.role {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 1.75rem 1.25rem;
-  text-align: center;
-  transition: all 0.2s ease;
-  box-shadow: var(--shadow);
-}
-
-.role:hover {
-  border-color: var(--accent);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-hover);
-}
-
-.role .role-icon {
-  width: 48px;
-  height: 48px;
-  margin: 0 auto 1rem;
-  border-radius: 50%;
-  background: var(--accent-light);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.role .role-icon svg {
-  width: 24px;
-  height: 24px;
-  stroke: var(--accent);
-  fill: none;
-  stroke-width: 2;
-}
-
-.role h4 {
-  font-size: 1rem;
-  margin-bottom: 0.375rem;
-  font-weight: 600;
-  color: var(--text);
-}
-
-.role p {
-  font-size: 0.8125rem;
-  color: var(--text-tertiary);
-  line-height: 1.5;
-}
+/* ========== LOCAL AI ========== */
+.local-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; max-width: 1000px; margin: 0 auto; align-items: center; }
+@media (max-width: 768px) { .local-wrap { grid-template-columns: 1fr; } }
+.local-features { display: grid; grid-template-columns: 1fr 1fr; gap: 0.875rem; }
+.local-feature { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 1.125rem; }
+.local-feature .icon { font-size: 1.25rem; margin-bottom: 0.375rem; }
+.local-feature h4 { font-size: 0.875rem; margin-bottom: 0.25rem; color: var(--text); }
+.local-feature p { font-size: 0.75rem; color: var(--text-tertiary); line-height: 1.45; }
 
 /* ========== CASE STUDY ========== */
-.case-study {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 3rem;
-  max-width: 800px;
-  margin: 0 auto;
-  box-shadow: var(--shadow);
-}
-
-.case-study h3 {
-  font-size: 1.375rem;
-  margin-bottom: 2rem;
-  font-weight: 600;
-}
-
-.timeline {
-  border-left: 2px solid var(--accent);
-  padding-left: 1.5rem;
-  margin: 1.5rem 0;
-}
-
-.timeline .event {
-  margin-bottom: 1.5rem;
-  position: relative;
-}
-
-.timeline .event::before {
-  content: '';
-  position: absolute;
-  left: -1.875rem;
-  top: 0.375rem;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--accent);
-  border: 2px solid var(--bg);
-}
-
-.timeline .event.error::before {
-  background: var(--error);
-}
-
-.timeline .event.fix::before {
-  background: var(--success);
-}
-
-.timeline .time {
-  font-size: 0.8125rem;
-  color: var(--text-tertiary);
-  font-family: 'SF Mono', monospace;
-  margin-bottom: 0.25rem;
-  letter-spacing: 0.02em;
-}
-
-.timeline .desc {
-  font-size: 0.9375rem;
-  color: var(--text-secondary);
-  line-height: 1.65;
-}
-
-.timeline .desc strong {
-  color: var(--text);
-  font-weight: 600;
-}
-
-.case-study .note {
-  margin-top: 2rem;
-  padding: 1.25rem;
-  background: var(--accent-light);
-  border-radius: 8px;
-  border-left: 3px solid var(--accent);
-  font-size: 0.9375rem;
-  color: var(--text-secondary);
-  line-height: 1.65;
-}
+.case-study { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 3rem; max-width: 820px; margin: 0 auto; box-shadow: var(--shadow); }
+@media (max-width: 768px) { .case-study { padding: 2rem 1.5rem; } }
+.case-study h3 { font-size: 1.375rem; margin-bottom: 2rem; }
+.timeline { border-left: 2px solid var(--accent); padding-left: 1.5rem; margin: 1.5rem 0; }
+.timeline .event { margin-bottom: 1.5rem; position: relative; }
+.timeline .event::before { content: ''; position: absolute; left: -1.875rem; top: 0.375rem; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); border: 2px solid var(--bg); }
+.timeline .event.error::before { background: var(--error); }
+.timeline .event.fix::before { background: var(--success); }
+.timeline .time { font-size: 0.8125rem; color: var(--text-tertiary); font-family: 'SF Mono', monospace; margin-bottom: 0.25rem; letter-spacing: 0.02em; }
+.timeline .desc { font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.65; }
+.timeline .desc strong { color: var(--text); font-weight: 600; }
+.case-study .note { margin-top: 2rem; padding: 1.25rem; background: var(--accent-light); border-radius: 10px; border-left: 3px solid var(--accent); font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.65; }
 
 /* ========== STEPS ========== */
-.steps {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 2rem;
-  max-width: 1000px;
-  margin: 0 auto;
-}
-
-@media (max-width: 768px) {
-  .steps {
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-  }
-}
-
-.step {
-  text-align: center;
-}
-
-.step .num {
-  display: inline-flex;
-  width: 48px;
-  height: 48px;
-  align-items: center;
-  justify-content: center;
-  border-radius: 12px;
-  background: var(--gradient);
-  color: white;
-  font-weight: 700;
-  font-size: 1.25rem;
-  margin-bottom: 1rem;
-}
-
-.step h4 {
-  font-size: 1.0625rem;
-  margin-bottom: 0.5rem;
-  font-weight: 600;
-  color: var(--text);
-}
-
-.step p {
-  font-size: 0.9375rem;
-  color: var(--text-secondary);
-  line-height: 1.6;
-}
-
-.step code {
-  color: var(--code-text);
-  background: var(--code-bg);
-  padding: 0.125rem 0.375rem;
-  border-radius: 4px;
-  font-size: 0.875rem;
-}
+.steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; max-width: 1000px; margin: 0 auto; }
+@media (max-width: 768px) { .steps { grid-template-columns: 1fr 1fr; gap: 1.5rem; } }
+.step { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem 1.25rem; text-align: center; transition: all 0.2s; }
+.step:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: var(--shadow-hover); }
+.step .num { display: inline-flex; width: 44px; height: 44px; align-items: center; justify-content: center; border-radius: 12px; background: var(--gradient); color: white; font-weight: 800; font-size: 1.125rem; margin-bottom: 0.875rem; }
+.step h4 { font-size: 1rem; margin-bottom: 0.5rem; color: var(--text); }
+.step p { font-size: 0.875rem; color: var(--text-secondary); line-height: 1.55; }
 
 /* ========== OSS GRID ========== */
-.oss-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem;
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-@media (max-width: 768px) {
-  .oss-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-.oss-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 2rem;
-  transition: all 0.2s ease;
-  box-shadow: var(--shadow);
-}
-
-.oss-card:hover {
-  border-color: var(--accent);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-hover);
-}
-
-.oss-card .oss-icon {
-  width: 40px;
-  height: 40px;
-  margin-bottom: 1rem;
-  border-radius: 8px;
-  background: var(--accent-light);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.oss-card .oss-icon svg {
-  width: 20px;
-  height: 20px;
-  stroke: var(--accent);
-  fill: none;
-  stroke-width: 2;
-}
-
-.oss-card h4 {
-  font-size: 1.0625rem;
-  margin-bottom: 0.625rem;
-  font-weight: 600;
-  color: var(--text);
-}
-
-.oss-card p {
-  font-size: 0.9375rem;
-  color: var(--text-secondary);
-  line-height: 1.65;
-}
+.oss-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; max-width: 800px; margin: 0 auto; }
+@media (max-width: 768px) { .oss-grid { grid-template-columns: 1fr; } }
+.oss-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 2rem; transition: all 0.2s ease; box-shadow: var(--shadow); }
+.oss-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: var(--shadow-hover); }
+.oss-card .oss-icon { width: 42px; height: 42px; margin-bottom: 1rem; border-radius: 10px; background: var(--accent-light); display: flex; align-items: center; justify-content: center; }
+.oss-card .oss-icon svg { width: 22px; height: 22px; stroke: var(--accent); fill: none; stroke-width: 2; }
+.oss-card h4 { font-size: 1.0625rem; margin-bottom: 0.625rem; color: var(--text); }
+.oss-card p { font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.6; }
 
 /* ========== FOOTER ========== */
-footer {
-  border-top: 1px solid var(--border);
-  padding: 3rem 0;
-  text-align: center;
-  background: var(--card-alt);
-}
+footer { border-top: 1px solid var(--border); padding: 3rem 0; text-align: center; background: var(--card-alt); }
+footer .links { display: flex; justify-content: center; gap: 2rem; margin-bottom: 1.25rem; font-size: 0.9375rem; flex-wrap: wrap; }
+footer .links a { color: var(--text-secondary); transition: color 0.2s ease; }
+footer .links a:hover { color: var(--text); }
+footer .copyright { font-size: 0.875rem; color: var(--text-tertiary); }
 
-footer .links {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  margin-bottom: 1.25rem;
-  font-size: 0.9375rem;
-}
-
-footer .links a {
-  color: var(--text-secondary);
-  transition: color 0.2s ease;
-}
-
-footer .links a:hover {
-  color: var(--text);
-}
-
-footer .copyright {
-  font-size: 0.875rem;
-  color: var(--text-tertiary);
-}
-
+/* ========== LANG ========== */
 .lang-dropdown { position: relative; margin-left: 8px; }
-.lang-toggle { display: flex; align-items: center; gap: 4px; padding: 6px 10px; background: transparent; border: 1px solid var(--border, #d4e4d4); border-radius: 6px; color: var(--text-secondary, #5a6b5a); font-size: 13px; cursor: pointer; transition: all 0.2s; }
-.lang-toggle:hover { border-color: var(--accent, #4a8c6a); color: var(--text-primary, #2d3b2d); }
-.lang-menu { display: none; position: absolute; right: 0; top: 100%; margin-top: 4px; background: #ffffff; border: 1px solid #d4e4d4; border-radius: 8px; box-shadow: 0 8px 24px rgba(74,140,106,0.12); min-width: 140px; z-index: 1000; overflow: hidden; }
+.lang-toggle { display: flex; align-items: center; gap: 4px; padding: 6px 10px; background: transparent; border: 1px solid var(--border); border-radius: 8px; color: var(--text-secondary); font-size: 13px; cursor: pointer; transition: all 0.2s; }
+.lang-toggle:hover { border-color: var(--accent); color: var(--text); }
+.lang-menu { display: none; position: absolute; right: 0; top: 100%; margin-top: 4px; background: #ffffff; border: 1px solid var(--border); border-radius: 10px; box-shadow: 0 12px 32px rgba(36, 80, 58, 0.14); min-width: 160px; z-index: 1000; overflow: hidden; }
 .lang-menu.show { display: block; }
-.lang-menu a { display: block; padding: 8px 16px; color: #2d3b2d; text-decoration: none; font-size: 13px; transition: background 0.15s; }
-.lang-menu a:hover { background: rgba(74,140,106,0.06); }
-.lang-menu a.active { color: #4a8c6a; font-weight: 600; background: rgba(74,140,106,0.08); }
-
-/* ========== TERMINAL PROMPT ========== */
-.terminal {
-  background: var(--code-bg);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 1rem;
-  font-family: 'SF Mono', monospace;
-  font-size: 0.875rem;
-  color: var(--text-secondary);
-  margin: 2rem auto;
-  max-width: 600px;
-}
-
-.terminal .prompt {
-  color: var(--accent);
-}
+.lang-menu a { display: block; padding: 9px 16px; color: var(--text); text-decoration: none; font-size: 13px; transition: background 0.15s; }
+.lang-menu a:hover { background: var(--accent-light); }
+.lang-menu a.active { color: var(--accent); font-weight: 700; background: var(--accent-light); }
 </style>
 </head>
 <body>
@@ -673,34 +302,27 @@ footer .copyright {
 <!-- NAVIGATION -->
 <nav>
   <div class="inner">
-    <div class="logo">
-      <img src="logo-nav.png?v=11" alt="ASRP" style="height:28px;vertical-align:middle">
-
-    </div>
+    <a href="#" class="logo">
+      <img src="icon.svg" alt="ASRP" onerror="this.src='icon-512.png'">
+      <span>ASRP</span>
+    </a>
     <div class="links">
-      <a href="#" data-i18n="nav.home">Home</a>
-      <a href="#features" class="hide-mobile" data-i18n="nav.features">Features</a>
+      <a href="#workflow" class="hide-mobile" data-i18n="nav.workflow">Workflow</a>
       <a href="#agents" class="hide-mobile" data-i18n="nav.agents">Agents</a>
-      <a href="#case-study" class="hide-mobile" data-i18n="nav.caseStudy">Case Study</a>
-      <a href="#start" data-i18n="nav.getStarted">Get Started</a>
+      <a href="#features" class="hide-mobile" data-i18n="nav.features">Features</a>
+      <a href="#challenge" class="hide-mobile" data-i18n="nav.challenge">Challenge</a>
+      <a href="#download" data-i18n="nav.download">Download</a>
       <a href="https://github.com/JackZH26/ASRP-JZIS" class="btn btn-outline btn-sm">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-        </svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
         GitHub
       </a>
-      <a href="https://discord.gg/DFmwBkDTB" target="_blank" class="nav-link-icon" title="Join Discord" style="display:inline-flex;align-items:center;margin-left:8px;color:var(--text-secondary);transition:color .2s">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.095 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.095 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
-        </svg>
+      <a href="https://discord.gg/DFmwBkDTB" target="_blank" rel="noopener" title="Discord" style="display:inline-flex;align-items:center;color:var(--text-secondary)">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.095 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.095 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
       </a>
       <div class="lang-dropdown">
-        <button class="lang-toggle" onclick="toggleLangMenu(event)">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-          </svg>
+        <button class="lang-toggle" onclick="toggleLangMenu(event)" aria-label="Language">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
           <span id="current-lang">EN</span>
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
         </button>
         <div class="lang-menu" id="lang-menu">
           <a href="#" onclick="switchLang('en'); return false;" data-lang="en">English</a>
@@ -717,281 +339,382 @@ footer .copyright {
 <div class="hero">
   <div class="container">
     <div class="badge">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-        <circle cx="12" cy="12" r="10"/>
-      </svg>
-      <span data-i18n="hero.badge">Open Source · Apache 2.0</span>
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+      <span data-i18n="hero.badge">Open Source · Apache 2.0 · v0.3.13</span>
     </div>
-    <h1><span data-i18n="hero.title1">Your next breakthrough</span><br><span data-i18n="hero.title2">won't be </span><span class="gradient-text" data-i18n="hero.title3">solo</span>.</h1>
-    <p class="subtitle" data-i18n="hero.subtitle">ASRP is an open-source platform that turns AI agents into rigorous research collaborators. Pre-register experiments, cross-validate results, and audit every decision.</p>
+    <h1>
+      <span data-i18n="hero.title1">A 3-agent research team</span><br>
+      <span data-i18n="hero.title2">that catches errors </span><span class="gradient-text" data-i18n="hero.title3">before they ship</span>.
+    </h1>
+    <p class="subtitle" data-i18n="hero.subtitle">ASRP is an open-source AI Scientific Research Platform. Theorist, Engineer, and Reviewer collaborate in your Discord, pre-register hypotheses, cross-validate results, and audit every decision — all from a desktop app you run on your own machine.</p>
     <div class="actions">
-      <a href="setup.html" class="btn btn-primary" onclick="gotoSetup(event)">
-        <span data-i18n="hero.setupWizard">Setup Wizard</span>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M5 12h14M12 5l7 7-7 7"/>
-        </svg>
+      <a href="https://github.com/JackZH26/ASRP-JZIS/releases/latest" class="btn btn-primary dl-btn" data-asrp-download>
+        <span class="dl-row1">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span data-dl-label data-i18n="hero.download">Download for your platform</span>
+        </span>
+        <span class="dl-row2">
+          <span data-dl-version></span>
+          <span data-dl-sub data-i18n="hero.dlSub"></span>
+        </span>
       </a>
       <a href="https://github.com/JackZH26/ASRP-JZIS" class="btn btn-outline" data-i18n="hero.viewGithub">View on GitHub</a>
     </div>
     <div class="stats">
-      <div class="stat">
-        <div class="num">5</div>
-        <div class="label" data-i18n="hero.stats.agentRoles">Agent Roles</div>
-      </div>
-      <div class="stat">
-        <div class="num">77</div>
-        <div class="label" data-i18n="hero.stats.testsPassing">Tests Passing</div>
-      </div>
-      <div class="stat">
-        <div class="num">9</div>
-        <div class="label" data-i18n="hero.stats.dftBenchmarks">DFT Benchmarks</div>
-      </div>
-      <div class="stat">
-        <div class="num">3</div>
-        <div class="label" data-i18n="hero.stats.languages">Languages</div>
-      </div>
+      <div class="stat"><div class="num">3</div><div class="label" data-i18n="hero.stats.agents">Agent Roles</div></div>
+      <div class="stat"><div class="num">7</div><div class="label" data-i18n="hero.stats.phases">Workflow Phases</div></div>
+      <div class="stat"><div class="num">396</div><div class="label" data-i18n="hero.stats.challenges">Challenge Problems</div></div>
+      <div class="stat"><div class="num">4</div><div class="label" data-i18n="hero.stats.languages">Languages</div></div>
     </div>
   </div>
 </div>
 
-<!-- FEATURES -->
-<section id="features">
+<!-- PROBLEM -->
+<section class="section-alt">
   <div class="container">
-    <h2 data-i18n="features.title">Built for scientific rigor.</h2>
-    <p class="section-subtitle" data-i18n="features.subtitle">Speed without rigor is noise. ASRP encodes the scientific method into AI agent workflows.</p>
-    <div class="features">
-      <div class="feature">
-        <div class="icon">
-          <svg viewBox="0 0 24 24">
-            <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-          </svg>
-        </div>
-        <h3 data-i18n="features.preregistration.title">Experiment Pre-Registration</h3>
-        <p data-i18n="features.preregistration.desc">Register hypotheses before running experiments. No post-hoc storytelling. Success and failure criteria defined upfront.</p>
+    <div class="section-eyebrow" data-i18n="problem.eyebrow">The reproducibility crisis</div>
+    <h2 data-i18n="problem.title">Speed without rigor is noise.</h2>
+    <p class="section-subtitle" data-i18n="problem.subtitle">AI agents can produce a paper a day. Most of those papers won't reproduce. ASRP encodes the scientific method into the workflow itself.</p>
+    <div class="problem-grid">
+      <div class="problem-card">
+        <div class="stat-num">70%</div>
+        <p data-i18n="problem.p1">of researchers have failed to reproduce another scientist's experiment. <em>(Nature, 2016)</em></p>
       </div>
-      <div class="feature">
-        <div class="icon">
-          <svg viewBox="0 0 24 24">
-            <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
-          </svg>
-        </div>
-        <h3 data-i18n="features.crossvalidation.title">Cross-Validation Protocol</h3>
-        <p data-i18n="features.crossvalidation.desc">Three levels: reproduction, independent implementation, alternative method. Different agents must verify results before publication.</p>
+      <div class="problem-card">
+        <div class="stat-num">52%</div>
+        <p data-i18n="problem.p2">say there is a <em>significant</em> reproducibility crisis in their field — and AI is making it worse.</p>
       </div>
-      <div class="feature">
-        <div class="icon">
-          <svg viewBox="0 0 24 24">
-            <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-          </svg>
-        </div>
-        <h3 data-i18n="features.audit.title">Audit Trails</h3>
-        <p data-i18n="features.audit.desc">Every decision, every data point, every error correction logged in append-only format. Full reproducibility from hypothesis to conclusion.</p>
-      </div>
-      <div class="feature">
-        <div class="icon">
-          <svg viewBox="0 0 24 24">
-            <path d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
-          </svg>
-        </div>
-        <h3 data-i18n="features.firstprinciples.title">First Principles Thinking</h3>
-        <p data-i18n="features.firstprinciples.desc">Every agent is instructed to reason from first principles. Question assumptions, verify definitions, trust data over authority.</p>
-      </div>
-      <div class="feature">
-        <div class="icon">
-          <svg viewBox="0 0 24 24">
-            <path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-          </svg>
-        </div>
-        <h3 data-i18n="features.tokenbudget.title">Token Budget Management</h3>
-        <p data-i18n="features.tokenbudget.desc">Right model for the right task. Opus for reasoning, Sonnet for code, Flash for search. Automatic cost tracking per experiment.</p>
-      </div>
-      <div class="feature">
-        <div class="icon">
-          <svg viewBox="0 0 24 24">
-            <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
-          </svg>
-        </div>
-        <h3 data-i18n="features.roleseparation.title">Role Separation</h3>
-        <p data-i18n="features.roleseparation.desc">The agent that proposes a hypothesis is not the one that validates it. Reviewer has read-only access — true independent evaluation.</p>
+      <div class="problem-card">
+        <div class="stat-num">2</div>
+        <p data-i18n="problem.p3">errors caught in <em>one day</em> in the iDEA case study below — before submission, not months after.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- AGENT ROLES -->
+<!-- WORKFLOW: SRW -->
+<section id="workflow">
+  <div class="container">
+    <div class="section-eyebrow" data-i18n="workflow.eyebrow">Standard Research Workflow · SRW-v3</div>
+    <h2 data-i18n="workflow.title">From idea to direction menu in ≤20 minutes.</h2>
+    <p class="section-subtitle" data-i18n="workflow.subtitle">Every research project starts with the same 7-phase workflow. Bootstrap phases run on AI minutes — you steer immediately. Phase 7 then switches to "1 human day = 1 AI hour" for deep work.</p>
+
+    <div class="srw-wrap">
+      <div class="srw-phases">
+        <div class="srw-phase"><div class="num">1</div><h4 data-i18n="srw.p1.t">Intake</h4><p data-i18n="srw.p1.d">Theorist Q&amp;A in Discord</p></div>
+        <div class="srw-phase"><div class="num">2</div><h4 data-i18n="srw.p2.t">Lit Recon</h4><p data-i18n="srw.p2.d">Web · arXiv · self-search</p></div>
+        <div class="srw-phase"><div class="num">3</div><h4 data-i18n="srw.p3.t">Opportunities</h4><p data-i18n="srw.p3.d">Synthesise + critique</p></div>
+        <div class="srw-phase"><div class="num">4</div><h4 data-i18n="srw.p4.t">Direction Pick</h4><p data-i18n="srw.p4.d">User chooses path</p></div>
+        <div class="srw-phase"><div class="num">5</div><h4 data-i18n="srw.p5.t">Plan</h4><p data-i18n="srw.p5.d">Engineer feasibility</p></div>
+        <div class="srw-phase"><div class="num">6</div><h4 data-i18n="srw.p6.t">Schedule</h4><p data-i18n="srw.p6.d">Time + budget lock-in</p></div>
+        <div class="srw-phase active"><div class="num">7</div><h4 data-i18n="srw.p7.t">Active Loop</h4><p data-i18n="srw.p7.d">Execute · review · iterate</p></div>
+      </div>
+
+      <div class="srw-meta">
+        <div class="srw-meta-card">
+          <h4 data-i18n="srw.m1.t">Self-healing dispatcher</h4>
+          <p data-i18n="srw.m1.d">Reviewer dispatches phase kickoffs and writes daily standups. Sender ≠ mention target is a runtime invariant — no Discord self-mention deadlocks.</p>
+        </div>
+        <div class="srw-meta-card">
+          <h4 data-i18n="srw.m2.t">Independent recompute</h4>
+          <p data-i18n="srw.m2.d">Engineer recomputes any numerical result Theorist produces, using a different library, algorithm, or parameterization — divergence is logged.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AGENTS -->
 <section id="agents" class="section-alt">
   <div class="container">
-    <h2 data-i18n="agents.title">Five agents. One research team.</h2>
-    <p class="section-subtitle" data-i18n="agents.subtitle">Each role has a SOUL template, skill manifest, and defined access permissions.</p>
+    <div class="section-eyebrow" data-i18n="agents.eyebrow">The team</div>
+    <h2 data-i18n="agents.title">Three agents. One research team.</h2>
+    <p class="section-subtitle" data-i18n="agents.subtitle">Each role has its own SOUL prompt, model class, skill manifest, and access permissions. The agent that proposes a hypothesis is never the one that signs off on it.</p>
     <div class="roles">
       <div class="role">
         <div class="role-icon">
-          <svg viewBox="0 0 24 24">
-            <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
-          </svg>
+          <svg viewBox="0 0 24 24"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
         </div>
-        <h4 data-i18n="agents.theorist.name">Theorist</h4>
-        <p data-i18n="agents.theorist.desc">Hypotheses, reasoning, paper writing</p>
+        <div class="role-name" data-i18n="agents.theorist.name">Theorist</div>
+        <div class="role-model">OPUS · LEAD</div>
+        <p data-i18n="agents.theorist.desc">Lead scientist and the only user-facing voice. Owns hypotheses, literature reconnaissance, opportunity synthesis, plan construction, and the active loop.</p>
+        <ul>
+          <li data-i18n="agents.theorist.b1">Self red-team pass on every draft</li>
+          <li data-i18n="agents.theorist.b2">Owns Phase 1 Intake with the researcher</li>
+          <li data-i18n="agents.theorist.b3">Writes and revises the paper</li>
+        </ul>
       </div>
       <div class="role">
         <div class="role-icon">
-          <svg viewBox="0 0 24 24">
-            <path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-          </svg>
+          <svg viewBox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
         </div>
-        <h4 data-i18n="agents.engineer.name">Engineer</h4>
-        <p data-i18n="agents.engineer.desc">Code, computation, data pipelines</p>
+        <div class="role-name" data-i18n="agents.engineer.name">Engineer</div>
+        <div class="role-model">SONNET · BUILD</div>
+        <p data-i18n="agents.engineer.desc">Implements code, runs experiments, processes data — and independently recomputes every numerical result Theorist produces, using a different path.</p>
+        <ul>
+          <li data-i18n="agents.engineer.b1">Different library / algorithm / params</li>
+          <li data-i18n="agents.engineer.b2">Reviews compute feasibility in Phase 5</li>
+          <li data-i18n="agents.engineer.b3">Owns workspace, code, data pipelines</li>
+        </ul>
       </div>
       <div class="role">
         <div class="role-icon">
-          <svg viewBox="0 0 24 24">
-            <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
-          </svg>
+          <svg viewBox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
         </div>
-        <h4 data-i18n="agents.reviewer.name">Reviewer</h4>
-        <p data-i18n="agents.reviewer.desc">Independent review (read-only access)</p>
+        <div class="role-name" data-i18n="agents.reviewer.name">Reviewer</div>
+        <div class="role-model">HAIKU/SONNET · CRITIC</div>
+        <p data-i18n="agents.reviewer.desc">Dispatcher, daily standup author, and red-team critic. Posts phase kickoffs that @mention Theorist and Engineer. Never mentions itself — bots don't receive self-mention events.</p>
+        <ul>
+          <li data-i18n="agents.reviewer.b1">Hostile-reviewer critique on every deliverable</li>
+          <li data-i18n="agents.reviewer.b2">Sender ≠ mention target invariant</li>
+          <li data-i18n="agents.reviewer.b3">Writes the daily standup summary</li>
+        </ul>
       </div>
-      <div class="role">
-        <div class="role-icon">
-          <svg viewBox="0 0 24 24">
-            <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
-          </svg>
-        </div>
-        <h4 data-i18n="agents.librarian.name">Librarian</h4>
-        <p data-i18n="agents.librarian.desc">Literature search, references</p>
+    </div>
+  </div>
+</section>
+
+<!-- DISCORD-NATIVE -->
+<section>
+  <div class="container">
+    <div class="section-eyebrow" data-i18n="discord.eyebrow">Discord-native</div>
+    <h2 data-i18n="discord.title">Your research team lives in Discord.</h2>
+    <p class="section-subtitle" data-i18n="discord.subtitle">No new chat app to learn. ASRP spins up an embedded OpenClaw gateway and connects each agent as a real Discord bot — you talk to them in #general just like a teammate.</p>
+    <div class="discord-wrap">
+      <div class="discord-text">
+        <h3 data-i18n="discord.h">@mention to trigger. Standup at sunrise.</h3>
+        <p data-i18n="discord.p">Every research project gets its own channel. Phase kickoffs are posted automatically. Daily standups summarize what shipped, what broke, and what's next.</p>
+        <ul>
+          <li data-i18n="discord.f1">Embedded OpenClaw gateway — one click to start</li>
+          <li data-i18n="discord.f2">3 independent Discord bots, one per role</li>
+          <li data-i18n="discord.f3">@mention Theorist to ask anything</li>
+          <li data-i18n="discord.f4">Phase kickoffs · daily standups · audit log</li>
+        </ul>
       </div>
-      <div class="role">
-        <div class="role-icon">
-          <svg viewBox="0 0 24 24">
-            <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-          </svg>
+      <div class="discord-mock">
+        <div class="channel"># <b>research-idea-novel-dft</b> · <span data-i18n="discord.ch">3 members</span></div>
+        <div class="msg">
+          <div class="av" style="background:#5865f2">R</div>
+          <div class="body">
+            <div class="name">Reviewer <span class="role-tag" style="background:#5865f2;color:#fff">BOT</span></div>
+            <div class="text"><span class="mention">@Theorist</span> Phase 2 kickoff — lit recon window opens now. Budget: 12 minutes. Drop the top-3 candidate papers in this channel when ready.</div>
+          </div>
         </div>
-        <h4 data-i18n="agents.itdoctor.name">ITDoctor</h4>
-        <p data-i18n="agents.itdoctor.desc">Monitoring, backups, self-healing</p>
+        <div class="msg">
+          <div class="av" style="background:#3A7D5C">T</div>
+          <div class="body">
+            <div class="name">Theorist <span class="role-tag" style="background:#3A7D5C;color:#fff">BOT</span></div>
+            <div class="text">Found 3 anchors: Hodgson 2023 (iDEA library), Tozer 2018 (KS gap), Cohen 2008 (DD definition). Hypothesis candidate: prime-spaced wells → anomalous negative DD. Critique: depends on exact-vs-approx KS gap — flag for Engineer.</div>
+          </div>
+        </div>
+        <div class="msg">
+          <div class="av" style="background:#b89a4a">E</div>
+          <div class="body">
+            <div class="name">Engineer <span class="role-tag" style="background:#b89a4a;color:#fff">BOT</span></div>
+            <div class="text">Recomputed with exact KS gap → DD flips to <b>+0.084</b>. The "negative DD" was a definition artifact. Logging divergence; Reviewer please re-open the deliverable.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features" class="section-alt">
+  <div class="container">
+    <div class="section-eyebrow" data-i18n="features.eyebrow">Built-in scientific rigor</div>
+    <h2 data-i18n="features.title">Six guardrails the workflow enforces.</h2>
+    <p class="section-subtitle" data-i18n="features.subtitle">These aren't best practices you have to remember. They're encoded in the workflow itself.</p>
+    <div class="features">
+      <div class="feature">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg></div>
+        <h3 data-i18n="features.preregistration.title">Hypothesis Pre-Registration</h3>
+        <p data-i18n="features.preregistration.desc">Register hypotheses with falsification criteria before running anything. The Researches Registry is your immutable baseline — no post-hoc storytelling.</p>
+      </div>
+      <div class="feature">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg></div>
+        <h3 data-i18n="features.crossvalidation.title">Independent Cross-Validation</h3>
+        <p data-i18n="features.crossvalidation.desc">Engineer must reproduce every numerical result via a different code path. Divergence triggers a Reviewer red-team pass before anything goes into the paper.</p>
+      </div>
+      <div class="feature">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg></div>
+        <h3 data-i18n="features.audit.title">Append-Only Audit Trail</h3>
+        <p data-i18n="features.audit.desc">Every decision, every data point, every error correction logged forever. Full reproducibility from hypothesis to conclusion — exportable as CSV.</p>
+      </div>
+      <div class="feature">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg></div>
+        <h3 data-i18n="features.firstprinciples.title">First Principles Reasoning</h3>
+        <p data-i18n="features.firstprinciples.desc">Every SOUL prompt instructs the agent to question assumptions, verify definitions, and trust data over authority. Self red-team pass before any deliverable ships.</p>
+      </div>
+      <div class="feature">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+        <h3 data-i18n="features.tokenbudget.title">Per-Task Model Budget</h3>
+        <p data-i18n="features.tokenbudget.desc">Right model for the right task. Opus for reasoning, Sonnet for code, Haiku for dispatch. Daily budget caps with live cost tracking on the dashboard.</p>
+      </div>
+      <div class="feature">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg></div>
+        <h3 data-i18n="features.roleseparation.title">Role Separation</h3>
+        <p data-i18n="features.roleseparation.desc">The proposer is never the validator. Reviewer red-teams every deliverable. SRW-v3 enforces sender ≠ mention target as a runtime invariant.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PAPERS PIPELINE -->
+<section id="papers">
+  <div class="container">
+    <div class="section-eyebrow" data-i18n="papers.eyebrow">Papers pipeline</div>
+    <h2 data-i18n="papers.title">From draft to submission, in six tracked stages.</h2>
+    <p class="section-subtitle" data-i18n="papers.subtitle">Every paper project lives as a directory tree with authors, sections, references, and stage gates. Three sample paper projects ship out of the box.</p>
+    <div class="pipeline">
+      <div class="pipeline-step"><div class="icon">1</div><h4 data-i18n="papers.s1.t">Draft</h4><p data-i18n="papers.s1.d">Outline + scaffold</p></div>
+      <div class="pipeline-step"><div class="icon">2</div><h4 data-i18n="papers.s2.t">Lit Review</h4><p data-i18n="papers.s2.d">Citations &amp; anchors</p></div>
+      <div class="pipeline-step"><div class="icon">3</div><h4 data-i18n="papers.s3.t">Methods</h4><p data-i18n="papers.s3.d">Reproducible recipe</p></div>
+      <div class="pipeline-step"><div class="icon">4</div><h4 data-i18n="papers.s4.t">Results</h4><p data-i18n="papers.s4.d">Tables, figures, data</p></div>
+      <div class="pipeline-step"><div class="icon">5</div><h4 data-i18n="papers.s5.t">Internal Review</h4><p data-i18n="papers.s5.d">Reviewer red-team</p></div>
+      <div class="pipeline-step"><div class="icon">6</div><h4 data-i18n="papers.s6.t">Submission</h4><p data-i18n="papers.s6.d">Export &amp; archive</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CHALLENGE CENTER -->
+<section id="challenge" class="section-alt">
+  <div class="container">
+    <div class="section-eyebrow" data-i18n="challenge.eyebrow">Challenge center</div>
+    <h2 data-i18n="challenge.title">396 problems to benchmark your agents.</h2>
+    <p class="section-subtitle" data-i18n="challenge.subtitle">A built-in question bank across four disciplines. Hand them to your ASRP team and measure how a real research workflow stacks up against single-shot prompting.</p>
+    <div class="challenge-wrap">
+      <div>
+        <p style="font-size:1rem;line-height:1.65;margin-bottom:1rem" data-i18n="challenge.p1">Each discipline ships with 99 graded problems — easy warm-ups through grad-level open questions. Search, filter by difficulty, and route any problem straight into a new research project.</p>
+        <p style="font-size:0.9375rem;line-height:1.6" data-i18n="challenge.p2">Race-guarded loading, debounced search, accessible keyboard nav, and a Local toggle so you can run the whole bank against your on-prem Ollama stack.</p>
+      </div>
+      <div class="challenge-cards">
+        <div class="challenge-card"><div class="icon">π</div><h4 data-i18n="challenge.math">Mathematics</h4><div class="count">99 problems</div></div>
+        <div class="challenge-card"><div class="icon">⚛︎</div><h4 data-i18n="challenge.physics">Physics</h4><div class="count">99 problems</div></div>
+        <div class="challenge-card"><div class="icon">⚗︎</div><h4 data-i18n="challenge.chem">Chemistry</h4><div class="count">99 problems</div></div>
+        <div class="challenge-card"><div class="icon">🧬</div><h4 data-i18n="challenge.life">Life Sciences</h4><div class="count">99 problems</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOCAL AI / PRIVACY -->
+<section id="local">
+  <div class="container">
+    <div class="section-eyebrow" data-i18n="local.eyebrow">Privacy first</div>
+    <h2 data-i18n="local.title">Run on-prem. Your data stays on your machine.</h2>
+    <p class="section-subtitle" data-i18n="local.subtitle">ASRP works fully offline with Ollama. Hardware detection, streaming model pulls, GPU/VRAM aware. Or deploy headless on a VPS — same desktop, no display required.</p>
+    <div class="local-wrap">
+      <div class="local-features">
+        <div class="local-feature"><div class="icon">🖥️</div><h4 data-i18n="local.f1.t">Hardware aware</h4><p data-i18n="local.f1.d">Detects RAM, GPU, VRAM and recommends models you can actually run.</p></div>
+        <div class="local-feature"><div class="icon">⬇️</div><h4 data-i18n="local.f2.t">Streaming pulls</h4><p data-i18n="local.f2.d">One-click ollama pull with live progress and resume.</p></div>
+        <div class="local-feature"><div class="icon">🔐</div><h4 data-i18n="local.f3.t">OS-level encryption</h4><p data-i18n="local.f3.d">API keys live in the OS keychain. Local SQLite + JWT auth.</p></div>
+        <div class="local-feature"><div class="icon">🚀</div><h4 data-i18n="local.f4.t">Headless / VPS</h4><p data-i18n="local.f4.d">Auto-detects missing $DISPLAY and switches to headless mode.</p></div>
+      </div>
+      <div>
+        <h3 style="font-size:1.5rem;margin-bottom:1rem" data-i18n="local.h">Cloud or local — your call.</h3>
+        <p style="font-size:0.9375rem;line-height:1.65;margin-bottom:1rem" data-i18n="local.p1">Bring your own keys for Anthropic, Google, or OpenRouter. Or run everything locally with Ollama. Mix and match per agent — Theorist on Opus, Engineer on a local Qwen, Reviewer on Haiku.</p>
+        <p style="font-size:0.9375rem;line-height:1.65" data-i18n="local.p2">Self-test suite (25 checks) verifies the install end-to-end. Auto-updater handles new releases.</p>
       </div>
     </div>
   </div>
 </section>
 
 <!-- CASE STUDY -->
-<section id="case-study">
+<section id="case-study" class="section-alt">
   <div class="container">
+    <div class="section-eyebrow" data-i18n="casestudy.eyebrow">Case study</div>
     <h2 data-i18n="casestudy.title">Errors caught in hours, not months.</h2>
-    <p class="section-subtitle" data-i18n="casestudy.subtitle">A real case study: one-day DFT experiment with two self-corrections.</p>
+    <p class="section-subtitle" data-i18n="casestudy.subtitle">A real ASRP run: a one-day DFT investigation that self-corrected twice and retracted itself before submission.</p>
     <div class="case-study">
       <h3 data-i18n="casestudy.expTitle">The iDEA Experiment — April 1, 2026</h3>
       <div class="timeline">
-        <div class="event">
-          <div class="time">T+0h</div>
-          <div class="desc" data-i18n="casestudy.t0">Literature review; iDEA code installed and benchmarked</div>
-        </div>
-        <div class="event">
-          <div class="time">T+2h</div>
-          <div class="desc" data-i18n="casestudy.t2">Hypothesis: "Prime-spaced wells produce anomalous negative DD"</div>
-        </div>
-        <div class="event">
-          <div class="time">T+4h</div>
-          <div class="desc" data-i18n="casestudy.t4">V1 results support hypothesis (DD = -0.070 Ha)</div>
-        </div>
-        <div class="event error">
-          <div class="time" data-i18n="casestudy.error1time">T+4.5h — Error #1</div>
-          <div class="desc"><strong data-i18n="casestudy.reviewerCaught">Reviewer caught:</strong> <span data-i18n="casestudy.error1desc">Lattice spans unequal. Control experiment shows it's spacing asymmetry, not primes.</span></div>
-        </div>
-        <div class="event error">
-          <div class="time" data-i18n="casestudy.error2time">T+9h — Error #2</div>
-          <div class="desc"><strong data-i18n="casestudy.reviewerCaught">Reviewer caught:</strong> <span data-i18n="casestudy.error2desc">Used approximate KS gap instead of exact. Wrong definition.</span></div>
-        </div>
-        <div class="event fix">
-          <div class="time" data-i18n="casestudy.fixtime">T+10h — Corrected</div>
-          <div class="desc" data-i18n="casestudy.fixdesc">Exact KS gap flips DD sign from -0.041 to +0.084. "Negative DD" was an artifact.</div>
-        </div>
-        <div class="event fix">
-          <div class="time" data-i18n="casestudy.conclusiontime">T+11h — Conclusion</div>
-          <div class="desc" data-i18n="casestudy.conclusiondesc">Paper retracted before submission. Two errors caught in one day.</div>
-        </div>
+        <div class="event"><div class="time">T+0h</div><div class="desc" data-i18n="casestudy.t0">Literature review; iDEA code installed and benchmarked.</div></div>
+        <div class="event"><div class="time">T+2h</div><div class="desc" data-i18n="casestudy.t2">Hypothesis: "Prime-spaced wells produce anomalous negative DD."</div></div>
+        <div class="event"><div class="time">T+4h</div><div class="desc" data-i18n="casestudy.t4">V1 results support the hypothesis (DD = -0.070 Ha).</div></div>
+        <div class="event error"><div class="time" data-i18n="casestudy.error1time">T+4.5h — Error #1</div><div class="desc"><strong data-i18n="casestudy.reviewerCaught">Reviewer caught:</strong> <span data-i18n="casestudy.error1desc">Lattice spans unequal. Control experiment shows it's spacing asymmetry, not primes.</span></div></div>
+        <div class="event error"><div class="time" data-i18n="casestudy.error2time">T+9h — Error #2</div><div class="desc"><strong data-i18n="casestudy.reviewerCaught">Reviewer caught:</strong> <span data-i18n="casestudy.error2desc">Used approximate KS gap instead of exact. Wrong definition.</span></div></div>
+        <div class="event fix"><div class="time" data-i18n="casestudy.fixtime">T+10h — Corrected</div><div class="desc" data-i18n="casestudy.fixdesc">Exact KS gap flips DD sign from -0.041 to +0.084. "Negative DD" was an artifact.</div></div>
+        <div class="event fix"><div class="time" data-i18n="casestudy.conclusiontime">T+11h — Conclusion</div><div class="desc" data-i18n="casestudy.conclusiondesc">Paper retracted before submission. Two errors caught in one day.</div></div>
       </div>
-      <div class="note" data-i18n="casestudy.note">
-        In traditional research, these errors would survive to submission and be caught months later — if at all.
-      </div>
+      <div class="note" data-i18n="casestudy.note">In traditional research, these errors would survive to submission and be caught months later — if at all.</div>
     </div>
   </div>
 </section>
 
-<!-- GET STARTED -->
-<section id="start" class="section-alt">
+<!-- DOWNLOAD + GET STARTED -->
+<section id="download">
   <div class="container">
-    <h2 data-i18n="getstarted.title">Get started in 4 steps.</h2>
-    <p class="section-subtitle" data-i18n="getstarted.subtitle">From zero to running research platform in under an hour.</p>
+    <div class="section-eyebrow" data-i18n="getstarted.eyebrow">Get started</div>
+    <h2 data-i18n="getstarted.title">From download to first research, in four steps.</h2>
+    <p class="section-subtitle" data-i18n="getstarted.subtitle">No CLI needed. Install the desktop app, complete the 5-step Setup Wizard, and start your first research project.</p>
+
     <div class="steps">
       <div class="step">
         <div class="num">1</div>
-        <h4 data-i18n="getstarted.step1.title">Configure</h4>
-        <p data-i18n="getstarted.step1.desc">Open the <a href="setup.html">Setup Wizard</a>. Add API keys, name your agents, select tools.</p>
+        <h4 data-i18n="getstarted.step1.title">Download</h4>
+        <p data-i18n="getstarted.step1.desc">Get the installer for macOS, Windows, or Linux. Auto-updater takes care of the rest.</p>
       </div>
       <div class="step">
         <div class="num">2</div>
-        <h4 data-i18n="getstarted.step2.title">Initialize</h4>
-        <p><code>asrp init</code> <span data-i18n="getstarted.step2.desc">creates your workspace with audit logs, registries, and agent directories.</span></p>
+        <h4 data-i18n="getstarted.step2.title">Setup Wizard</h4>
+        <p data-i18n="getstarted.step2.desc">5 steps: profile, API keys, agent config, Discord bots, launch. ~10 minutes.</p>
       </div>
       <div class="step">
         <div class="num">3</div>
-        <h4 data-i18n="getstarted.step3.title">Register</h4>
-        <p><code>asrp register</code> <span data-i18n="getstarted.step3.desc">pre-registers your first experiment with hypothesis and success criteria.</span></p>
+        <h4 data-i18n="getstarted.step3.title">Start agents</h4>
+        <p data-i18n="getstarted.step3.desc">One click on the dashboard spins up the embedded OpenClaw gateway and your 3 bots.</p>
       </div>
       <div class="step">
         <div class="num">4</div>
-        <h4 data-i18n="getstarted.step4.title">Research</h4>
-        <p data-i18n="getstarted.step4.desc">Run experiments, cross-validate, and let ASRP track every decision from hypothesis to publication.</p>
+        <h4 data-i18n="getstarted.step4.title">Talk in Discord</h4>
+        <p data-i18n="getstarted.step4.desc">@mention Theorist with your research question. The team takes it from there.</p>
       </div>
     </div>
-    <div style="display:flex;gap:12px;justify-content:center;margin-top:32px">
-      <a href="setup.html" class="btn btn-primary" onclick="gotoSetup(event)">Setup Wizard →</a>
-      <a href="https://github.com/JackZH26/ASRP-JZIS" class="btn btn-outline">View on GitHub</a>
+
+    <div style="text-align:center;margin-top:3rem">
+      <a href="https://github.com/JackZH26/ASRP-JZIS/releases/latest" class="btn btn-primary dl-btn" data-asrp-download style="margin:0 auto">
+        <span class="dl-row1">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span data-dl-label data-i18n="hero.download">Download for your platform</span>
+        </span>
+        <span class="dl-row2"><span data-dl-version></span> <span data-dl-sub></span></span>
+      </a>
+      <div class="dl-others" data-asrp-download-list></div>
+      <div style="margin-top:1rem;font-size:0.8125rem;color:var(--text-tertiary)">
+        <span data-i18n="download.allPlatforms">All platforms · Apache 2.0 ·</span>
+        <a href="https://github.com/JackZH26/ASRP-JZIS/releases" data-i18n="download.releaseNotes">release notes</a>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- OPEN SOURCE -->
-<section>
+<section class="section-alt">
   <div class="container">
-    <h2 data-i18n="opensource.title">Open source for science.</h2>
+    <div class="section-eyebrow" data-i18n="opensource.eyebrow">Open source</div>
+    <h2 data-i18n="opensource.title">Built in the open. For science.</h2>
     <p class="section-subtitle" data-i18n="opensource.subtitle">Inspect every line. Self-host on your terms. Shape the future of AI-augmented research.</p>
     <div class="oss-grid">
       <div class="oss-card">
-        <div class="oss-icon">
-          <svg viewBox="0 0 24 24">
-            <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-          </svg>
-        </div>
+        <div class="oss-icon"><svg viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg></div>
         <h4 data-i18n="opensource.transparent.title">Transparent</h4>
-        <p data-i18n="opensource.transparent.desc">Every line of code is auditable. See how agents make decisions and where your data flows.</p>
+        <p data-i18n="opensource.transparent.desc">Every line of code is auditable on GitHub. See exactly how agents make decisions and where your data flows.</p>
       </div>
       <div class="oss-card">
-        <div class="oss-icon">
-          <svg viewBox="0 0 24 24">
-            <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-          </svg>
-        </div>
-        <h4 data-i18n="opensource.selfhost.title">Self-Host</h4>
-        <p data-i18n="opensource.selfhost.desc">Run ASRP on your own machine. Your research data never leaves your network.</p>
+        <div class="oss-icon"><svg viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg></div>
+        <h4 data-i18n="opensource.selfhost.title">Self-host</h4>
+        <p data-i18n="opensource.selfhost.desc">Run ASRP on your laptop, your lab workstation, or a headless VPS. Your research data never leaves your network.</p>
       </div>
       <div class="oss-card">
-        <div class="oss-icon">
-          <svg viewBox="0 0 24 24">
-            <path d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"/>
-          </svg>
-        </div>
-        <h4 data-i18n="opensource.nolockin.title">No Lock-In</h4>
-        <p data-i18n="opensource.nolockin.desc">Bring your own LLM provider. Claude, Gemini, GPT, or OpenRouter — swap freely.</p>
+        <div class="oss-icon"><svg viewBox="0 0 24 24"><path d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"/></svg></div>
+        <h4 data-i18n="opensource.nolockin.title">No lock-in</h4>
+        <p data-i18n="opensource.nolockin.desc">Bring your own LLM. Anthropic, Google, OpenRouter, or local Ollama — swap freely per agent.</p>
       </div>
       <div class="oss-card">
-        <div class="oss-icon">
-          <svg viewBox="0 0 24 24">
-            <path d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-          </svg>
-        </div>
+        <div class="oss-icon"><svg viewBox="0 0 24 24"><path d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
         <h4 data-i18n="opensource.community.title">Community</h4>
-        <p data-i18n="opensource.community.desc">Contribute benchmarks, agent templates, and domain-specific skills that benefit all researchers.</p>
+        <p data-i18n="opensource.community.desc">Contribute SOUL templates, skill manifests, benchmarks, and domain workflows that benefit every researcher.</p>
       </div>
     </div>
   </div>
@@ -1002,542 +725,355 @@ footer .copyright {
   <div class="container">
     <div class="links">
       <a href="https://github.com/JackZH26/ASRP-JZIS">GitHub</a>
-      <a href="setup.html">Setup Wizard</a>
-      <a href="https://jzis.org/publications/">Publications</a>
+      <a href="https://github.com/JackZH26/ASRP-JZIS/releases" data-i18n="footer.releases">Releases</a>
       <a href="https://discord.gg/DFmwBkDTB">Discord</a>
+      <a href="https://jzis.org/publications/" data-i18n="footer.publications">Publications</a>
+      <a href="https://www.jzis.org">JZIS</a>
     </div>
-    <p class="copyright" data-i18n="footer.copyright">ASRP — Agent Science Research Platform · Apache 2.0 · Built by <a href="https://www.jzis.org" target="_blank" style="color:inherit;text-decoration:underline">JZIS</a></p>
+    <p class="copyright" data-i18n="footer.copyright">ASRP — AI Scientific Research Platform · Apache 2.0 · Built by <a href="https://www.jzis.org" target="_blank" style="color:inherit;text-decoration:underline">JZIS</a></p>
   </div>
 </footer>
 
+<!-- I18N + UTILS -->
 <script>
-// Toggle language menu
-function toggleLangMenu(event) {
-  event.stopPropagation();
-  var menu = document.getElementById("lang-menu");
-  menu.classList.toggle("show");
-}
-
-// Close on click outside
-document.addEventListener('click', function(e) {
-  if (!e.target.closest('.lang-dropdown')) {
-    var lm = document.getElementById('lang-menu'); if(lm) lm.classList.remove('show');
-  }
-});
-
-// Translation data
-const translations = {
-  en: {
-    "nav.home": "Home",
-    "nav.features": "Features",
-    "nav.agents": "Agents",
-    "nav.caseStudy": "Case Study",
-    "nav.github": "GitHub",
-    "agents.theorist.name": "Theorist",
-    "agents.engineer.name": "Engineer",
-    "agents.reviewer.name": "Reviewer",
-    "agents.librarian.name": "Librarian",
-    "agents.itdoctor.name": "ITDoctor",
-    "nav.getStarted": "Get Started",
-    "hero.badge": "Open Source · Apache 2.0",
-    "hero.title1": "Your next breakthrough",
-    "hero.title2": "won't be ",
-    "hero.title3": "solo",
-    "hero.subtitle": "ASRP is an open-source platform that turns AI agents into rigorous research collaborators. Pre-register experiments, cross-validate results, and audit every decision.",
-    "hero.setupWizard": "Setup Wizard",
-    "hero.viewGithub": "View on GitHub",
-    "hero.stats.agentRoles": "Agent Roles",
-    "hero.stats.testsPassing": "Tests Passing",
-    "hero.stats.dftBenchmarks": "DFT Benchmarks",
-    "hero.stats.languages": "Languages",
-    "features.title": "Built for scientific rigor.",
-    "features.subtitle": "Speed without rigor is noise. ASRP encodes the scientific method into AI agent workflows.",
-    "features.preregistration.title": "Experiment Pre-Registration",
-    "features.preregistration.desc": "Register hypotheses before running experiments. No post-hoc storytelling. Success and failure criteria defined upfront.",
-    "features.crossvalidation.title": "Cross-Validation Protocol",
-    "features.crossvalidation.desc": "Three levels: reproduction, independent implementation, alternative method. Different agents must verify results before publication.",
-    "features.audit.title": "Audit Trails",
-    "features.audit.desc": "Every decision, every data point, every error correction logged in append-only format. Full reproducibility from hypothesis to conclusion.",
-    "features.firstprinciples.title": "First Principles Thinking",
-    "features.firstprinciples.desc": "Every agent is instructed to reason from first principles. Question assumptions, verify definitions, trust data over authority.",
-    "features.tokenbudget.title": "Token Budget Management",
-    "features.tokenbudget.desc": "Right model for the right task. Opus for reasoning, Sonnet for code, Flash for search. Automatic cost tracking per experiment.",
-    "features.roleseparation.title": "Role Separation",
-    "features.roleseparation.desc": "The agent that proposes a hypothesis is not the one that validates it. Reviewer has read-only access — true independent evaluation.",
-    "agents.title": "Five agents. One research team.",
-    "agents.subtitle": "Each role has a SOUL template, skill manifest, and defined access permissions.",
-    "agents.theorist.desc": "Hypotheses, reasoning, paper writing",
-    "agents.engineer.desc": "Code, computation, data pipelines",
-    "agents.reviewer.desc": "Independent review (read-only access)",
-    "agents.librarian.desc": "Literature search, references",
-    "agents.itdoctor.desc": "Monitoring, backups, self-healing",
-    "casestudy.title": "Errors caught in hours, not months.",
-    "casestudy.subtitle": "A real case study: one-day DFT experiment with two self-corrections.",
-    "casestudy.expTitle": "The iDEA Experiment — April 1, 2026",
-    "casestudy.t0": "Literature review; iDEA code installed and benchmarked",
-    "casestudy.t2": "Hypothesis: \"Prime-spaced wells produce anomalous negative DD\"",
-    "casestudy.t4": "V1 results support hypothesis (DD = -0.070 Ha)",
-    "casestudy.error1time": "T+4.5h — Error #1",
-    "casestudy.error2time": "T+9h — Error #2",
-    "casestudy.reviewerCaught": "Reviewer caught:",
-    "casestudy.error1desc": "Lattice spans unequal. Control experiment shows it's spacing asymmetry, not primes.",
-    "casestudy.error2desc": "Used approximate KS gap instead of exact. Wrong definition.",
-    "casestudy.fixtime": "T+10h — Corrected",
-    "casestudy.fixdesc": "Exact KS gap flips DD sign from -0.041 to +0.084. \"Negative DD\" was an artifact.",
-    "casestudy.conclusiontime": "T+11h — Conclusion",
-    "casestudy.conclusiondesc": "Paper retracted before submission. Two errors caught in one day.",
-    "casestudy.note": "In traditional research, these errors would survive to submission and be caught months later — if at all.",
-    "getstarted.title": "Get started in 4 steps.",
-    "getstarted.subtitle": "From zero to running research platform in under an hour.",
-    "getstarted.step1.title": "Configure",
-    "getstarted.step1.desc": "Open the <a href=\"setup.html\">Setup Wizard</a>. Add API keys, name your agents, select tools.",
-    "getstarted.step2.title": "Initialize",
-    "getstarted.step2.desc": "creates your workspace with audit logs, registries, and agent directories.",
-    "getstarted.step3.title": "Register",
-    "getstarted.step3.desc": "pre-registers your first experiment with hypothesis and success criteria.",
-    "getstarted.step4.title": "Research",
-    "getstarted.step4.desc": "Run experiments, cross-validate, and let ASRP track every decision from hypothesis to publication.",
-    "opensource.title": "Open source for science.",
-    "opensource.subtitle": "Inspect every line. Self-host on your terms. Shape the future of AI-augmented research.",
-    "opensource.transparent.title": "Transparent",
-    "opensource.transparent.desc": "Every line of code is auditable. See how agents make decisions and where your data flows.",
-    "opensource.selfhost.title": "Self-Host",
-    "opensource.selfhost.desc": "Run ASRP on your own machine. Your research data never leaves your network.",
-    "opensource.nolockin.title": "No Lock-In",
-    "opensource.nolockin.desc": "Bring your own LLM provider. Claude, Gemini, GPT, or OpenRouter — swap freely.",
-    "opensource.community.title": "Community",
-    "opensource.community.desc": "Contribute benchmarks, agent templates, and domain-specific skills that benefit all researchers.",
-    "footer.copyright": "ASRP — Agent Science Research Platform · Apache 2.0 · Built by <a href='https://www.jzis.org' target='_blank' style='color:inherit;text-decoration:underline'>JZIS</a>"
-  },
-  zh: {
-    "nav.home": "首页",
-    "nav.features": "功能",
-    "nav.agents": "智能体",
-    "nav.caseStudy": "案例研究",
-    "nav.github": "GitHub",
-    "agents.theorist.name": "Theorist",
-    "agents.engineer.name": "Engineer",
-    "agents.reviewer.name": "Reviewer",
-    "agents.librarian.name": "Librarian",
-    "agents.itdoctor.name": "ITDoctor",
-    "nav.getStarted": "开始使用",
-    "hero.badge": "开源 · Apache 2.0",
-    "hero.title1": "您的下一个突破",
-    "hero.title2": "不会是",
-    "hero.title3": "独自完成",
-    "hero.subtitle": "ASRP 是一个开源平台，将 AI 智能体转变为严谨的科研合作者。预注册实验、交叉验证结果并审计每个决策。",
-    "hero.setupWizard": "设置向导",
-    "hero.viewGithub": "在 GitHub 上查看",
-    "hero.stats.agentRoles": "智能体角色",
-    "hero.stats.testsPassing": "测试通过",
-    "hero.stats.dftBenchmarks": "DFT 基准",
-    "hero.stats.languages": "语言",
-    "features.title": "为科学严谨性而构建",
-    "features.subtitle": "速度而无严谨即噪音。ASRP 将科学方法编码到 AI 智能体工作流程中。",
-    "features.preregistration.title": "实验预注册",
-    "features.preregistration.desc": "在运行实验前注册假设。杜绝事后叙事。成功和失败标准预先定义。",
-    "features.crossvalidation.title": "交叉验证协议",
-    "features.crossvalidation.desc": "三个层次：重现、独立实现、替代方法。不同智能体必须在发表前验证结果。",
-    "features.audit.title": "审计跟踪",
-    "features.audit.desc": "每个决策、每个数据点、每次错误修正都记录在仅追加格式中。从假设到结论的完整可重现性。",
-    "features.firstprinciples.title": "第一性原理思维",
-    "features.firstprinciples.desc": "每个智能体都被指示从第一性原理推理。质疑假设、验证定义、信任数据而非权威。",
-    "features.tokenbudget.title": "令牌预算管理",
-    "features.tokenbudget.desc": "为正确任务选择正确模型。Opus 用于推理，Sonnet 用于代码，Flash 用于搜索。每个实验的自动成本跟踪。",
-    "features.roleseparation.title": "角色分离",
-    "features.roleseparation.desc": "提出假设的智能体不是验证假设的智能体。审查者拥有只读访问权限——真正的独立评估。",
-    "agents.title": "五个智能体，一个研究团队",
-    "agents.subtitle": "每个角色都有 SOUL 模板、技能清单和定义的访问权限。",
-    "agents.theorist.desc": "假设、推理、论文写作",
-    "agents.engineer.desc": "代码、计算、数据管道",
-    "agents.reviewer.desc": "独立审查（只读访问）",
-    "agents.librarian.desc": "文献搜索、参考文献",
-    "agents.itdoctor.desc": "监控、备份、自愈",
-    "casestudy.title": "数小时内发现错误，而非数月",
-    "casestudy.subtitle": "真实案例研究：一天内完成的 DFT 实验，包含两次自我修正。",
-    "casestudy.expTitle": "iDEA 实验 — 2026年4月1日",
-    "casestudy.t0": "文献综述；iDEA 代码已安装并进行基准测试",
-    "casestudy.t2": "假设：\"素数间隔势阱产生异常负 DD\"",
-    "casestudy.t4": "V1 结果支持假设（DD = -0.070 Ha）",
-    "casestudy.error1time": "T+4.5h — 错误 #1",
-    "casestudy.error2time": "T+9h — 错误 #2",
-    "casestudy.reviewerCaught": "审查者发现：",
-    "casestudy.error1desc": "晶格跨度不等。对照实验表明这是间距不对称，而非素数。",
-    "casestudy.error2desc": "使用了近似 KS 能隙而非精确值。定义错误。",
-    "casestudy.fixtime": "T+10h — 已更正",
-    "casestudy.fixdesc": "精确 KS 能隙将 DD 符号从 -0.041 翻转至 +0.084。\"负 DD\" 是伪影。",
-    "casestudy.conclusiontime": "T+11h — 结论",
-    "casestudy.conclusiondesc": "论文在提交前撤回。一天内发现两个错误。",
-    "casestudy.note": "在传统研究中，这些错误会存活到提交阶段，并在数月后被发现——如果有的话。",
-    "getstarted.title": "四步开始使用",
-    "getstarted.subtitle": "从零到运行研究平台，不到一小时。",
-    "getstarted.step1.title": "配置",
-    "getstarted.step1.desc": "打开<a href=\"setup.html\">设置向导</a>。添加 API 密钥，命名智能体，选择工具。",
-    "getstarted.step2.title": "初始化",
-    "getstarted.step2.desc": "创建包含审计日志、注册表和智能体目录的工作空间。",
-    "getstarted.step3.title": "注册",
-    "getstarted.step3.desc": "预注册您的第一个实验，包含假设和成功标准。",
-    "getstarted.step4.title": "研究",
-    "getstarted.step4.desc": "运行实验、交叉验证，让 ASRP 跟踪从假设到发表的每个决策。",
-    "opensource.title": "为科学开源",
-    "opensource.subtitle": "审查每一行代码。按您的条件自托管。塑造 AI 增强研究的未来。",
-    "opensource.transparent.title": "透明",
-    "opensource.transparent.desc": "每行代码都可审计。了解智能体如何做出决策以及数据流向何处。",
-    "opensource.selfhost.title": "自托管",
-    "opensource.selfhost.desc": "在您自己的机器上运行 ASRP。您的研究数据永远不会离开您的网络。",
-    "opensource.nolockin.title": "无锁定",
-    "opensource.nolockin.desc": "使用您自己的 LLM 提供商。Claude、Gemini、GPT 或 OpenRouter——自由切换。",
-    "opensource.community.title": "社区",
-    "opensource.community.desc": "贡献基准测试、智能体模板和领域特定技能，惠及所有研究人员。",
-    "footer.copyright": "ASRP — 智能体科学研究平台 · Apache 2.0 · 由<a href='https://www.jzis.org' target='_blank' style='color:inherit;text-decoration:underline'>JZIS</a>开发"
-  },
-  zht: {
-    "nav.home": "首頁",
-    "nav.features": "功能",
-    "nav.agents": "智能體",
-    "nav.caseStudy": "案例研究",
-    "nav.github": "GitHub",
-    "agents.theorist.name": "Theorist",
-    "agents.engineer.name": "Engineer",
-    "agents.reviewer.name": "Reviewer",
-    "agents.librarian.name": "Librarian",
-    "agents.itdoctor.name": "ITDoctor",
-    "nav.getStarted": "開始使用",
-    "hero.badge": "開源 · Apache 2.0",
-    "hero.title1": "您的下一個突破",
-    "hero.title2": "不会是",
-    "hero.title3": "獨自完成",
-    "hero.subtitle": "ASRP 是一個開源平台，將 AI 智能體轉变為嚴謹的科研合作者。預註冊實驗、交叉驗證結果并審計每個決策。",
-    "hero.setupWizard": "設置向導",
-    "hero.viewGithub": "在 GitHub 上查看",
-    "hero.stats.agentRoles": "智能體角色",
-    "hero.stats.testsPassing": "測試通過",
-    "hero.stats.dftBenchmarks": "DFT 基準",
-    "hero.stats.languages": "語言",
-    "features.title": "為科學嚴謹性而構建",
-    "features.subtitle": "速度而无嚴謹即噪音。ASRP 將科學方法编碼到 AI 智能體工作流程中。",
-    "features.preregistration.title": "實驗預註冊",
-    "features.preregistration.desc": "在運行實驗前註冊假設。杜绝事后叙事。成功和失败標準預先定义。",
-    "features.crossvalidation.title": "交叉驗證協议",
-    "features.crossvalidation.desc": "三個层次：重現、獨立實現、替代方法。不同智能體必须在發表前驗證結果。",
-    "features.audit.title": "審計跟踪",
-    "features.audit.desc": "每個決策、每個數據點、每次錯誤修正都记錄在僅追加格式中。從假設到結論的完整可重現性。",
-    "features.firstprinciples.title": "第一性原理思維",
-    "features.firstprinciples.desc": "每個智能體都被指示從第一性原理推理。质疑假設、驗證定义、信任數據而非權威。",
-    "features.tokenbudget.title": "令牌預算管理",
-    "features.tokenbudget.desc": "為正確任务選擇正確模型。Opus 用於推理，Sonnet 用於代碼，Flash 用於搜索。每個實驗的自動成本跟踪。",
-    "features.roleseparation.title": "角色分離",
-    "features.roleseparation.desc": "提出假設的智能體不是驗證假設的智能體。審查者拥有只读访問權限——真正的獨立評估。",
-    "agents.title": "五個智能體，一個研究團隊",
-    "agents.subtitle": "每個角色都有 SOUL 模板、技能清單和定义的访問權限。",
-    "agents.theorist.desc": "假設、推理、論文写作",
-    "agents.engineer.desc": "代碼、計算、數據管道",
-    "agents.reviewer.desc": "獨立審查（只读访問）",
-    "agents.librarian.desc": "文献搜索、参考文献",
-    "agents.itdoctor.desc": "監控、備份、自愈",
-    "casestudy.title": "數小時內發現錯誤，而非數月",
-    "casestudy.subtitle": "真實案例研究：一天內完成的 DFT 實驗，包含两次自我修正。",
-    "casestudy.expTitle": "iDEA 實驗 — 2026年4月1日",
-    "casestudy.t0": "文献综述；iDEA 代碼已安裝并進行基準測試",
-    "casestudy.t2": "假設：\"素數間隔势阱產生异常负 DD\"",
-    "casestudy.t4": "V1 結果支持假設（DD = -0.070 Ha）",
-    "casestudy.error1time": "T+4.5h — 錯誤 #1",
-    "casestudy.error2time": "T+9h — 錯誤 #2",
-    "casestudy.reviewerCaught": "審查者發現：",
-    "casestudy.error1desc": "晶格跨度不等。對照實驗表明這是間距不對称，而非素數。",
-    "casestudy.error2desc": "使用了近似 KS 能隙而非精確值。定义錯誤。",
-    "casestudy.fixtime": "T+10h — 已更正",
-    "casestudy.fixdesc": "精確 KS 能隙將 DD 符号從 -0.041 翻轉至 +0.084。\"负 DD\" 是伪影。",
-    "casestudy.conclusiontime": "T+11h — 結論",
-    "casestudy.conclusiondesc": "論文在提交前撤回。一天內發現两個錯誤。",
-    "casestudy.note": "在傳統研究中，這些錯誤会存活到提交阶段，并在數月后被發現——如果有的话。",
-    "getstarted.title": "四步開始使用",
-    "getstarted.subtitle": "從零到運行研究平台，不到一小時。",
-    "getstarted.step1.title": "配置",
-    "getstarted.step1.desc": "打開<a href=\"setup.html\">設置向導</a>。添加 API 密钥，命名智能體，選擇工具。",
-    "getstarted.step2.title": "初始化",
-    "getstarted.step2.desc": "創建包含審計日志、註冊表和智能體目錄的工作空間。",
-    "getstarted.step3.title": "註冊",
-    "getstarted.step3.desc": "預註冊您的第一個實驗，包含假設和成功標準。",
-    "getstarted.step4.title": "研究",
-    "getstarted.step4.desc": "運行實驗、交叉驗證，让 ASRP 跟踪從假設到發表的每個決策。",
-    "opensource.title": "為科學開源",
-    "opensource.subtitle": "審查每一行代碼。按您的条件自託管。塑造 AI 增强研究的未来。",
-    "opensource.transparent.title": "透明",
-    "opensource.transparent.desc": "每行代碼都可審計。了解智能體如何做出決策以及數據流向何處。",
-    "opensource.selfhost.title": "自託管",
-    "opensource.selfhost.desc": "在您自己的机器上運行 ASRP。您的研究數據永远不会離開您的網絡。",
-    "opensource.nolockin.title": "无锁定",
-    "opensource.nolockin.desc": "使用您自己的 LLM 提供商。Claude、Gemini、GPT 或 OpenRouter——自由切换。",
-    "opensource.community.title": "社区",
-    "opensource.community.desc": "贡献基準測試、智能體模板和領域特定技能，惠及所有研究人员。",
-    "footer.copyright": "ASRP — 智能體科學研究平台 · Apache 2.0 · 由<a href='https://www.jzis.org' target='_blank' style='color:inherit;text-decoration:underline'>JZIS</a>開發"
-  },
-  de: {
-    "nav.home": "Startseite",
-    "nav.features": "Funktionen",
-    "nav.agents": "Agenten",
-    "nav.caseStudy": "Fallstudie",
-    "nav.github": "GitHub",
-    "agents.theorist.name": "Theorist",
-    "agents.engineer.name": "Engineer",
-    "agents.reviewer.name": "Reviewer",
-    "agents.librarian.name": "Librarian",
-    "agents.itdoctor.name": "ITDoctor",
-    "nav.getStarted": "Erste Schritte",
-    "hero.badge": "Open Source · Apache 2.0",
-    "hero.title1": "Ihr nächster Durchbruch",
-    "hero.title2": "wird nicht",
-    "hero.title3": "allein",
-    "hero.subtitle": "ASRP ist eine Open-Source-Plattform, die KI-Agenten in rigorose Forschungspartner verwandelt. Experimente vorregistrieren, Ergebnisse kreuzvalidieren und jede Entscheidung prüfen.",
-    "hero.setupWizard": "Setup-Assistent",
-    "hero.viewGithub": "Auf GitHub ansehen",
-    "hero.stats.agentRoles": "Agentenrollen",
-    "hero.stats.testsPassing": "Tests bestanden",
-    "hero.stats.dftBenchmarks": "DFT-Benchmarks",
-    "hero.stats.languages": "Sprachen",
-    "features.title": "Für wissenschaftliche Strenge gebaut",
-    "features.subtitle": "Geschwindigkeit ohne Strenge ist Rauschen. ASRP kodiert die wissenschaftliche Methode in KI-Agenten-Workflows.",
-    "features.preregistration.title": "Experimentvorregistrierung",
-    "features.preregistration.desc": "Hypothesen vor der Durchführung von Experimenten registrieren. Keine nachträglichen Narrative. Erfolgs- und Fehlschlagskriterien werden im Voraus definiert.",
-    "features.crossvalidation.title": "Kreuzvalidierungsprotokoll",
-    "features.crossvalidation.desc": "Drei Ebenen: Reproduktion, unabhängige Implementierung, alternative Methode. Verschiedene Agenten müssen Ergebnisse vor der Veröffentlichung überprüfen.",
-    "features.audit.title": "Prüfpfade",
-    "features.audit.desc": "Jede Entscheidung, jeder Datenpunkt, jede Fehlerkorrektur wird im Append-Only-Format protokolliert. Vollständige Reproduzierbarkeit von der Hypothese bis zur Schlussfolgerung.",
-    "features.firstprinciples.title": "Denken aus ersten Prinzipien",
-    "features.firstprinciples.desc": "Jeder Agent wird angewiesen, aus ersten Prinzipien zu argumentieren. Annahmen hinterfragen, Definitionen verifizieren, Daten über Autorität vertrauen.",
-    "features.tokenbudget.title": "Token-Budget-Verwaltung",
-    "features.tokenbudget.desc": "Das richtige Modell für die richtige Aufgabe. Opus für Argumentation, Sonnet für Code, Flash für Suche. Automatische Kostenverfolgung pro Experiment.",
-    "features.roleseparation.title": "Rollentrennung",
-    "features.roleseparation.desc": "Der Agent, der eine Hypothese vorschlägt, ist nicht derjenige, der sie validiert. Der Prüfer hat schreibgeschützten Zugriff — echte unabhängige Bewertung.",
-    "agents.title": "Fünf Agenten. Ein Forschungsteam.",
-    "agents.subtitle": "Jede Rolle hat eine SOUL-Vorlage, ein Skill-Manifest und definierte Zugriffsberechtigungen.",
-    "agents.theorist.desc": "Hypothesen, Argumentation, Verfassen von Arbeiten",
-    "agents.engineer.desc": "Code, Berechnung, Datenpipelines",
-    "agents.reviewer.desc": "Unabhängige Überprüfung (schreibgeschützter Zugriff)",
-    "agents.librarian.desc": "Literatursuche, Referenzen",
-    "agents.itdoctor.desc": "Überwachung, Backups, Selbstheilung",
-    "casestudy.title": "Fehler in Stunden erkannt, nicht Monaten",
-    "casestudy.subtitle": "Eine echte Fallstudie: eintägiges DFT-Experiment mit zwei Selbstkorrekturen.",
-    "casestudy.expTitle": "Das iDEA-Experiment — 1. April 2026",
-    "casestudy.t0": "Literaturrecherche; iDEA-Code installiert und getestet",
-    "casestudy.t2": "Hypothese: \"Primzahl-beabstandete Potentialtöpfe erzeugen anomales negatives DD\"",
-    "casestudy.t4": "V1-Ergebnisse unterstützen Hypothese (DD = -0.070 Ha)",
-    "casestudy.error1time": "T+4,5h — Fehler #1",
-    "casestudy.error2time": "T+9h — Fehler #2",
-    "casestudy.reviewerCaught": "Prüfer entdeckte:",
-    "casestudy.error1desc": "Gitterspannen ungleich. Kontrollexperiment zeigt, es ist Abstandsasymmetrie, nicht Primzahlen.",
-    "casestudy.error2desc": "Ungefähre KS-Lücke anstelle der exakten verwendet. Falsche Definition.",
-    "casestudy.fixtime": "T+10h — Korrigiert",
-    "casestudy.fixdesc": "Exakte KS-Lücke kehrt DD-Vorzeichen von -0.041 auf +0.084 um. \"Negatives DD\" war ein Artefakt.",
-    "casestudy.conclusiontime": "T+11h — Schlussfolgerung",
-    "casestudy.conclusiondesc": "Arbeit vor Einreichung zurückgezogen. Zwei Fehler in einem Tag erkannt.",
-    "casestudy.note": "In der traditionellen Forschung würden diese Fehler bis zur Einreichung überleben und Monate später erkannt werden — wenn überhaupt.",
-    "getstarted.title": "In 4 Schritten starten",
-    "getstarted.subtitle": "Von Null bis zur laufenden Forschungsplattform in unter einer Stunde.",
-    "getstarted.step1.title": "Konfigurieren",
-    "getstarted.step1.desc": "Öffnen Sie den <a href=\"setup.html\">Setup-Assistenten</a>. API-Schlüssel hinzufügen, Agenten benennen, Tools auswählen.",
-    "getstarted.step2.title": "Initialisieren",
-    "getstarted.step2.desc": "erstellt Ihren Arbeitsbereich mit Prüfprotokollen, Registern und Agentenverzeichnissen.",
-    "getstarted.step3.title": "Registrieren",
-    "getstarted.step3.desc": "registriert Ihr erstes Experiment mit Hypothese und Erfolgskriterien vor.",
-    "getstarted.step4.title": "Forschen",
-    "getstarted.step4.desc": "Experimente durchführen, kreuzvalidieren und ASRP jede Entscheidung von der Hypothese bis zur Veröffentlichung verfolgen lassen.",
-    "opensource.title": "Open Source für die Wissenschaft",
-    "opensource.subtitle": "Jede Zeile inspizieren. Zu Ihren Bedingungen selbst hosten. Die Zukunft der KI-gestützten Forschung gestalten.",
-    "opensource.transparent.title": "Transparent",
-    "opensource.transparent.desc": "Jede Codezeile ist überprüfbar. Sehen Sie, wie Agenten Entscheidungen treffen und wohin Ihre Daten fließen.",
-    "opensource.selfhost.title": "Selbst hosten",
-    "opensource.selfhost.desc": "ASRP auf Ihrer eigenen Maschine ausführen. Ihre Forschungsdaten verlassen niemals Ihr Netzwerk.",
-    "opensource.nolockin.title": "Keine Bindung",
-    "opensource.nolockin.desc": "Bringen Sie Ihren eigenen LLM-Anbieter mit. Claude, Gemini, GPT oder OpenRouter — frei wechseln.",
-    "opensource.community.title": "Gemeinschaft",
-    "opensource.community.desc": "Benchmarks, Agentenvorlagen und domänenspezifische Fähigkeiten beisteuern, die allen Forschern zugutekommen.",
-    "footer.copyright": "ASRP — Agenten-Wissenschafts-Forschungsplattform · Apache 2.0 · Erstellt von <a href='https://www.jzis.org' target='_blank' style='color:inherit;text-decoration:underline'>JZIS</a>"
-  }
-};
-
-// Language switching function
-function switchLang(lang) {
-  // Validate language
-  if (!translations[lang]) {
-    console.error('Language not supported:', lang);
-    return;
-  }
-
-  // Save to localStorage
-  localStorage.setItem('asrp-lang', lang);
-
-  // Update all elements with data-i18n attribute
-  document.querySelectorAll('[data-i18n]').forEach(element => {
-    const key = element.getAttribute('data-i18n');
-    if (translations[lang][key]) {
-      // Handle HTML content in translations (like links in step descriptions)
-      if (translations[lang][key].includes('<a href')) {
-        element.innerHTML = translations[lang][key];
-      } else {
-        element.textContent = translations[lang][key];
-      }
-    }
-  });
-
-  // Update current-lang display
-  const langNames = { en: 'EN', zh: '中文', zht: '繁體', de: 'DE' };
-  document.getElementById('current-lang').textContent = langNames[lang] || 'EN';
-
-  // Update active menu item
-  document.querySelectorAll('.lang-menu a').forEach(link => {
-    link.classList.remove('active');
-    if (link.getAttribute('data-lang') === lang) {
-      link.classList.add('active');
-    }
-  });
-
-  // Close dropdown
-  var lm = document.getElementById('lang-menu'); if(lm) lm.classList.remove('show');
-
-  // Update html lang attribute
-  document.documentElement.lang = lang;
-}
-
-// Initialize on page load
-document.addEventListener('DOMContentLoaded', function() {
-  // Get saved language or default to English
-  // Auto-detect language: localStorage > IP geolocation > default English
-    const savedLang = localStorage.getItem('asrp-lang');
-    if (savedLang) {
-      switchLang(savedLang);
-    } else {
-      // Detect country via free IP geolocation API
-      fetch('https://ipapi.co/json/', { signal: AbortSignal.timeout(3000) })
-        .then(r => r.json())
-        .then(data => {
-          const cc = (data.country_code || '').toUpperCase();
-          const langMap = {
-            'CN': 'zh',                    // China → Simplified Chinese
-            'HK': 'zht', 'MO': 'zht',     // Hong Kong, Macau → Traditional Chinese
-            'TW': 'zht', 'SG': 'zht',     // Taiwan, Singapore → Traditional Chinese
-            'DE': 'de', 'CH': 'de', 'AT': 'de'  // Germany, Switzerland, Austria → German
-          };
-          const detectedLang = langMap[cc] || 'en';
-          switchLang(detectedLang);
-        })
-        .catch(() => {
-          // API failed or timeout — keep English default
-        });
-    }
-});
-</script>
-
-<script src="auth.js"></script>
-
-
-<script>
-// === Language Module (standalone) ===
 function toggleLangMenu(event) {
   if (event) event.stopPropagation();
   var menu = document.getElementById('lang-menu');
   if (menu) menu.classList.toggle('show');
 }
-
 document.addEventListener('click', function(e) {
   if (!e.target.closest('.lang-dropdown')) {
     var menu = document.getElementById('lang-menu');
     if (menu) menu.classList.remove('show');
   }
 });
-</script>
 
-<!-- Login Modal -->
-<div id="login-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.4);z-index:9999;align-items:center;justify-content:center">
-  <div style="background:#fff;border-radius:12px;padding:32px;max-width:400px;width:90%;box-shadow:0 16px 48px rgba(0,0,0,0.15);position:relative">
-    <button onclick="closeLoginModal()" style="position:absolute;top:12px;right:16px;background:none;border:none;font-size:20px;cursor:pointer;color:#5a6b5a">✕</button>
-    <h3 style="margin-bottom:4px;color:#2d3b2d;font-size:18px" id="modal-title">Login to continue</h3>
-    <p style="color:#5a6b5a;font-size:13px;margin-bottom:20px">You need an account to access Setup Wizard</p>
-    <div style="display:flex;gap:8px;margin-bottom:16px">
-      <button onclick="switchModalTab('login')" id="modal-tab-login" style="flex:1;padding:8px;border:1px solid #d4e4d4;border-radius:6px;background:#4a8c6a;color:#fff;cursor:pointer;font-size:13px;font-weight:500">Login</button>
-      <button onclick="switchModalTab('register')" id="modal-tab-register" style="flex:1;padding:8px;border:1px solid #d4e4d4;border-radius:6px;background:transparent;color:#5a6b5a;cursor:pointer;font-size:13px;font-weight:500">Register</button>
-    </div>
-    <form id="modal-login-form" onsubmit="handleModalLogin(event)">
-      <input type="email" id="modal-login-email" placeholder="Email" required style="width:100%;padding:10px 12px;border:1px solid #d4e4d4;border-radius:6px;margin-bottom:10px;font-size:14px;box-sizing:border-box">
-      <input type="password" id="modal-login-password" placeholder="Password" required minlength="6" style="width:100%;padding:10px 12px;border:1px solid #d4e4d4;border-radius:6px;margin-bottom:12px;font-size:14px;box-sizing:border-box">
-      <button type="submit" style="width:100%;padding:10px;background:linear-gradient(135deg,#7bc4a0,#4a8c6a);color:#fff;border:none;border-radius:6px;font-size:14px;font-weight:600;cursor:pointer">Login</button>
-    </form>
-    <form id="modal-register-form" style="display:none" onsubmit="handleModalRegister(event)">
-      <input type="text" id="modal-reg-name" placeholder="Full name" required style="width:100%;padding:10px 12px;border:1px solid #d4e4d4;border-radius:6px;margin-bottom:10px;font-size:14px;box-sizing:border-box">
-      <input type="email" id="modal-reg-email" placeholder="Email" required style="width:100%;padding:10px 12px;border:1px solid #d4e4d4;border-radius:6px;margin-bottom:10px;font-size:14px;box-sizing:border-box">
-      <input type="password" id="modal-reg-password" placeholder="Password (min 6 chars)" required minlength="6" style="width:100%;padding:10px 12px;border:1px solid #d4e4d4;border-radius:6px;margin-bottom:10px;font-size:14px;box-sizing:border-box">
-      <input type="password" id="modal-reg-confirm" placeholder="Confirm password" required minlength="6" style="width:100%;padding:10px 12px;border:1px solid #d4e4d4;border-radius:6px;margin-bottom:12px;font-size:14px;box-sizing:border-box">
-      <button type="submit" style="width:100%;padding:10px;background:linear-gradient(135deg,#7bc4a0,#4a8c6a);color:#fff;border:none;border-radius:6px;font-size:14px;font-weight:600;cursor:pointer">Create Account</button>
-    </form>
-    <div id="modal-alert" style="display:none;margin-top:12px;padding:8px 12px;border-radius:6px;font-size:13px"></div>
-  </div>
-</div>
-
-
-<script>
-// Login Modal
-function openLoginModal() {
-  document.getElementById('login-modal').style.display = 'flex';
-}
-function closeLoginModal() {
-  document.getElementById('login-modal').style.display = 'none';
-  document.getElementById('modal-alert').style.display = 'none';
-}
-function switchModalTab(tab) {
-  document.getElementById('modal-login-form').style.display = tab === 'login' ? 'block' : 'none';
-  document.getElementById('modal-register-form').style.display = tab === 'register' ? 'block' : 'none';
-  document.getElementById('modal-tab-login').style.background = tab === 'login' ? '#4a8c6a' : 'transparent';
-  document.getElementById('modal-tab-login').style.color = tab === 'login' ? '#fff' : '#5a6b5a';
-  document.getElementById('modal-tab-register').style.background = tab === 'register' ? '#4a8c6a' : 'transparent';
-  document.getElementById('modal-tab-register').style.color = tab === 'register' ? '#fff' : '#5a6b5a';
-}
-function showModalAlert(msg, type) {
-  var el = document.getElementById('modal-alert');
-  el.style.display = 'block';
-  el.style.background = type === 'error' ? 'rgba(200,60,60,0.1)' : 'rgba(74,140,106,0.1)';
-  el.style.color = type === 'error' ? '#c45c5c' : '#4a8c6a';
-  el.textContent = msg;
-}
-async function handleModalLogin(e) {
-  e.preventDefault();
-  try {
-    var user = await Auth.login(
-      document.getElementById('modal-login-email').value,
-      document.getElementById('modal-login-password').value
-    );
-    showModalAlert('Success! Redirecting...', 'success');
-    setTimeout(function() { window.location.href = 'setup.html'; }, 500);
-  } catch(err) { showModalAlert(err.message, 'error'); }
-}
-async function handleModalRegister(e) {
-  e.preventDefault();
-  var pw = document.getElementById('modal-reg-password').value;
-  if (pw !== document.getElementById('modal-reg-confirm').value) { showModalAlert('Passwords do not match', 'error'); return; }
-  try {
-    await Auth.register(
-      document.getElementById('modal-reg-name').value,
-      document.getElementById('modal-reg-email').value, pw
-    );
-    showModalAlert('Account created! Redirecting...', 'success');
-    setTimeout(function() { window.location.href = 'setup.html'; }, 800);
-  } catch(err) { showModalAlert(err.message, 'error'); }
-}
-// Close modal on background click
-document.getElementById('login-modal').addEventListener('click', function(e) {
-  if (e.target === this) closeLoginModal();
-});
-
-// Intercept Setup Wizard button: check auth first
-async function gotoSetup(e) {
-  e.preventDefault();
-  if (await Auth.isLoggedIn()) {
-    window.location.href = 'setup.html';
-  } else {
-    openLoginModal();
+const translations = {
+  en: {
+    "nav.workflow":"Workflow","nav.agents":"Agents","nav.features":"Features","nav.challenge":"Challenge","nav.download":"Download",
+    "hero.badge":"Open Source · Apache 2.0 · v0.3.13",
+    "hero.title1":"A 3-agent research team",
+    "hero.title2":"that catches errors ",
+    "hero.title3":"before they ship",
+    "hero.subtitle":"ASRP is an open-source AI Scientific Research Platform. Theorist, Engineer, and Reviewer collaborate in your Discord, pre-register hypotheses, cross-validate results, and audit every decision — all from a desktop app you run on your own machine.",
+    "hero.download":"Download for your platform","hero.dlSub":"","hero.viewGithub":"View on GitHub",
+    "hero.stats.agents":"Agent Roles","hero.stats.phases":"Workflow Phases","hero.stats.challenges":"Challenge Problems","hero.stats.languages":"Languages",
+    "problem.eyebrow":"The reproducibility crisis","problem.title":"Speed without rigor is noise.","problem.subtitle":"AI agents can produce a paper a day. Most of those papers won't reproduce. ASRP encodes the scientific method into the workflow itself.",
+    "problem.p1":"of researchers have failed to reproduce another scientist's experiment. <em>(Nature, 2016)</em>",
+    "problem.p2":"say there is a <em>significant</em> reproducibility crisis in their field — and AI is making it worse.",
+    "problem.p3":"errors caught in <em>one day</em> in the iDEA case study below — before submission, not months after.",
+    "workflow.eyebrow":"Standard Research Workflow · SRW-v3","workflow.title":"From idea to direction menu in ≤20 minutes.","workflow.subtitle":"Every research project starts with the same 7-phase workflow. Bootstrap phases run on AI minutes — you steer immediately. Phase 7 then switches to \"1 human day = 1 AI hour\" for deep work.",
+    "srw.p1.t":"Intake","srw.p1.d":"Theorist Q&A in Discord","srw.p2.t":"Lit Recon","srw.p2.d":"Web · arXiv · self-search","srw.p3.t":"Opportunities","srw.p3.d":"Synthesise + critique","srw.p4.t":"Direction Pick","srw.p4.d":"User chooses path","srw.p5.t":"Plan","srw.p5.d":"Engineer feasibility","srw.p6.t":"Schedule","srw.p6.d":"Time + budget lock-in","srw.p7.t":"Active Loop","srw.p7.d":"Execute · review · iterate",
+    "srw.m1.t":"Self-healing dispatcher","srw.m1.d":"Reviewer dispatches phase kickoffs and writes daily standups. Sender ≠ mention target is a runtime invariant — no Discord self-mention deadlocks.",
+    "srw.m2.t":"Independent recompute","srw.m2.d":"Engineer recomputes any numerical result Theorist produces, using a different library, algorithm, or parameterization — divergence is logged.",
+    "agents.eyebrow":"The team","agents.title":"Three agents. One research team.","agents.subtitle":"Each role has its own SOUL prompt, model class, skill manifest, and access permissions. The agent that proposes a hypothesis is never the one that signs off on it.",
+    "agents.theorist.name":"Theorist","agents.theorist.desc":"Lead scientist and the only user-facing voice. Owns hypotheses, literature reconnaissance, opportunity synthesis, plan construction, and the active loop.",
+    "agents.theorist.b1":"Self red-team pass on every draft","agents.theorist.b2":"Owns Phase 1 Intake with the researcher","agents.theorist.b3":"Writes and revises the paper",
+    "agents.engineer.name":"Engineer","agents.engineer.desc":"Implements code, runs experiments, processes data — and independently recomputes every numerical result Theorist produces, using a different path.",
+    "agents.engineer.b1":"Different library / algorithm / params","agents.engineer.b2":"Reviews compute feasibility in Phase 5","agents.engineer.b3":"Owns workspace, code, data pipelines",
+    "agents.reviewer.name":"Reviewer","agents.reviewer.desc":"Dispatcher, daily standup author, and red-team critic. Posts phase kickoffs that @mention Theorist and Engineer. Never mentions itself — bots don't receive self-mention events.",
+    "agents.reviewer.b1":"Hostile-reviewer critique on every deliverable","agents.reviewer.b2":"Sender ≠ mention target invariant","agents.reviewer.b3":"Writes the daily standup summary",
+    "discord.eyebrow":"Discord-native","discord.title":"Your research team lives in Discord.","discord.subtitle":"No new chat app to learn. ASRP spins up an embedded OpenClaw gateway and connects each agent as a real Discord bot — you talk to them in #general just like a teammate.",
+    "discord.h":"@mention to trigger. Standup at sunrise.","discord.p":"Every research project gets its own channel. Phase kickoffs are posted automatically. Daily standups summarize what shipped, what broke, and what's next.",
+    "discord.f1":"Embedded OpenClaw gateway — one click to start","discord.f2":"3 independent Discord bots, one per role","discord.f3":"@mention Theorist to ask anything","discord.f4":"Phase kickoffs · daily standups · audit log","discord.ch":"3 members",
+    "features.eyebrow":"Built-in scientific rigor","features.title":"Six guardrails the workflow enforces.","features.subtitle":"These aren't best practices you have to remember. They're encoded in the workflow itself.",
+    "features.preregistration.title":"Hypothesis Pre-Registration","features.preregistration.desc":"Register hypotheses with falsification criteria before running anything. The Researches Registry is your immutable baseline — no post-hoc storytelling.",
+    "features.crossvalidation.title":"Independent Cross-Validation","features.crossvalidation.desc":"Engineer must reproduce every numerical result via a different code path. Divergence triggers a Reviewer red-team pass before anything goes into the paper.",
+    "features.audit.title":"Append-Only Audit Trail","features.audit.desc":"Every decision, every data point, every error correction logged forever. Full reproducibility from hypothesis to conclusion — exportable as CSV.",
+    "features.firstprinciples.title":"First Principles Reasoning","features.firstprinciples.desc":"Every SOUL prompt instructs the agent to question assumptions, verify definitions, and trust data over authority. Self red-team pass before any deliverable ships.",
+    "features.tokenbudget.title":"Per-Task Model Budget","features.tokenbudget.desc":"Right model for the right task. Opus for reasoning, Sonnet for code, Haiku for dispatch. Daily budget caps with live cost tracking on the dashboard.",
+    "features.roleseparation.title":"Role Separation","features.roleseparation.desc":"The proposer is never the validator. Reviewer red-teams every deliverable. SRW-v3 enforces sender ≠ mention target as a runtime invariant.",
+    "papers.eyebrow":"Papers pipeline","papers.title":"From draft to submission, in six tracked stages.","papers.subtitle":"Every paper project lives as a directory tree with authors, sections, references, and stage gates. Three sample paper projects ship out of the box.",
+    "papers.s1.t":"Draft","papers.s1.d":"Outline + scaffold","papers.s2.t":"Lit Review","papers.s2.d":"Citations & anchors","papers.s3.t":"Methods","papers.s3.d":"Reproducible recipe","papers.s4.t":"Results","papers.s4.d":"Tables, figures, data","papers.s5.t":"Internal Review","papers.s5.d":"Reviewer red-team","papers.s6.t":"Submission","papers.s6.d":"Export & archive",
+    "challenge.eyebrow":"Challenge center","challenge.title":"396 problems to benchmark your agents.","challenge.subtitle":"A built-in question bank across four disciplines. Hand them to your ASRP team and measure how a real research workflow stacks up against single-shot prompting.",
+    "challenge.p1":"Each discipline ships with 99 graded problems — easy warm-ups through grad-level open questions. Search, filter by difficulty, and route any problem straight into a new research project.",
+    "challenge.p2":"Race-guarded loading, debounced search, accessible keyboard nav, and a Local toggle so you can run the whole bank against your on-prem Ollama stack.",
+    "challenge.math":"Mathematics","challenge.physics":"Physics","challenge.chem":"Chemistry","challenge.life":"Life Sciences",
+    "local.eyebrow":"Privacy first","local.title":"Run on-prem. Your data stays on your machine.","local.subtitle":"ASRP works fully offline with Ollama. Hardware detection, streaming model pulls, GPU/VRAM aware. Or deploy headless on a VPS — same desktop, no display required.",
+    "local.f1.t":"Hardware aware","local.f1.d":"Detects RAM, GPU, VRAM and recommends models you can actually run.",
+    "local.f2.t":"Streaming pulls","local.f2.d":"One-click ollama pull with live progress and resume.",
+    "local.f3.t":"OS-level encryption","local.f3.d":"API keys live in the OS keychain. Local SQLite + JWT auth.",
+    "local.f4.t":"Headless / VPS","local.f4.d":"Auto-detects missing $DISPLAY and switches to headless mode.",
+    "local.h":"Cloud or local — your call.","local.p1":"Bring your own keys for Anthropic, Google, or OpenRouter. Or run everything locally with Ollama. Mix and match per agent — Theorist on Opus, Engineer on a local Qwen, Reviewer on Haiku.",
+    "local.p2":"Self-test suite (25 checks) verifies the install end-to-end. Auto-updater handles new releases.",
+    "casestudy.eyebrow":"Case study","casestudy.title":"Errors caught in hours, not months.","casestudy.subtitle":"A real ASRP run: a one-day DFT investigation that self-corrected twice and retracted itself before submission.",
+    "casestudy.expTitle":"The iDEA Experiment — April 1, 2026",
+    "casestudy.t0":"Literature review; iDEA code installed and benchmarked.",
+    "casestudy.t2":"Hypothesis: \"Prime-spaced wells produce anomalous negative DD.\"",
+    "casestudy.t4":"V1 results support the hypothesis (DD = -0.070 Ha).",
+    "casestudy.error1time":"T+4.5h — Error #1","casestudy.error2time":"T+9h — Error #2","casestudy.reviewerCaught":"Reviewer caught:",
+    "casestudy.error1desc":"Lattice spans unequal. Control experiment shows it's spacing asymmetry, not primes.",
+    "casestudy.error2desc":"Used approximate KS gap instead of exact. Wrong definition.",
+    "casestudy.fixtime":"T+10h — Corrected","casestudy.fixdesc":"Exact KS gap flips DD sign from -0.041 to +0.084. \"Negative DD\" was an artifact.",
+    "casestudy.conclusiontime":"T+11h — Conclusion","casestudy.conclusiondesc":"Paper retracted before submission. Two errors caught in one day.",
+    "casestudy.note":"In traditional research, these errors would survive to submission and be caught months later — if at all.",
+    "getstarted.eyebrow":"Get started","getstarted.title":"From download to first research, in four steps.","getstarted.subtitle":"No CLI needed. Install the desktop app, complete the 5-step Setup Wizard, and start your first research project.",
+    "getstarted.step1.title":"Download","getstarted.step1.desc":"Get the installer for macOS, Windows, or Linux. Auto-updater takes care of the rest.",
+    "getstarted.step2.title":"Setup Wizard","getstarted.step2.desc":"5 steps: profile, API keys, agent config, Discord bots, launch. ~10 minutes.",
+    "getstarted.step3.title":"Start agents","getstarted.step3.desc":"One click on the dashboard spins up the embedded OpenClaw gateway and your 3 bots.",
+    "getstarted.step4.title":"Talk in Discord","getstarted.step4.desc":"@mention Theorist with your research question. The team takes it from there.",
+    "download.allPlatforms":"All platforms · Apache 2.0 ·","download.releaseNotes":"release notes",
+    "opensource.eyebrow":"Open source","opensource.title":"Built in the open. For science.","opensource.subtitle":"Inspect every line. Self-host on your terms. Shape the future of AI-augmented research.",
+    "opensource.transparent.title":"Transparent","opensource.transparent.desc":"Every line of code is auditable on GitHub. See exactly how agents make decisions and where your data flows.",
+    "opensource.selfhost.title":"Self-host","opensource.selfhost.desc":"Run ASRP on your laptop, your lab workstation, or a headless VPS. Your research data never leaves your network.",
+    "opensource.nolockin.title":"No lock-in","opensource.nolockin.desc":"Bring your own LLM. Anthropic, Google, OpenRouter, or local Ollama — swap freely per agent.",
+    "opensource.community.title":"Community","opensource.community.desc":"Contribute SOUL templates, skill manifests, benchmarks, and domain workflows that benefit every researcher.",
+    "footer.releases":"Releases","footer.publications":"Publications","footer.copyright":"ASRP — AI Scientific Research Platform · Apache 2.0 · Built by <a href='https://www.jzis.org' target='_blank' style='color:inherit;text-decoration:underline'>JZIS</a>"
+  },
+  zh: {
+    "nav.workflow":"工作流","nav.agents":"智能体","nav.features":"功能","nav.challenge":"挑战题库","nav.download":"下载",
+    "hero.badge":"开源 · Apache 2.0 · v0.3.13",
+    "hero.title1":"3 智能体科研团队",
+    "hero.title2":"在错误流入论文前 ",
+    "hero.title3":"主动拦截",
+    "hero.subtitle":"ASRP 是一个开源的 AI 科学研究平台。Theorist、Engineer、Reviewer 三个智能体在你的 Discord 中协作，预注册假设、交叉验证结果、审计每一个决策——全部在你本机运行的桌面应用里完成。",
+    "hero.download":"下载适合你平台的版本","hero.dlSub":"","hero.viewGithub":"在 GitHub 上查看",
+    "hero.stats.agents":"智能体角色","hero.stats.phases":"工作流阶段","hero.stats.challenges":"挑战题","hero.stats.languages":"语言",
+    "problem.eyebrow":"可重复性危机","problem.title":"没有严谨的速度只是噪音。","problem.subtitle":"AI 智能体一天能产出一篇论文。但其中大多数无法复现。ASRP 把科学方法直接编码到工作流里。",
+    "problem.p1":"的研究者曾经无法复现另一位科学家的实验。<em>(Nature, 2016)</em>",
+    "problem.p2":"认为本领域存在<em>显著</em>的可重复性危机——AI 让情况更糟。",
+    "problem.p3":"个错误在下方 iDEA 案例中<em>一天内</em>就被发现——发生在投稿之前，而非数月之后。",
+    "workflow.eyebrow":"标准研究工作流 · SRW-v3","workflow.title":"从一个想法到方向菜单：≤20 分钟。","workflow.subtitle":"每一个研究项目都从相同的 7 阶段工作流开始。前 6 个 bootstrap 阶段以 AI 分钟运行——你立刻就能掌舵。Phase 7 切换为 \"1 个人类日 = 1 个 AI 小时\" 的深度工作模式。",
+    "srw.p1.t":"接案 Intake","srw.p1.d":"Theorist 在 Discord 里问答","srw.p2.t":"文献侦察","srw.p2.d":"Web · arXiv · 自查","srw.p3.t":"机会综合","srw.p3.d":"综合 + 自我批评","srw.p4.t":"方向选择","srw.p4.d":"用户挑路径","srw.p5.t":"计划","srw.p5.d":"Engineer 可行性评审","srw.p6.t":"排程","srw.p6.d":"时间 + 预算锁定","srw.p7.t":"主动循环","srw.p7.d":"执行 · 复核 · 迭代",
+    "srw.m1.t":"自愈调度","srw.m1.d":"Reviewer 负责派发各阶段 kickoff 并撰写每日 standup。\"发送方 ≠ @ 目标\" 是运行时不变量——彻底消除 Discord 自我 @ 死锁。",
+    "srw.m2.t":"独立复算","srw.m2.d":"Theorist 产出的所有数值结果，都会由 Engineer 用不同的库 / 算法 / 参数化独立复算，分歧会被记录。",
+    "agents.eyebrow":"团队","agents.title":"三个智能体，一个研究团队。","agents.subtitle":"每个角色都拥有自己的 SOUL 提示词、模型档位、技能清单和访问权限。提出假设的智能体，绝对不是签字放行的那一个。",
+    "agents.theorist.name":"Theorist","agents.theorist.desc":"首席科学家，也是唯一面向用户的发声方。负责假设、文献侦察、机会综合、计划构建和主动循环。",
+    "agents.theorist.b1":"每个草稿都做自我 red-team 复审","agents.theorist.b2":"主导 Phase 1 与研究者的接案对话","agents.theorist.b3":"撰写并修订论文",
+    "agents.engineer.name":"Engineer","agents.engineer.desc":"实现代码、跑实验、处理数据——并对 Theorist 产出的每一个数值结果用不同路径独立复算。",
+    "agents.engineer.b1":"不同的库 / 算法 / 参数","agents.engineer.b2":"在 Phase 5 评审计算可行性","agents.engineer.b3":"负责工作区、代码与数据流水线",
+    "agents.reviewer.name":"Reviewer","agents.reviewer.desc":"派发器、每日 standup 作者，以及 red-team 批评者。在频道里 @ Theorist 与 Engineer 启动各阶段。从不 @ 自己——bot 不会收到自我 @ 事件。",
+    "agents.reviewer.b1":"对每个交付物做敌意评审","agents.reviewer.b2":"\"发送方 ≠ @ 目标\" 不变量","agents.reviewer.b3":"撰写每日 standup 摘要",
+    "discord.eyebrow":"Discord 原生","discord.title":"你的研究团队住在 Discord 里。","discord.subtitle":"不需要学新的聊天工具。ASRP 内置 OpenClaw gateway，把每个智能体接入为真实的 Discord bot——你在 #general 里就像和队友说话一样跟它们交流。",
+    "discord.h":"@ 触发。日出 standup。","discord.p":"每个研究项目都有自己的频道。各阶段 kickoff 自动发出。每日 standup 总结今天交付了什么、哪里出了问题、下一步是什么。",
+    "discord.f1":"内置 OpenClaw gateway — 一键启动","discord.f2":"3 个独立的 Discord bot，一个角色一个","discord.f3":"@ Theorist 提任何问题","discord.f4":"阶段 kickoff · 每日 standup · 审计日志","discord.ch":"3 名成员",
+    "features.eyebrow":"内建科学严谨性","features.title":"工作流强制执行的 6 道护栏。","features.subtitle":"这些不是需要你记住的最佳实践。它们直接编码进了工作流。",
+    "features.preregistration.title":"假设预注册","features.preregistration.desc":"在跑任何东西之前先注册带可证伪标准的假设。Researches Registry 是你不可篡改的基线——杜绝事后叙事。",
+    "features.crossvalidation.title":"独立交叉验证","features.crossvalidation.desc":"Engineer 必须用不同的代码路径复现每一个数值结果。出现分歧会触发 Reviewer red-team，论文里才能用。",
+    "features.audit.title":"只追加审计日志","features.audit.desc":"每个决策、每个数据点、每次错误修正都永久记录。从假设到结论的完整可重复性——可导出为 CSV。",
+    "features.firstprinciples.title":"第一性原理推理","features.firstprinciples.desc":"每个 SOUL 提示词都要求智能体质疑假设、核对定义、信任数据胜过权威。任何交付物发出之前先做自我 red-team。",
+    "features.tokenbudget.title":"按任务的模型预算","features.tokenbudget.desc":"对的任务用对的模型。Opus 推理，Sonnet 写代码，Haiku 调度。仪表盘上有每日预算上限和实时成本。",
+    "features.roleseparation.title":"角色分离","features.roleseparation.desc":"提出者绝不是验证者。Reviewer 对每一个交付物做 red-team。SRW-v3 把 \"发送方 ≠ @ 目标\" 作为运行时不变量强制执行。",
+    "papers.eyebrow":"论文流水线","papers.title":"从草稿到投稿，6 个可追踪阶段。","papers.subtitle":"每个论文项目都是一棵带作者、章节、引用与阶段门的目录树。开箱即用 3 个示例论文项目。",
+    "papers.s1.t":"草稿","papers.s1.d":"提纲 + 骨架","papers.s2.t":"文献综述","papers.s2.d":"引用与锚点","papers.s3.t":"方法","papers.s3.d":"可复现配方","papers.s4.t":"结果","papers.s4.d":"表格、图、数据","papers.s5.t":"内部评审","papers.s5.d":"Reviewer red-team","papers.s6.t":"投稿","papers.s6.d":"导出与归档",
+    "challenge.eyebrow":"挑战中心","challenge.title":"396 道题用来给你的智能体打分。","challenge.subtitle":"四个学科的内置题库。把它们交给你的 ASRP 团队，对比真实研究工作流和单次提示之间的差距。",
+    "challenge.p1":"每个学科 99 道分级题——从入门到研究生开放题。可搜索、按难度筛选，或一键作为新研究项目入口。",
+    "challenge.p2":"防竞态加载、防抖搜索、可访问键盘导航，以及一个 Local 开关——可以把整个题库丢给你本地的 Ollama 跑。",
+    "challenge.math":"数学","challenge.physics":"物理","challenge.chem":"化学","challenge.life":"生命科学",
+    "local.eyebrow":"隐私优先","local.title":"本地运行。数据永远在你机器上。","local.subtitle":"ASRP 完全可以离线 + Ollama 运行。自动检测硬件、流式拉取模型、识别 GPU/VRAM。或者部署到无显示的 VPS——同一个桌面，无需 display。",
+    "local.f1.t":"硬件感知","local.f1.d":"检测 RAM、GPU、VRAM，推荐你机器实际能跑的模型。",
+    "local.f2.t":"流式拉取","local.f2.d":"一键 ollama pull，进度实时刷新，可断点续传。",
+    "local.f3.t":"OS 级加密","local.f3.d":"API 密钥保存在系统钥匙串。本地 SQLite + JWT 认证。",
+    "local.f4.t":"无头 / VPS","local.f4.d":"自动检测缺失的 $DISPLAY 并切换为无头模式。",
+    "local.h":"云端还是本地——你说了算。","local.p1":"用你自己的 Anthropic / Google / OpenRouter 密钥。或者全部交给本地 Ollama。每个 agent 自由组合——Theorist 用 Opus、Engineer 用本地 Qwen、Reviewer 用 Haiku。",
+    "local.p2":"Self-test 套件（25 项检查）端到端验证安装。Auto-updater 自动处理新版本。",
+    "casestudy.eyebrow":"案例研究","casestudy.title":"数小时内拦截错误，而不是数月。","casestudy.subtitle":"一个真实的 ASRP 运行：一天的 DFT 调研，过程中两次自我修正，并在投稿前自我撤回。",
+    "casestudy.expTitle":"iDEA 实验 — 2026 年 4 月 1 日",
+    "casestudy.t0":"文献综述；iDEA 代码安装并完成基准测试。",
+    "casestudy.t2":"假设：\"素数间隔的势阱产生异常的负 DD。\"",
+    "casestudy.t4":"V1 结果支持假设 (DD = -0.070 Ha)。",
+    "casestudy.error1time":"T+4.5h — 错误 #1","casestudy.error2time":"T+9h — 错误 #2","casestudy.reviewerCaught":"Reviewer 发现：",
+    "casestudy.error1desc":"晶格跨度不等。控制实验显示是间距不对称，而非素数。",
+    "casestudy.error2desc":"用了近似 KS 能隙而非精确值。定义错误。",
+    "casestudy.fixtime":"T+10h — 已修正","casestudy.fixdesc":"精确 KS 能隙把 DD 符号从 -0.041 翻转为 +0.084。\"负 DD\" 是定义伪影。",
+    "casestudy.conclusiontime":"T+11h — 结论","casestudy.conclusiondesc":"论文在投稿前撤回。一天内捕捉到两个错误。",
+    "casestudy.note":"在传统研究里，这些错误会一路活到投稿，并在数月之后才被发现——如果有人发现的话。",
+    "getstarted.eyebrow":"快速开始","getstarted.title":"从下载到第一个研究：四步。","getstarted.subtitle":"不需要 CLI。安装桌面应用，完成 5 步 Setup Wizard，启动你的第一个研究项目。",
+    "getstarted.step1.title":"下载","getstarted.step1.desc":"获取 macOS / Windows / Linux 安装包。Auto-updater 接管后续。",
+    "getstarted.step2.title":"Setup Wizard","getstarted.step2.desc":"5 步：研究档案、API 密钥、agent 配置、Discord bot、启动。约 10 分钟。",
+    "getstarted.step3.title":"启动 agents","getstarted.step3.desc":"在 Dashboard 上一键启动内置 OpenClaw gateway 和 3 个 bot。",
+    "getstarted.step4.title":"在 Discord 里对话","getstarted.step4.desc":"@ Theorist 提出你的研究问题。剩下的交给团队。",
+    "download.allPlatforms":"全平台 · Apache 2.0 ·","download.releaseNotes":"发行说明",
+    "opensource.eyebrow":"开源","opensource.title":"在开放中构建。为科学。","opensource.subtitle":"逐行可审。按你的方式自托管。塑造 AI 增强研究的未来。",
+    "opensource.transparent.title":"透明","opensource.transparent.desc":"GitHub 上每一行代码都可审计。看看 agents 是怎么决策的，你的数据流向何处。",
+    "opensource.selfhost.title":"自托管","opensource.selfhost.desc":"在你的笔记本、实验室工作站，或一台无头 VPS 上运行 ASRP。研究数据永远不离开你的网络。",
+    "opensource.nolockin.title":"无锁定","opensource.nolockin.desc":"自带 LLM。Anthropic、Google、OpenRouter，或本地 Ollama——按 agent 自由切换。",
+    "opensource.community.title":"社区","opensource.community.desc":"贡献 SOUL 模板、技能清单、基准、领域工作流，让每位研究者受益。",
+    "footer.releases":"发行版","footer.publications":"出版物","footer.copyright":"ASRP — AI 科学研究平台 · Apache 2.0 · 由 <a href='https://www.jzis.org' target='_blank' style='color:inherit;text-decoration:underline'>JZIS</a> 构建"
+  },
+  zht: {
+    "nav.workflow":"工作流","nav.agents":"智能體","nav.features":"功能","nav.challenge":"挑戰題庫","nav.download":"下載",
+    "hero.badge":"開源 · Apache 2.0 · v0.3.13",
+    "hero.title1":"3 智能體科研團隊",
+    "hero.title2":"在錯誤流入論文前 ",
+    "hero.title3":"主動攔截",
+    "hero.subtitle":"ASRP 是一個開源的 AI 科學研究平台。Theorist、Engineer、Reviewer 三個智能體在你的 Discord 中協作，預註冊假設、交叉驗證結果、稽核每一個決策——全部在你本機運行的桌面應用裡完成。",
+    "hero.download":"下載適合你平台的版本","hero.dlSub":"","hero.viewGithub":"在 GitHub 上查看",
+    "hero.stats.agents":"智能體角色","hero.stats.phases":"工作流階段","hero.stats.challenges":"挑戰題","hero.stats.languages":"語言",
+    "problem.eyebrow":"可重現性危機","problem.title":"沒有嚴謹的速度只是噪音。","problem.subtitle":"AI 智能體一天能產出一篇論文。但其中大多數無法重現。ASRP 把科學方法直接編碼到工作流裡。",
+    "problem.p1":"的研究者曾經無法重現另一位科學家的實驗。<em>(Nature, 2016)</em>",
+    "problem.p2":"認為本領域存在<em>顯著</em>的可重現性危機——AI 讓情況更糟。",
+    "problem.p3":"個錯誤在下方 iDEA 案例中<em>一天內</em>就被發現——發生在投稿之前，而非數月之後。",
+    "workflow.eyebrow":"標準研究工作流 · SRW-v3","workflow.title":"從一個想法到方向選單：≤20 分鐘。","workflow.subtitle":"每一個研究專案都從相同的 7 階段工作流開始。前 6 個 bootstrap 階段以 AI 分鐘運行——你立刻就能掌舵。Phase 7 切換為 \"1 個人類日 = 1 個 AI 小時\" 的深度工作模式。",
+    "srw.p1.t":"接案 Intake","srw.p1.d":"Theorist 在 Discord 裡問答","srw.p2.t":"文獻偵察","srw.p2.d":"Web · arXiv · 自查","srw.p3.t":"機會綜合","srw.p3.d":"綜合 + 自我批評","srw.p4.t":"方向選擇","srw.p4.d":"使用者挑路徑","srw.p5.t":"計畫","srw.p5.d":"Engineer 可行性評審","srw.p6.t":"排程","srw.p6.d":"時間 + 預算鎖定","srw.p7.t":"主動迴圈","srw.p7.d":"執行 · 複核 · 迭代",
+    "srw.m1.t":"自癒調度","srw.m1.d":"Reviewer 負責派發各階段 kickoff 並撰寫每日 standup。\"發送方 ≠ @ 目標\" 是運行時不變量——徹底消除 Discord 自我 @ 死鎖。",
+    "srw.m2.t":"獨立複算","srw.m2.d":"Theorist 產出的所有數值結果，都會由 Engineer 用不同的庫 / 演算法 / 參數化獨立複算，分歧會被記錄。",
+    "agents.eyebrow":"團隊","agents.title":"三個智能體，一個研究團隊。","agents.subtitle":"每個角色都擁有自己的 SOUL 提示詞、模型檔位、技能清單和存取權限。提出假設的智能體，絕對不是簽字放行的那一個。",
+    "agents.theorist.name":"Theorist","agents.theorist.desc":"首席科學家，也是唯一面向使用者的發聲方。負責假設、文獻偵察、機會綜合、計畫構建和主動迴圈。",
+    "agents.theorist.b1":"每個草稿都做自我 red-team 複審","agents.theorist.b2":"主導 Phase 1 與研究者的接案對話","agents.theorist.b3":"撰寫並修訂論文",
+    "agents.engineer.name":"Engineer","agents.engineer.desc":"實現代碼、跑實驗、處理資料——並對 Theorist 產出的每一個數值結果用不同路徑獨立複算。",
+    "agents.engineer.b1":"不同的庫 / 演算法 / 參數","agents.engineer.b2":"在 Phase 5 評審計算可行性","agents.engineer.b3":"負責工作區、程式碼與資料流水線",
+    "agents.reviewer.name":"Reviewer","agents.reviewer.desc":"派發器、每日 standup 作者，以及 red-team 批評者。在頻道裡 @ Theorist 與 Engineer 啟動各階段。從不 @ 自己——bot 不會收到自我 @ 事件。",
+    "agents.reviewer.b1":"對每個交付物做敵意評審","agents.reviewer.b2":"\"發送方 ≠ @ 目標\" 不變量","agents.reviewer.b3":"撰寫每日 standup 摘要",
+    "discord.eyebrow":"Discord 原生","discord.title":"你的研究團隊住在 Discord 裡。","discord.subtitle":"不需要學新的聊天工具。ASRP 內建 OpenClaw gateway，把每個智能體接入為真實的 Discord bot——你在 #general 裡就像和隊友說話一樣跟它們交流。",
+    "discord.h":"@ 觸發。日出 standup。","discord.p":"每個研究專案都有自己的頻道。各階段 kickoff 自動發出。每日 standup 總結今天交付了什麼、哪裡出了問題、下一步是什麼。",
+    "discord.f1":"內建 OpenClaw gateway — 一鍵啟動","discord.f2":"3 個獨立的 Discord bot，一個角色一個","discord.f3":"@ Theorist 提任何問題","discord.f4":"階段 kickoff · 每日 standup · 稽核日誌","discord.ch":"3 名成員",
+    "features.eyebrow":"內建科學嚴謹性","features.title":"工作流強制執行的 6 道護欄。","features.subtitle":"這些不是需要你記住的最佳實踐。它們直接編碼進了工作流。",
+    "features.preregistration.title":"假設預註冊","features.preregistration.desc":"在跑任何東西之前先註冊帶可證偽標準的假設。Researches Registry 是你不可篡改的基線——杜絕事後敘事。",
+    "features.crossvalidation.title":"獨立交叉驗證","features.crossvalidation.desc":"Engineer 必須用不同的程式碼路徑重現每一個數值結果。出現分歧會觸發 Reviewer red-team，論文裡才能用。",
+    "features.audit.title":"只追加稽核日誌","features.audit.desc":"每個決策、每個資料點、每次錯誤修正都永久記錄。從假設到結論的完整可重現性——可匯出為 CSV。",
+    "features.firstprinciples.title":"第一性原理推理","features.firstprinciples.desc":"每個 SOUL 提示詞都要求智能體質疑假設、核對定義、信任資料勝過權威。任何交付物發出之前先做自我 red-team。",
+    "features.tokenbudget.title":"按任務的模型預算","features.tokenbudget.desc":"對的任務用對的模型。Opus 推理，Sonnet 寫代碼，Haiku 調度。儀表板上有每日預算上限和即時成本。",
+    "features.roleseparation.title":"角色分離","features.roleseparation.desc":"提出者絕不是驗證者。Reviewer 對每一個交付物做 red-team。SRW-v3 把 \"發送方 ≠ @ 目標\" 作為運行時不變量強制執行。",
+    "papers.eyebrow":"論文流水線","papers.title":"從草稿到投稿，6 個可追蹤階段。","papers.subtitle":"每個論文專案都是一棵帶作者、章節、引用與階段門的目錄樹。開箱即用 3 個範例論文專案。",
+    "papers.s1.t":"草稿","papers.s1.d":"提綱 + 骨架","papers.s2.t":"文獻綜述","papers.s2.d":"引用與錨點","papers.s3.t":"方法","papers.s3.d":"可重現配方","papers.s4.t":"結果","papers.s4.d":"表格、圖、資料","papers.s5.t":"內部評審","papers.s5.d":"Reviewer red-team","papers.s6.t":"投稿","papers.s6.d":"匯出與歸檔",
+    "challenge.eyebrow":"挑戰中心","challenge.title":"396 道題用來給你的智能體打分。","challenge.subtitle":"四個學科的內建題庫。把它們交給你的 ASRP 團隊，對比真實研究工作流和單次提示之間的差距。",
+    "challenge.p1":"每個學科 99 道分級題——從入門到研究生開放題。可搜尋、按難度篩選，或一鍵作為新研究專案入口。",
+    "challenge.p2":"防競態載入、防抖搜尋、可存取鍵盤導覽，以及一個 Local 開關——可以把整個題庫丟給你本地的 Ollama 跑。",
+    "challenge.math":"數學","challenge.physics":"物理","challenge.chem":"化學","challenge.life":"生命科學",
+    "local.eyebrow":"隱私優先","local.title":"本地運行。資料永遠在你機器上。","local.subtitle":"ASRP 完全可以離線 + Ollama 運行。自動偵測硬體、串流拉取模型、辨識 GPU/VRAM。或者部署到無顯示的 VPS——同一個桌面，無需 display。",
+    "local.f1.t":"硬體感知","local.f1.d":"偵測 RAM、GPU、VRAM，推薦你機器實際能跑的模型。",
+    "local.f2.t":"串流拉取","local.f2.d":"一鍵 ollama pull，進度即時刷新，可斷點續傳。",
+    "local.f3.t":"OS 級加密","local.f3.d":"API 金鑰保存在系統鑰匙圈。本地 SQLite + JWT 認證。",
+    "local.f4.t":"無頭 / VPS","local.f4.d":"自動偵測缺失的 $DISPLAY 並切換為無頭模式。",
+    "local.h":"雲端還是本地——你說了算。","local.p1":"用你自己的 Anthropic / Google / OpenRouter 金鑰。或者全部交給本地 Ollama。每個 agent 自由組合——Theorist 用 Opus、Engineer 用本地 Qwen、Reviewer 用 Haiku。",
+    "local.p2":"Self-test 套件（25 項檢查）端到端驗證安裝。Auto-updater 自動處理新版本。",
+    "casestudy.eyebrow":"案例研究","casestudy.title":"數小時內攔截錯誤，而不是數月。","casestudy.subtitle":"一個真實的 ASRP 運行：一天的 DFT 調研，過程中兩次自我修正，並在投稿前自我撤回。",
+    "casestudy.expTitle":"iDEA 實驗 — 2026 年 4 月 1 日",
+    "casestudy.t0":"文獻綜述；iDEA 代碼安裝並完成基準測試。",
+    "casestudy.t2":"假設：\"質數間隔的勢阱產生異常的負 DD。\"",
+    "casestudy.t4":"V1 結果支持假設 (DD = -0.070 Ha)。",
+    "casestudy.error1time":"T+4.5h — 錯誤 #1","casestudy.error2time":"T+9h — 錯誤 #2","casestudy.reviewerCaught":"Reviewer 發現：",
+    "casestudy.error1desc":"晶格跨度不等。控制實驗顯示是間距不對稱，而非質數。",
+    "casestudy.error2desc":"用了近似 KS 能隙而非精確值。定義錯誤。",
+    "casestudy.fixtime":"T+10h — 已修正","casestudy.fixdesc":"精確 KS 能隙把 DD 符號從 -0.041 翻轉為 +0.084。\"負 DD\" 是定義偽影。",
+    "casestudy.conclusiontime":"T+11h — 結論","casestudy.conclusiondesc":"論文在投稿前撤回。一天內捕捉到兩個錯誤。",
+    "casestudy.note":"在傳統研究裡，這些錯誤會一路活到投稿，並在數月之後才被發現——如果有人發現的話。",
+    "getstarted.eyebrow":"快速開始","getstarted.title":"從下載到第一個研究：四步。","getstarted.subtitle":"不需要 CLI。安裝桌面應用，完成 5 步 Setup Wizard，啟動你的第一個研究專案。",
+    "getstarted.step1.title":"下載","getstarted.step1.desc":"取得 macOS / Windows / Linux 安裝包。Auto-updater 接管後續。",
+    "getstarted.step2.title":"Setup Wizard","getstarted.step2.desc":"5 步：研究檔案、API 金鑰、agent 設定、Discord bot、啟動。約 10 分鐘。",
+    "getstarted.step3.title":"啟動 agents","getstarted.step3.desc":"在 Dashboard 上一鍵啟動內建 OpenClaw gateway 和 3 個 bot。",
+    "getstarted.step4.title":"在 Discord 裡對話","getstarted.step4.desc":"@ Theorist 提出你的研究問題。剩下的交給團隊。",
+    "download.allPlatforms":"全平台 · Apache 2.0 ·","download.releaseNotes":"發行說明",
+    "opensource.eyebrow":"開源","opensource.title":"在開放中構建。為科學。","opensource.subtitle":"逐行可審。按你的方式自託管。塑造 AI 增強研究的未來。",
+    "opensource.transparent.title":"透明","opensource.transparent.desc":"GitHub 上每一行代碼都可稽核。看看 agents 是怎麼決策的，你的資料流向何處。",
+    "opensource.selfhost.title":"自託管","opensource.selfhost.desc":"在你的筆電、實驗室工作站，或一台無頭 VPS 上運行 ASRP。研究資料永遠不離開你的網路。",
+    "opensource.nolockin.title":"無鎖定","opensource.nolockin.desc":"自帶 LLM。Anthropic、Google、OpenRouter，或本地 Ollama——按 agent 自由切換。",
+    "opensource.community.title":"社群","opensource.community.desc":"貢獻 SOUL 模板、技能清單、基準、領域工作流，讓每位研究者受益。",
+    "footer.releases":"發行版","footer.publications":"出版物","footer.copyright":"ASRP — AI 科學研究平台 · Apache 2.0 · 由 <a href='https://www.jzis.org' target='_blank' style='color:inherit;text-decoration:underline'>JZIS</a> 構建"
+  },
+  de: {
+    "nav.workflow":"Workflow","nav.agents":"Agenten","nav.features":"Funktionen","nav.challenge":"Challenge","nav.download":"Download",
+    "hero.badge":"Open Source · Apache 2.0 · v0.3.13",
+    "hero.title1":"Ein 3-Agenten-Forschungsteam,",
+    "hero.title2":"das Fehler abfängt, ",
+    "hero.title3":"bevor sie veröffentlicht werden",
+    "hero.subtitle":"ASRP ist eine Open-Source-Plattform für KI-gestützte wissenschaftliche Forschung. Theorist, Engineer und Reviewer arbeiten in deinem Discord zusammen, registrieren Hypothesen vor, kreuzvalidieren Ergebnisse und prüfen jede Entscheidung — alles in einer Desktop-App, die du auf deinem eigenen Rechner betreibst.",
+    "hero.download":"Download für dein System","hero.dlSub":"","hero.viewGithub":"Auf GitHub ansehen",
+    "hero.stats.agents":"Agentenrollen","hero.stats.phases":"Workflow-Phasen","hero.stats.challenges":"Challenge-Aufgaben","hero.stats.languages":"Sprachen",
+    "problem.eyebrow":"Die Reproduzierbarkeitskrise","problem.title":"Geschwindigkeit ohne Strenge ist Rauschen.","problem.subtitle":"KI-Agenten produzieren ein Paper pro Tag. Die meisten lassen sich nicht reproduzieren. ASRP kodiert die wissenschaftliche Methode direkt in den Workflow.",
+    "problem.p1":"der Forschenden konnten ein Experiment einer anderen Wissenschaftlerin nicht reproduzieren. <em>(Nature, 2016)</em>",
+    "problem.p2":"sehen eine <em>signifikante</em> Reproduzierbarkeitskrise in ihrem Feld — KI verschärft sie.",
+    "problem.p3":"Fehler in der iDEA-Fallstudie unten in <em>einem einzigen Tag</em> abgefangen — vor der Einreichung, nicht Monate später.",
+    "workflow.eyebrow":"Standard Research Workflow · SRW-v3","workflow.title":"Von der Idee zum Direction-Menü in ≤20 Minuten.","workflow.subtitle":"Jedes Forschungsprojekt startet mit demselben 7-Phasen-Workflow. Die ersten 6 Bootstrap-Phasen laufen in KI-Minuten — du steuerst sofort. Phase 7 wechselt zu \"1 Menschentag = 1 KI-Stunde\" für die Tiefenarbeit.",
+    "srw.p1.t":"Intake","srw.p1.d":"Theorist Q&A in Discord","srw.p2.t":"Lit-Recon","srw.p2.d":"Web · arXiv · Eigenrecherche","srw.p3.t":"Chancen","srw.p3.d":"Synthese + Selbstkritik","srw.p4.t":"Richtungswahl","srw.p4.d":"Nutzer entscheidet","srw.p5.t":"Plan","srw.p5.d":"Engineer-Machbarkeit","srw.p6.t":"Zeitplan","srw.p6.d":"Zeit + Budget fix","srw.p7.t":"Aktive Schleife","srw.p7.d":"Ausführen · prüfen · iterieren",
+    "srw.m1.t":"Selbstheilender Dispatcher","srw.m1.d":"Reviewer löst Phasen-Kickoffs aus und schreibt das tägliche Standup. \"Sender ≠ Mention-Ziel\" ist Laufzeit-Invariante — keine Discord-Selbst-@-Deadlocks.",
+    "srw.m2.t":"Unabhängige Neuberechnung","srw.m2.d":"Engineer berechnet jedes numerische Ergebnis von Theorist mit anderer Bibliothek, Algorithmus oder Parameterisierung neu — Abweichungen werden protokolliert.",
+    "agents.eyebrow":"Das Team","agents.title":"Drei Agenten. Ein Forschungsteam.","agents.subtitle":"Jede Rolle hat einen eigenen SOUL-Prompt, eine Modellklasse, ein Skill-Manifest und Zugriffsrechte. Wer eine Hypothese vorschlägt, gibt sie nicht selbst frei.",
+    "agents.theorist.name":"Theorist","agents.theorist.desc":"Leitende Wissenschaftlerin und einzige nutzerseitige Stimme. Verantwortlich für Hypothesen, Literaturrecherche, Chancen-Synthese, Planaufbau und die aktive Schleife.",
+    "agents.theorist.b1":"Selbst-Red-Team-Pass für jeden Entwurf","agents.theorist.b2":"Führt Phase 1 Intake mit der Forscherin","agents.theorist.b3":"Schreibt und überarbeitet das Paper",
+    "agents.engineer.name":"Engineer","agents.engineer.desc":"Implementiert Code, führt Experimente aus, verarbeitet Daten — und berechnet jedes numerische Ergebnis von Theorist unabhängig auf einem anderen Pfad nach.",
+    "agents.engineer.b1":"Andere Bibliothek / Algorithmus / Parameter","agents.engineer.b2":"Prüft Compute-Machbarkeit in Phase 5","agents.engineer.b3":"Verantwortet Workspace, Code, Datenpipelines",
+    "agents.reviewer.name":"Reviewer","agents.reviewer.desc":"Dispatcher, Standup-Autor und Red-Team-Kritiker. Postet Phasen-Kickoffs, die @Theorist und @Engineer ansprechen. Nennt sich nie selbst — Bots erhalten keine Selbst-Mention-Events.",
+    "agents.reviewer.b1":"Feindselige Reviewer-Kritik für jedes Deliverable","agents.reviewer.b2":"\"Sender ≠ Mention-Ziel\"-Invariante","agents.reviewer.b3":"Schreibt die tägliche Standup-Zusammenfassung",
+    "discord.eyebrow":"Discord-nativ","discord.title":"Dein Forschungsteam lebt in Discord.","discord.subtitle":"Keine neue Chat-App nötig. ASRP startet ein eingebettetes OpenClaw-Gateway und verbindet jeden Agenten als echten Discord-Bot — du sprichst mit ihnen in #general wie mit Teamkollegen.",
+    "discord.h":"@-Mention zum Auslösen. Standup im Morgengrauen.","discord.p":"Jedes Forschungsprojekt bekommt seinen eigenen Channel. Phasen-Kickoffs werden automatisch gepostet. Tägliche Standups fassen zusammen, was geliefert wurde, was kaputtging und was als Nächstes kommt.",
+    "discord.f1":"Eingebettetes OpenClaw-Gateway — Ein-Klick-Start","discord.f2":"3 unabhängige Discord-Bots, einer pro Rolle","discord.f3":"@Theorist für jede Frage","discord.f4":"Phasen-Kickoffs · tägliches Standup · Audit-Log","discord.ch":"3 Mitglieder",
+    "features.eyebrow":"Eingebaute wissenschaftliche Strenge","features.title":"Sechs Leitplanken, die der Workflow erzwingt.","features.subtitle":"Das sind keine Best Practices, an die du dich erinnern musst. Sie sind direkt in den Workflow kodiert.",
+    "features.preregistration.title":"Hypothesen-Vorregistrierung","features.preregistration.desc":"Hypothesen mit Falsifikationskriterien registrieren, bevor irgendetwas läuft. Die Researches-Registry ist deine unveränderliche Baseline — keine nachträglichen Erzählungen.",
+    "features.crossvalidation.title":"Unabhängige Kreuzvalidierung","features.crossvalidation.desc":"Engineer muss jedes numerische Ergebnis über einen anderen Codepfad reproduzieren. Abweichung löst einen Reviewer-Red-Team-Pass aus, bevor es ins Paper geht.",
+    "features.audit.title":"Append-Only Audit-Trail","features.audit.desc":"Jede Entscheidung, jeder Datenpunkt, jede Korrektur — dauerhaft protokolliert. Vollständige Reproduzierbarkeit von der Hypothese bis zur Schlussfolgerung. CSV-Export.",
+    "features.firstprinciples.title":"First-Principles-Denken","features.firstprinciples.desc":"Jeder SOUL-Prompt weist den Agenten an, Annahmen zu hinterfragen, Definitionen zu prüfen und Daten über Autorität zu vertrauen. Self-Red-Team vor jedem Deliverable.",
+    "features.tokenbudget.title":"Modell-Budget pro Aufgabe","features.tokenbudget.desc":"Das richtige Modell für die richtige Aufgabe. Opus zum Argumentieren, Sonnet zum Coden, Haiku zum Dispatchen. Tagesbudget mit Live-Kostenanzeige im Dashboard.",
+    "features.roleseparation.title":"Rollentrennung","features.roleseparation.desc":"Wer vorschlägt, validiert nie selbst. Reviewer macht Red-Team auf jedes Deliverable. SRW-v3 erzwingt \"Sender ≠ Mention-Ziel\" als Laufzeit-Invariante.",
+    "papers.eyebrow":"Papers-Pipeline","papers.title":"Vom Entwurf zur Einreichung in sechs verfolgten Stufen.","papers.subtitle":"Jedes Paper-Projekt lebt als Verzeichnisbaum mit Autoren, Sektionen, Referenzen und Stage-Gates. Drei Beispielprojekte sind out-of-the-box dabei.",
+    "papers.s1.t":"Entwurf","papers.s1.d":"Outline + Gerüst","papers.s2.t":"Lit-Review","papers.s2.d":"Zitate & Anker","papers.s3.t":"Methoden","papers.s3.d":"Reproduzierbares Rezept","papers.s4.t":"Ergebnisse","papers.s4.d":"Tabellen, Abb., Daten","papers.s5.t":"Internes Review","papers.s5.d":"Reviewer Red-Team","papers.s6.t":"Einreichung","papers.s6.d":"Export & Archiv",
+    "challenge.eyebrow":"Challenge-Center","challenge.title":"396 Probleme zum Benchmarken deiner Agenten.","challenge.subtitle":"Eine eingebaute Aufgabenbank über vier Disziplinen. Gib sie deinem ASRP-Team und miss, wie ein echter Forschungs-Workflow gegen Single-Shot-Prompting abschneidet.",
+    "challenge.p1":"Jede Disziplin liefert 99 abgestufte Aufgaben — von einfachen Aufwärm-Übungen bis zu offenen Fragen auf Doktorandenniveau. Suchen, nach Schwierigkeit filtern, oder direkt in ein neues Forschungsprojekt überführen.",
+    "challenge.p2":"Race-sichere Ladung, debounced Suche, barrierefreie Tastaturnavigation und ein Local-Toggle, mit dem du die ganze Bank gegen deinen on-prem Ollama-Stack laufen lassen kannst.",
+    "challenge.math":"Mathematik","challenge.physics":"Physik","challenge.chem":"Chemie","challenge.life":"Lebenswissenschaften",
+    "local.eyebrow":"Privatsphäre zuerst","local.title":"On-Prem ausführen. Deine Daten bleiben bei dir.","local.subtitle":"ASRP läuft komplett offline mit Ollama. Hardwareerkennung, gestreamte Modell-Pulls, GPU/VRAM-bewusst. Oder Headless auf einem VPS — dasselbe Desktop, kein Display nötig.",
+    "local.f1.t":"Hardware-aware","local.f1.d":"Erkennt RAM, GPU, VRAM und empfiehlt Modelle, die du tatsächlich laufen lassen kannst.",
+    "local.f2.t":"Streaming-Pulls","local.f2.d":"Ein-Klick ollama pull mit Live-Fortschritt und Resume.",
+    "local.f3.t":"OS-Verschlüsselung","local.f3.d":"API-Keys leben im OS-Schlüsselbund. Lokales SQLite + JWT-Auth.",
+    "local.f4.t":"Headless / VPS","local.f4.d":"Erkennt fehlendes $DISPLAY automatisch und wechselt in den Headless-Modus.",
+    "local.h":"Cloud oder lokal — du entscheidest.","local.p1":"Bring deine eigenen Keys für Anthropic, Google oder OpenRouter mit. Oder lass alles lokal in Ollama laufen. Pro Agent mischbar — Theorist auf Opus, Engineer auf einem lokalen Qwen, Reviewer auf Haiku.",
+    "local.p2":"Self-Test-Suite (25 Checks) verifiziert die Installation Ende-zu-Ende. Auto-Updater übernimmt neue Releases.",
+    "casestudy.eyebrow":"Fallstudie","casestudy.title":"Fehler in Stunden gefunden, nicht in Monaten.","casestudy.subtitle":"Ein echter ASRP-Lauf: eine eintägige DFT-Untersuchung, die sich zweimal selbst korrigierte und vor der Einreichung selbst zurückgezogen wurde.",
+    "casestudy.expTitle":"Das iDEA-Experiment — 1. April 2026",
+    "casestudy.t0":"Literaturrecherche; iDEA-Code installiert und gebenchmarkt.",
+    "casestudy.t2":"Hypothese: \"Primzahl-beabstandete Potentialtöpfe erzeugen anomales negatives DD.\"",
+    "casestudy.t4":"V1-Ergebnisse stützen die Hypothese (DD = -0.070 Ha).",
+    "casestudy.error1time":"T+4,5h — Fehler #1","casestudy.error2time":"T+9h — Fehler #2","casestudy.reviewerCaught":"Reviewer entdeckte:",
+    "casestudy.error1desc":"Gitterspannen ungleich. Kontrollexperiment zeigt Abstands­asymmetrie, nicht Primzahlen.",
+    "casestudy.error2desc":"Approximate KS-Lücke statt exakte verwendet. Falsche Definition.",
+    "casestudy.fixtime":"T+10h — Korrigiert","casestudy.fixdesc":"Exakte KS-Lücke kehrt das DD-Vorzeichen von -0.041 auf +0.084 um. \"Negatives DD\" war ein Artefakt.",
+    "casestudy.conclusiontime":"T+11h — Schlussfolgerung","casestudy.conclusiondesc":"Paper vor Einreichung zurückgezogen. Zwei Fehler in einem Tag erkannt.",
+    "casestudy.note":"In der traditionellen Forschung würden diese Fehler bis zur Einreichung überleben und Monate später entdeckt — wenn überhaupt.",
+    "getstarted.eyebrow":"Erste Schritte","getstarted.title":"Vom Download zur ersten Forschung — in vier Schritten.","getstarted.subtitle":"Kein CLI nötig. Desktop-App installieren, 5-Schritt-Setup-Assistenten durchlaufen, erstes Forschungsprojekt starten.",
+    "getstarted.step1.title":"Download","getstarted.step1.desc":"Installer für macOS, Windows oder Linux holen. Auto-Updater übernimmt den Rest.",
+    "getstarted.step2.title":"Setup-Assistent","getstarted.step2.desc":"5 Schritte: Profil, API-Keys, Agent-Konfig, Discord-Bots, Start. ~10 Minuten.",
+    "getstarted.step3.title":"Agenten starten","getstarted.step3.desc":"Ein Klick im Dashboard startet das eingebettete OpenClaw-Gateway und deine 3 Bots.",
+    "getstarted.step4.title":"In Discord sprechen","getstarted.step4.desc":"@Theorist mit deiner Forschungsfrage anpingen. Den Rest übernimmt das Team.",
+    "download.allPlatforms":"Alle Plattformen · Apache 2.0 ·","download.releaseNotes":"Release-Notes",
+    "opensource.eyebrow":"Open Source","opensource.title":"Im Offenen gebaut. Für die Wissenschaft.","opensource.subtitle":"Jede Zeile inspizieren. Zu deinen Bedingungen selbst hosten. Die Zukunft der KI-gestützten Forschung mitgestalten.",
+    "opensource.transparent.title":"Transparent","opensource.transparent.desc":"Jede Codezeile auf GitHub ist überprüfbar. Sieh genau, wie Agenten Entscheidungen treffen und wohin deine Daten fließen.",
+    "opensource.selfhost.title":"Selbst hosten","opensource.selfhost.desc":"ASRP auf Laptop, Lab-Workstation oder Headless-VPS betreiben. Forschungsdaten verlassen nie dein Netzwerk.",
+    "opensource.nolockin.title":"Kein Lock-in","opensource.nolockin.desc":"Bring dein eigenes LLM mit. Anthropic, Google, OpenRouter oder lokales Ollama — pro Agent frei wechseln.",
+    "opensource.community.title":"Community","opensource.community.desc":"SOUL-Vorlagen, Skill-Manifeste, Benchmarks und domänenspezifische Workflows beisteuern, die allen Forschenden zugutekommen.",
+    "footer.releases":"Releases","footer.publications":"Publikationen","footer.copyright":"ASRP — AI Scientific Research Platform · Apache 2.0 · Erstellt von <a href='https://www.jzis.org' target='_blank' style='color:inherit;text-decoration:underline'>JZIS</a>"
   }
+};
+
+function switchLang(lang) {
+  if (!translations[lang]) return;
+  localStorage.setItem('asrp-lang', lang);
+  document.querySelectorAll('[data-i18n]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n');
+    var val = translations[lang][key];
+    if (val == null) return;
+    if (val.indexOf('<') !== -1) { el.innerHTML = val; } else { el.textContent = val; }
+  });
+  var langNames = { en: 'EN', zh: '中文', zht: '繁體', de: 'DE' };
+  var cur = document.getElementById('current-lang');
+  if (cur) cur.textContent = langNames[lang] || 'EN';
+  document.querySelectorAll('.lang-menu a').forEach(function(link) {
+    link.classList.toggle('active', link.getAttribute('data-lang') === lang);
+  });
+  var lm = document.getElementById('lang-menu'); if (lm) lm.classList.remove('show');
+  document.documentElement.lang = lang;
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+  var saved = localStorage.getItem('asrp-lang');
+  if (saved) { switchLang(saved); return; }
+  // Best-effort geo detection
+  fetch('https://ipapi.co/json/', { signal: AbortSignal.timeout ? AbortSignal.timeout(3000) : undefined })
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      var cc = ((d && d.country_code) || '').toUpperCase();
+      var map = { CN:'zh', HK:'zht', MO:'zht', TW:'zht', SG:'zht', DE:'de', CH:'de', AT:'de' };
+      switchLang(map[cc] || 'en');
+    })
+    .catch(function(){ /* keep English */ });
+});
 </script>
+
+<!-- Smart download button -->
+<script src="download.js"></script>
+
+<!-- Auth modal kept for setup.html flow -->
+<script src="auth.js"></script>
 
 </body>
 </html>

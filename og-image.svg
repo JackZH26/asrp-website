@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f0f5f0"/>
+      <stop offset="100%" style="stop-color:#d4e4d4"/>
+    </linearGradient>
+    <linearGradient id="iconBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3A7D5C"/>
+      <stop offset="100%" style="stop-color:#24503A"/>
+    </linearGradient>
+    <linearGradient id="titleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#3A7D5C"/>
+      <stop offset="100%" style="stop-color:#24503A"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Icon (left side, scaled from 512 viewBox) -->
+  <g transform="translate(110, 175) scale(0.55)">
+    <rect width="512" height="512" rx="112" fill="url(#iconBg)"/>
+    <ellipse cx="256" cy="256" rx="190" ry="72" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="7" transform="rotate(-35 256 256)"/>
+    <ellipse cx="256" cy="256" rx="190" ry="72" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="7" transform="rotate(35 256 256)"/>
+    <ellipse cx="256" cy="256" rx="190" ry="72" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="7" transform="rotate(90 256 256)"/>
+    <text x="256" y="295" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="155" font-weight="bold" fill="white">α</text>
+    <circle cx="122" cy="120" r="17" fill="#FF4444"/>
+    <circle cx="390" cy="120" r="17" fill="#FFD234"/>
+    <circle cx="256" cy="430" r="17" fill="#4488FF"/>
+  </g>
+
+  <!-- Wordmark + tagline -->
+  <text x="470" y="280" font-family="-apple-system, 'Inter', 'Segoe UI', Helvetica, Arial, sans-serif" font-size="110" font-weight="700" fill="url(#titleGrad)" letter-spacing="-3">ASRP</text>
+  <text x="470" y="340" font-family="-apple-system, 'Inter', 'Segoe UI', Helvetica, Arial, sans-serif" font-size="32" font-weight="600" fill="#2d3b2d">AI Scientific Research Platform</text>
+  <text x="470" y="400" font-family="-apple-system, 'Inter', 'Segoe UI', Helvetica, Arial, sans-serif" font-size="24" font-weight="400" fill="#5a6b5a">A 3-agent research team that pre-registers,</text>
+  <text x="470" y="432" font-family="-apple-system, 'Inter', 'Segoe UI', Helvetica, Arial, sans-serif" font-size="24" font-weight="400" fill="#5a6b5a">cross-validates, and audits every decision.</text>
+
+  <!-- Footer chips -->
+  <g font-family="-apple-system, 'Inter', 'Segoe UI', sans-serif" font-size="20" font-weight="500">
+    <rect x="470" y="490" width="180" height="44" rx="22" fill="#3A7D5C"/>
+    <text x="560" y="519" text-anchor="middle" fill="white">Open Source</text>
+    <rect x="668" y="490" width="160" height="44" rx="22" fill="white" stroke="#d4e4d4" stroke-width="2"/>
+    <text x="748" y="519" text-anchor="middle" fill="#2d3b2d">Apache 2.0</text>
+    <rect x="846" y="490" width="190" height="44" rx="22" fill="white" stroke="#d4e4d4" stroke-width="2"/>
+    <text x="941" y="519" text-anchor="middle" fill="#2d3b2d">macOS · Win · Linux</text>
+  </g>
+</svg>
