@@ -123,6 +123,10 @@
         var asset = pickAsset(release.assets || [], plat);
         btns.forEach(function (btn) { applyToButton(btn, plat, release, asset); });
 
+        // Fill any standalone version placeholders (e.g. hero badge)
+        var verEls = document.querySelectorAll('[data-asrp-version]');
+        verEls.forEach(function (el) { el.textContent = release.tag_name || ''; });
+
         // Also fill any "other platforms" lists
         var others = document.querySelectorAll('[data-asrp-download-list]');
         others.forEach(function (list) {
@@ -141,9 +145,6 @@
             li.innerHTML = '<span class="dl-other-os">' + p.label + '</span><span class="dl-other-name">' + a.name + '</span>';
             list.appendChild(li);
           });
-          // Show version
-          var verEls = document.querySelectorAll('[data-asrp-version]');
-          verEls.forEach(function (el) { el.textContent = release.tag_name || ''; });
         });
       })
       .catch(function () {

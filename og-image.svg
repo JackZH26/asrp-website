@@ -29,10 +29,10 @@
   </g>
 
   <!-- Wordmark + tagline -->
-  <text x="470" y="280" font-family="-apple-system, 'Inter', 'Segoe UI', Helvetica, Arial, sans-serif" font-size="110" font-weight="700" fill="url(#titleGrad)" letter-spacing="-3">ASRP</text>
-  <text x="470" y="340" font-family="-apple-system, 'Inter', 'Segoe UI', Helvetica, Arial, sans-serif" font-size="32" font-weight="600" fill="#2d3b2d">AI Scientific Research Platform</text>
-  <text x="470" y="400" font-family="-apple-system, 'Inter', 'Segoe UI', Helvetica, Arial, sans-serif" font-size="24" font-weight="400" fill="#5a6b5a">A 3-agent research team that pre-registers,</text>
-  <text x="470" y="432" font-family="-apple-system, 'Inter', 'Segoe UI', Helvetica, Arial, sans-serif" font-size="24" font-weight="400" fill="#5a6b5a">cross-validates, and audits every decision.</text>
+  <text x="470" y="270" font-family="-apple-system, 'Inter', 'Segoe UI', Helvetica, Arial, sans-serif" font-size="92" font-weight="700" fill="url(#titleGrad)" letter-spacing="-3">ASRP</text>
+  <text x="470" y="320" font-family="-apple-system, 'Inter', 'Segoe UI', Helvetica, Arial, sans-serif" font-size="26" font-weight="600" fill="#2d3b2d">AI Scientific Research Platform</text>
+  <text x="470" y="385" font-family="-apple-system, 'Inter', 'Segoe UI', Helvetica, Arial, sans-serif" font-size="38" font-weight="700" fill="#24503A">You think. Three agents do the rest.</text>
+  <text x="470" y="425" font-family="-apple-system, 'Inter', 'Segoe UI', Helvetica, Arial, sans-serif" font-size="38" font-weight="700" fill="url(#titleGrad)">No limits.</text>
 
   <!-- Footer chips -->
   <g font-family="-apple-system, 'Inter', 'Segoe UI', sans-serif" font-size="20" font-weight="500">
