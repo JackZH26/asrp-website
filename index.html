@@ -227,6 +227,17 @@ section .section-subtitle { text-align: center; color: var(--text-secondary); fo
 .pipeline-step h4 { font-size: 0.8125rem; font-weight: 700; margin-bottom: 0.25rem; color: var(--text); }
 .pipeline-step p { font-size: 0.6875rem; color: var(--text-tertiary); line-height: 1.4; }
 
+/* ========== TOOLS ========== */
+.tools-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; max-width: 1000px; margin: 0 auto; }
+.tool-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; transition: all 0.2s; }
+.tool-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: var(--shadow-hover); }
+.tool-icon { width: 48px; height: 48px; border-radius: 10px; background: var(--accent-light); display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; }
+.tool-card h4 { font-size: 0.9375rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; }
+.tool-list { font-size: 0.8125rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 0.75rem; }
+.tool-agents { display: flex; flex-wrap: wrap; gap: 0.375rem; }
+.tag-agent { font-size: 0.6875rem; font-weight: 600; padding: 2px 8px; border-radius: 4px; background: var(--accent-light); color: var(--accent); border: 1px solid rgba(58,125,92,0.15); }
+@media (max-width: 768px) { .tools-grid { grid-template-columns: 1fr; } }
+
 /* ========== CHALLENGE ========== */
 .challenge-wrap { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: center; }
 @media (max-width: 768px) { .challenge-wrap { grid-template-columns: 1fr; } }
@@ -553,6 +564,68 @@ footer .copyright { font-size: 0.875rem; color: var(--text-tertiary); }
   </div>
 </section>
 
+<!-- TOOLS -->
+<section id="tools">
+  <div class="container">
+    <div class="section-eyebrow" data-i18n="tools.eyebrow">Agent Toolbox</div>
+    <h2 data-i18n="tools.title">23 research tools. One click to arm your agents.</h2>
+    <p class="section-subtitle" data-i18n="tools.subtitle">Auto-detect installed dependencies, batch-install what's missing, and keep each agent's capability profile in sync — pip, brew/apt/winget, cargo, clawhub, or guided manual install.</p>
+
+    <div class="tools-grid">
+      <div class="tool-card">
+        <div class="tool-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><path d="M8 7h8m-8 4h5"/></svg>
+        </div>
+        <h4 data-i18n="tools.math.t">Math & Scientific Computing</h4>
+        <p class="tool-list">mpmath · NumPy · SciPy · SymPy · pandas · Numba · scikit-learn</p>
+        <div class="tool-agents"><span class="tag-agent">Theorist</span><span class="tag-agent">Engineer</span></div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2L5 6l4 4"/><path d="M15 2l4 4-4 4"/><path d="M12 14v4a2 2 0 0 0 2 2h2"/><path d="M8 14v4a2 2 0 0 1-2 2H4"/></svg>
+        </div>
+        <h4 data-i18n="tools.proof.t">Formal Verification & Proof</h4>
+        <p class="tool-list">Lean 4</p>
+        <div class="tool-agents"><span class="tag-agent">Theorist</span></div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        </div>
+        <h4 data-i18n="tools.latex.t">LaTeX & Documents</h4>
+        <p class="tool-list">Tectonic · nano-pdf</p>
+        <div class="tool-agents"><span class="tag-agent">Engineer</span></div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </div>
+        <h4 data-i18n="tools.lit.t">Literature & Retrieval</h4>
+        <p class="tool-list">arxiv API · opendataloader-pdf</p>
+        <div class="tool-agents"><span class="tag-agent">Theorist</span></div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <h4 data-i18n="tools.claw.t">OpenClaw Skills</h4>
+        <p class="tool-list">github · summarize · himalaya (email)</p>
+        <div class="tool-agents"><span class="tag-agent">Theorist</span><span class="tag-agent">Engineer</span><span class="tag-agent">Reviewer</span></div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <h4 data-i18n="tools.infra.t">System & Infrastructure</h4>
+        <p class="tool-list">Git · tqdm · JupyterLab · jq · python3-venv</p>
+        <div class="tool-agents"><span class="tag-agent">Theorist</span><span class="tag-agent">Engineer</span><span class="tag-agent">Reviewer</span></div>
+      </div>
+    </div>
+
+    <p style="text-align:center;margin-top:2rem;font-size:0.8125rem;color:var(--text-tertiary)" data-i18n="tools.footer">5 install types · pip · brew / apt / winget · cargo · clawhub · manual — all auto-detected</p>
+  </div>
+</section>
+
 <!-- PAPERS PIPELINE -->
 <section id="papers">
   <div class="container">
@@ -782,6 +855,7 @@ const translations = {
     "features.firstprinciples.title":"First Principles Reasoning","features.firstprinciples.desc":"Every SOUL prompt instructs the agent to question assumptions, verify definitions, and trust data over authority. Self red-team pass before any deliverable ships.",
     "features.tokenbudget.title":"Per-Task Model Budget","features.tokenbudget.desc":"Right model for the right task. Opus for reasoning, Sonnet for code, Haiku for dispatch. Daily budget caps with live cost tracking on the dashboard.",
     "features.roleseparation.title":"Role Separation","features.roleseparation.desc":"The proposer is never the validator. Reviewer red-teams every deliverable. SRW-v3 enforces sender ≠ mention target as a runtime invariant.",
+    "tools.eyebrow":"Agent Toolbox","tools.title":"23 research tools. One click to arm your agents.","tools.subtitle":"Auto-detect installed dependencies, batch-install what's missing, and keep each agent's capability profile in sync — pip, brew/apt/winget, cargo, clawhub, or guided manual install.","tools.math.t":"Math & Scientific Computing","tools.proof.t":"Formal Verification & Proof","tools.latex.t":"LaTeX & Documents","tools.lit.t":"Literature & Retrieval","tools.claw.t":"OpenClaw Skills","tools.infra.t":"System & Infrastructure","tools.footer":"5 install types · pip · brew / apt / winget · cargo · clawhub · manual — all auto-detected",
     "papers.eyebrow":"Papers pipeline","papers.title":"From draft to submission, in six tracked stages.","papers.subtitle":"Every paper project lives as a directory tree with authors, sections, references, and stage gates. Three sample paper projects ship out of the box.",
     "papers.s1.t":"Draft","papers.s1.d":"Outline + scaffold","papers.s2.t":"Lit Review","papers.s2.d":"Citations & anchors","papers.s3.t":"Methods","papers.s3.d":"Reproducible recipe","papers.s4.t":"Results","papers.s4.d":"Tables, figures, data","papers.s5.t":"Internal Review","papers.s5.d":"Reviewer red-team","papers.s6.t":"Submission","papers.s6.d":"Export & archive",
     "challenge.eyebrow":"Challenge center","challenge.title":"396 problems to benchmark your agents.","challenge.subtitle":"A built-in question bank across four disciplines. Hand them to your ASRP team and measure how a real research workflow stacks up against single-shot prompting.",
@@ -853,6 +927,7 @@ const translations = {
     "features.firstprinciples.title":"第一性原理推理","features.firstprinciples.desc":"每个 SOUL 提示词都要求智能体质疑假设、核对定义、信任数据胜过权威。任何交付物发出之前先做自我 red-team。",
     "features.tokenbudget.title":"按任务的模型预算","features.tokenbudget.desc":"对的任务用对的模型。Opus 推理，Sonnet 写代码，Haiku 调度。仪表盘上有每日预算上限和实时成本。",
     "features.roleseparation.title":"角色分离","features.roleseparation.desc":"提出者绝不是验证者。Reviewer 对每一个交付物做 red-team。SRW-v3 把 \"发送方 ≠ @ 目标\" 作为运行时不变量强制执行。",
+    "tools.eyebrow":"智能体工具箱","tools.title":"23 个研究工具，一键武装你的智能体。","tools.subtitle":"自动检测已安装依赖，批量安装缺失项，每个 Agent 的能力档案实时同步——支持 pip、brew/apt/winget、cargo、clawhub、手动引导安装。","tools.math.t":"数学与科学计算","tools.proof.t":"形式化验证与证明","tools.latex.t":"LaTeX 与文档","tools.lit.t":"文献与检索","tools.claw.t":"OpenClaw Skills","tools.infra.t":"系统与基础设施","tools.footer":"5 种安装方式 · pip · brew / apt / winget · cargo · clawhub · 手动引导 — 全部自动检测",
     "papers.eyebrow":"论文流水线","papers.title":"从草稿到投稿，6 个可追踪阶段。","papers.subtitle":"每个论文项目都是一棵带作者、章节、引用与阶段门的目录树。开箱即用 3 个示例论文项目。",
     "papers.s1.t":"草稿","papers.s1.d":"提纲 + 骨架","papers.s2.t":"文献综述","papers.s2.d":"引用与锚点","papers.s3.t":"方法","papers.s3.d":"可复现配方","papers.s4.t":"结果","papers.s4.d":"表格、图、数据","papers.s5.t":"内部评审","papers.s5.d":"Reviewer red-team","papers.s6.t":"投稿","papers.s6.d":"导出与归档",
     "challenge.eyebrow":"挑战中心","challenge.title":"396 道题用来给你的智能体打分。","challenge.subtitle":"四个学科的内置题库。把它们交给你的 ASRP 团队，对比真实研究工作流和单次提示之间的差距。",
@@ -924,6 +999,7 @@ const translations = {
     "features.firstprinciples.title":"第一性原理推理","features.firstprinciples.desc":"每個 SOUL 提示詞都要求智能體質疑假設、核對定義、信任資料勝過權威。任何交付物發出之前先做自我 red-team。",
     "features.tokenbudget.title":"按任務的模型預算","features.tokenbudget.desc":"對的任務用對的模型。Opus 推理，Sonnet 寫代碼，Haiku 調度。儀表板上有每日預算上限和即時成本。",
     "features.roleseparation.title":"角色分離","features.roleseparation.desc":"提出者絕不是驗證者。Reviewer 對每一個交付物做 red-team。SRW-v3 把 \"發送方 ≠ @ 目標\" 作為運行時不變量強制執行。",
+    "tools.eyebrow":"智能體工具箱","tools.title":"23 個研究工具，一鍵武裝你的智能體。","tools.subtitle":"自動偵測已安裝相依套件，批次安裝缺失項，每個 Agent 的能力檔案即時同步——支援 pip、brew/apt/winget、cargo、clawhub、手動引導安裝。","tools.math.t":"數學與科學計算","tools.proof.t":"形式化驗證與證明","tools.latex.t":"LaTeX 與文件","tools.lit.t":"文獻與檢索","tools.claw.t":"OpenClaw Skills","tools.infra.t":"系統與基礎設施","tools.footer":"5 種安裝方式 · pip · brew / apt / winget · cargo · clawhub · 手動引導 — 全部自動偵測",
     "papers.eyebrow":"論文流水線","papers.title":"從草稿到投稿，6 個可追蹤階段。","papers.subtitle":"每個論文專案都是一棵帶作者、章節、引用與階段門的目錄樹。開箱即用 3 個範例論文專案。",
     "papers.s1.t":"草稿","papers.s1.d":"提綱 + 骨架","papers.s2.t":"文獻綜述","papers.s2.d":"引用與錨點","papers.s3.t":"方法","papers.s3.d":"可重現配方","papers.s4.t":"結果","papers.s4.d":"表格、圖、資料","papers.s5.t":"內部評審","papers.s5.d":"Reviewer red-team","papers.s6.t":"投稿","papers.s6.d":"匯出與歸檔",
     "challenge.eyebrow":"挑戰中心","challenge.title":"396 道題用來給你的智能體打分。","challenge.subtitle":"四個學科的內建題庫。把它們交給你的 ASRP 團隊，對比真實研究工作流和單次提示之間的差距。",
@@ -995,6 +1071,7 @@ const translations = {
     "features.firstprinciples.title":"First-Principles-Denken","features.firstprinciples.desc":"Jeder SOUL-Prompt weist den Agenten an, Annahmen zu hinterfragen, Definitionen zu prüfen und Daten über Autorität zu vertrauen. Self-Red-Team vor jedem Deliverable.",
     "features.tokenbudget.title":"Modell-Budget pro Aufgabe","features.tokenbudget.desc":"Das richtige Modell für die richtige Aufgabe. Opus zum Argumentieren, Sonnet zum Coden, Haiku zum Dispatchen. Tagesbudget mit Live-Kostenanzeige im Dashboard.",
     "features.roleseparation.title":"Rollentrennung","features.roleseparation.desc":"Wer vorschlägt, validiert nie selbst. Reviewer macht Red-Team auf jedes Deliverable. SRW-v3 erzwingt \"Sender ≠ Mention-Ziel\" als Laufzeit-Invariante.",
+    "tools.eyebrow":"Agenten-Toolbox","tools.title":"23 Forschungstools. Ein Klick rüstet deine Agenten aus.","tools.subtitle":"Installierte Abhängigkeiten automatisch erkennen, fehlende im Batch installieren und das Fähigkeitsprofil jedes Agenten synchron halten — pip, brew/apt/winget, cargo, clawhub oder geführte manuelle Installation.","tools.math.t":"Mathematik & Wissensch. Rechnen","tools.proof.t":"Formale Verifikation & Beweis","tools.latex.t":"LaTeX & Dokumente","tools.lit.t":"Literatur & Retrieval","tools.claw.t":"OpenClaw Skills","tools.infra.t":"System & Infrastruktur","tools.footer":"5 Installtypen · pip · brew / apt / winget · cargo · clawhub · manuell — alles automatisch erkannt",
     "papers.eyebrow":"Papers-Pipeline","papers.title":"Vom Entwurf zur Einreichung in sechs verfolgten Stufen.","papers.subtitle":"Jedes Paper-Projekt lebt als Verzeichnisbaum mit Autoren, Sektionen, Referenzen und Stage-Gates. Drei Beispielprojekte sind out-of-the-box dabei.",
     "papers.s1.t":"Entwurf","papers.s1.d":"Outline + Gerüst","papers.s2.t":"Lit-Review","papers.s2.d":"Zitate & Anker","papers.s3.t":"Methoden","papers.s3.d":"Reproduzierbares Rezept","papers.s4.t":"Ergebnisse","papers.s4.d":"Tabellen, Abb., Daten","papers.s5.t":"Internes Review","papers.s5.d":"Reviewer Red-Team","papers.s6.t":"Einreichung","papers.s6.d":"Export & Archiv",
     "challenge.eyebrow":"Challenge-Center","challenge.title":"396 Probleme zum Benchmarken deiner Agenten.","challenge.subtitle":"Eine eingebaute Aufgabenbank über vier Disziplinen. Gib sie deinem ASRP-Team und miss, wie ein echter Forschungs-Workflow gegen Single-Shot-Prompting abschneidet.",
